@@ -1,0 +1,1929 @@
+Name
+
+
+.init_proc
+.term_proc
+AccuracyImpact(serverObject_s *,serverObject_s *)
+AddToAuthCache(S_getPI *)
+AuthorizedVariables
+BPrintf(char *,int,char const*,...)
+BinaryToHexWithXor(char *,int,int)
+Bot_API
+CalculatePureSolution(short,int,bool)
+Called_SV_Init
+CanPutInInventory(uchar,uchar)
+CheckAbleDrop(void)
+CheckAbleGrab(int)
+CheckAblePush(void)
+CheckAttackFinished(int)
+CheckAttackImpact(void)
+CheckAttackLunge(void)
+CheckMaxTimeouts(int)
+CheckPureSolution(short,int,int)
+CheckWorkState(void)
+ClearVarArray(cvar_s *)
+Clear_Perf_Cmd(int,char **)
+ConcatArgs(char **,int,char *)
+ConvertStats(clientStats_t *,playerScore_t *,sentStats_t *)
+ConvertStringToFilename(char const*,char *)
+Core_API
+CountActiveObjects(void)
+Critical_Perf_Cmd(int,char **)
+Cvar_SetToValue_Cmd(int,char **)
+DC_Awards(int,int)
+DC_Connect(int,uint)
+DC_Disconnect(int,uint)
+DC_EndGame(int,int)
+DC_Frame(void)
+DC_Init(void)
+DC_Kill(int,int)
+DC_SpawnAtFlag(int,int)
+DuelResults(int,bool)
+DynAllocString(char const*)
+DynFree(char **)
+DynSetString(char **,char const*)
+EnumObjdefFile(char const*,void *)
+Exp_Edit_Cmd(int,char **)
+Exp_GetPercentNextLevel(int,int,int)
+Exp_GetTotalPointsForLevel(int,int)
+Exp_Init(void)
+Exp_List_Cmd(int,char **)
+Exp_Race_Cmd(int,char **)
+Exp_Save_Cmd(int,char **)
+Exp_Set_Cmd(int,char **)
+FastSin_tmp
+Filename_GetDir(char const*)
+Filename_GetExtension(char *)
+Filename_GetFilename(char *)
+Filename_StripExtension(char const*,char *)
+FinishDuel(int)
+FirstTok(char const*)
+GS_Attach(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_ChangeUnit(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_CheckResult(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_Damage(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_DamageRadius(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_Delay(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_Destabilize(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_Die(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_Drop(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_Exec(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_GetLine(char *,int,char const*,int *,int)
+GS_GetToken(char *,char const*,int)
+GS_Give(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_GiveAmmo(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_GiveExp(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_GiveExpRadius(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_GiveGold(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_GiveGoldRadius(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_GiveMana(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_GiveStamina(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_GiveState(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_GiveStateRadius(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_GiveStateRand(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_GiveStateRandReq(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_GiveStateRandReqHeat(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_Goal(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_HasState(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_Heal(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_If(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_IfNot(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_Inventory(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_MarkEnemies(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_Notify(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_Physic(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_PlaySoundRadius(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_Pull(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_Push(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_RegenRadius(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_Remove(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_RemoveGold(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_Revive(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_ReviveSecure(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_Scan(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_Search(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_SetState(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_SetStateRand(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_SpawnGoodie(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_SpawnMount(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_SpawnObject(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_StateSlot(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_StopRand(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_Stun(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_StunRadius(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_Teleport(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_Test(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_TestNot(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GS_Toss(serverObject_s *,serverObject_s *,uchar,serverObject_s *,gameScriptParam_s *)
+GameMsg(char const*)
+GetAnimName(int)
+GetAnimStateByName(char *)
+GetEventName(int)
+GetGametypeName(int)
+GetGoodieBagName(void)
+GetNewTypeByName(char const*)
+GetNextWord(char const*)
+GetNumResources(void)
+GetNumVoiceMenus(void)
+GetNumWPTech(void)
+GetObjectByName(char const*)
+GetObjectByType(uchar)
+GetObjectByTypeAdv(baseObject_s)
+GetObjectByTypeT(uchar,uchar)
+GetObjectTypeByName(char const*)
+GetRaceDataByName(char const*)
+GetResourceByName(char *)
+GetTUByName(char const*)
+GetTUByType(uchar)
+GetVoiceMenu(char const*)
+GetWPTechByName(char *)
+GiveInfoToClient(S_getPI *,bool)
+Global_Perf_Cmd(int,char **)
+Hashtable_Add(hashtable_entry_t *,char const*,int)
+Hashtable_Clear(hashtable_entry_t *)
+Hashtable_Find(hashtable_entry_t *,char const*)
+Hashtable_HashFunc(char const*)
+HeadingFromAngles(float,float,float *,float *)
+HexToBinary(char *,char *,int)
+InitGameDLL
+InitMetaConfig(void)
+InitMiscShared(void)
+InitObjdefReferences(void)
+InitObjectDefinitions(void)
+InitStates(void)
+InitVoiceChat(void)
+IsAttackAnim(int)
+IsBackwardMovementAnim(int)
+IsBuildingType(uchar)
+IsCharacterType(uchar)
+IsDynamicType(uchar)
+IsEOL(int)
+IsForwardMovementAnim(int)
+IsItemType(uchar)
+IsLeftMovementAnim(int)
+IsLineSeparator(int)
+IsMeleeType(uchar)
+IsMobileType(uchar)
+IsMovementAnim(int)
+IsObjectLoaded(char *)
+IsRightMovementAnim(int)
+IsSideMovementAnim(int)
+IsSpace(int)
+IsTokenSeparator(int)
+IsUnitType(uchar)
+IsWeaponType(uchar)
+IsWorkerType(uchar)
+LC_CompensateStun(int,int)
+LC_DelayDamage(serverObject_s *,client_s *,float *,int,int,int)
+LC_DelayDamageFrame(void)
+LC_Frame(void)
+LC_Init(void)
+LC_PredictLag(int,bool)
+LC_Reset(void)
+LC_RestoreLag(void)
+ListDemosCallback(char const*,void *)
+LittleFloat(float)
+LittleInt(int)
+LittleShort(int)
+LoadExpTable(char const*,char const*)
+LoadGameScript_Cmd(int,char **)
+LoadMetaConfig(char const*,char const*)
+LoadModObjects(char const*,char const*,bool)
+LoadModStates(char const*,char const*,bool)
+LoadModTU(char const*,char const*,bool)
+Load_StringTables(void)
+M_2dBoundsIntersect(float const*,float const*,float const*,float const*)
+M_AxisToQuat(float const(*)[3],float *)
+M_BarycentricToXYZ(float,float,float const(*)[3],float *)
+M_BoxOnPlaneSide(float const*,float const*,plane_t *)
+M_ByteToNormal(int,float *)
+M_ClampLerp(float,float,float)
+M_ClearAxis(float (*)[3])
+M_ClosestPointToSegment2d(float const*,float const*,float const*,float *)
+M_CompareVec2(float const*,float const*)
+M_CompareVec3(float const*,float const*)
+M_CopyBVec4(uchar *,uchar *)
+M_CosLerp(float,float,float)
+M_DistToLineSegment(float const*,float const*,float const*)
+M_Get4x4Det(matrix44_t const&)
+M_GetAxis4x3(float,float,float,float (*)[4])
+M_GetAxisFromForwardVec(float const*,float (*)[3])
+M_GetDistance(float const*,float const*)
+M_GetDistanceSq(float const*,float const*)
+M_GetOctant(float const*)
+M_GetTangent(float const*,float const*,float const*,float const*,float const*,float const*,float *,float *)
+M_GetTriangleOrientation(float const(&)[3],float const(&)[3],float const(&)[3])
+M_GetTriangleOrientationR3(float const(&)[3],float const(&)[3],float const(&)[3],float const(&)[3])
+M_GetVec2Angle(float *)
+M_GetVec3Length(float *)
+M_GramSchmidt(float const*,float *,float *)
+M_Identity44(matrix44_t *)
+M_Init(void)
+M_InitSimpleNoise2(void)
+M_InitSinData(void)
+M_InvertAxis(float const(*)[3],float (*)[3])
+M_LerpAngle(float,float,float)
+M_LerpAngleVec3(float,float const*,float const*,float *)
+M_LerpQuat(float,float const*,float const*,float *)
+M_LerpVec3(float,float const*,float const*,float *)
+M_LineBoxIntersect3d(float const*,float const*,float const*,float const*,float *)
+M_LineRectIntersect(float const*,float const*,float const*,float const*,float *)
+M_Modulate(float *,float const*)
+M_MultiplyAxis(float const(*)[3],float const(*)[3],float (*)[3])
+M_MultiplyMatrix44(matrix44_t *,matrix44_t *,matrix44_t *)
+M_Noise2(float,float)
+M_NormalToByte(float *)
+M_NormalToWord(float *)
+M_Normalize(float *)
+M_NormalizeVec2(float *)
+M_OBBOnPlaneSide(float const*,float const*,float const*,float const(*)[3],plane_t *)
+M_PointInBounds2d(float const*,float const*,float const*)
+M_PointOnLine(float const*,float const*,float,float *)
+M_PointOnProjectilePath(float const*,float const*,float,float,float *)
+M_ProjectDirOnBounds(float const*,float const*,float const*,float *)
+M_QuatToAxis(float const*,float (*)[3])
+M_Randnum(float,float)
+M_RangeCompress(float)
+M_RangeCompressVec3(float const*,uchar *)
+M_RayBoxIntersect(float const*,float const*,float const*,float const*,float *)
+M_RayBoxIntersect2(float const*,float const*,float const*,float const*,float *,float *)
+M_RayIntersectsLineSeg2d(float const*,float const*,float const*,float const*,float)
+M_RayPlaneIntersect(float const*,float const*,float const*,float,float *)
+M_RayPoint(float const*,float const*,float,float *)
+M_RotatePoint2d(float const*,float const(*)[3],float *)
+M_ScalePlane(plane_t const*,float,plane_t*)
+M_Sequence(uint)
+M_SimpleNoise2(uint,uint)
+M_SurfaceVec(float const*,float const*,float const*,float *)
+M_TransformBounds(float const*,float const*,float const*,float const(*)[3],float *,float *)
+M_TransformPlane(plane_t const*,float const*,float const(*)[3],plane_t*)
+M_Vec3toBVec3(float const*,uchar *)
+M_WordToNormal(int,float *)
+MakeObjdef_Cmd(int,char **)
+MapEchoCallback(char const*,void *)
+Mdl(char const*)
+MergeArgs(int,char **)
+NUM_OBJ_VARS
+ObjdefToFile(char const*,void *)
+PY_InitAPIs
+Perf_ClearClient(void)
+Perf_ClearServer(void)
+Perf_Print(void)
+Phys_AddEvent(playerState_t *,uchar,uchar,uchar)
+Phys_AdvancePlayerState(playerState_t *,uchar,inputState_t *,inputState_t *,bool (*)(traceinfo_t *,float const*,float const*,float const*,float const*,int,int),void (*)(baseObject_s *),void (*)(baseObject_s *),bool (*)(traceinfo_t *,float const*,float const*,float const*,float const*,int),objectData_t * (*)(uchar),baseObject_s * (*)(int),char,bool,phys_out_t *)0035540
+Phys_ClampVelocity(void)
+Phys_ClearEvents(playerState_t *)
+Phys_Dead(void)
+Phys_DoCombat(void)
+Phys_Drive(void)
+Phys_DriveTrace(traceinfo_t *,float *,float,float)
+Phys_FreeFly(void)
+Phys_GetAxleAngle(float *,float *)
+Phys_GetJumpHeight(uchar,uchar,uchar *)
+Phys_GetSpeed(uchar,int,uchar *)
+Phys_GetStaminaRegenRate(uchar *,uchar)
+Phys_GetSurfaceInfo(void)
+Phys_Init(void)
+Phys_IsLungeAttack(int)
+Phys_ParallelPlane(float *,float *,float *)
+Phys_SetDirectionalAnim(int,int,int,int,int)
+Phys_SetDrivingAnimState(void)
+Phys_SetMovementAnim(void)
+Phys_SetSecondaryAnim(void)
+Phys_SetupParams(int,uchar,uchar,uchar *,float *,float *,bool (*)(traceinfo_t *,float const*,float const*,float const*,float const*,int,int),void (*)(baseObject_s *),void (*)(baseObject_s *),bool (*)(traceinfo_t *,float const*,float const*,float const*,float const*,int),objectData_t * (*)(uchar),baseObject_s * (*)(int),float,physicsParams_t *)
+Phys_Slide(physicsParams_t *,phys_out_t *)
+Phys_SmartSlide(physicsParams_t *,phys_out_t *)
+Phys_Walk(void)
+Py_Cmd
+Py_File
+Py_Func
+Py_Scripts
+PythonCmd_Wrapper(int,char **)
+Python_Cmd(int,char **)
+Python_Execute(int,char *,...)
+Python_Frame(void)
+Python_Init(int)
+Python_LoadModule(char const*)
+Python_LoadProtectedModule(char const*)
+Python_PrintLastError(void)
+Python_RegisterAPI(char const*,PyMethodDef *)
+Python_RegisterFunction(_object *,char const*,char const*)
+Python_Shutdown(void)
+RegisterVarArray(cvar_s *)
+RelToAbsPath(char const*)
+ResetObjData(void)
+ResetStateData(void)
+ResetTUData(void)
+ResourceName(int)
+SEP_Frame(int)
+ST_FindState(char const*,char const*)
+ST_ForeachState(char const*,void (*)(char const*,char const*))
+ST_GetState(char const*,char const*)
+ST_RemoveState(char *,char const*)
+ST_SetState(char *,char const*,char const*,int)
+SV_AIClearTarget(serverObject_s *,int)
+SV_AIDamaged(serverObject_s *,serverObject_s *,float *,int,int,int)
+SV_AIFrame(serverObject_s *)
+SV_AIGoalAttackMelee_Init(aiGoal_s *)
+SV_AIGoalAttackMelee_Term(aiGoal_s *)
+SV_AIGoalAttackMelee_Update(aiGoal_s *)
+SV_AIGoalAttackMissile_Init(aiGoal_s *)
+SV_AIGoalAttackMissile_Term(aiGoal_s *)
+SV_AIGoalAttackMissile_Update(aiGoal_s *)
+SV_AIGoalAttackPound_Init(aiGoal_s *)
+SV_AIGoalAttackPound_Term(aiGoal_s *)
+SV_AIGoalAttackPound_Update(aiGoal_s *)
+SV_AIGoalAttackSuicide_Init(aiGoal_s *)
+SV_AIGoalAttackSuicide_Term(aiGoal_s *)
+SV_AIGoalAttackSuicide_Update(aiGoal_s *)
+SV_AIGoalConstruct_Init(aiGoal_s *)
+SV_AIGoalConstruct_Term(aiGoal_s *)
+SV_AIGoalConstruct_Update(aiGoal_s *)
+SV_AIGoalEnterMine_Init(aiGoal_s *)
+SV_AIGoalEnterMine_Term(aiGoal_s *)
+SV_AIGoalEnterMine_Update(aiGoal_s *)
+SV_AIGoalFlee_Init(aiGoal_s *)
+SV_AIGoalFlee_Term(aiGoal_s *)
+SV_AIGoalFlee_Update(aiGoal_s *)
+SV_AIGoalFollow_Init(aiGoal_s *)
+SV_AIGoalFollow_Term(aiGoal_s *)
+SV_AIGoalFollow_Update(aiGoal_s *)
+SV_AIGoalGoto_Init(aiGoal_s *)
+SV_AIGoalGoto_Term(aiGoal_s *)
+SV_AIGoalGoto_Update(aiGoal_s *)
+SV_AIGoalIdle_Init(aiGoal_s *)
+SV_AIGoalIdle_Term(aiGoal_s *)
+SV_AIGoalIdle_Update(aiGoal_s *)
+SV_AIGoalMine_Init(aiGoal_s *)
+SV_AIGoalMine_Term(aiGoal_s *)
+SV_AIGoalMine_Update(aiGoal_s *)
+SV_AIGoal_ChangeState(aiGoal_s *,aiStateCreateStruct_t const*)
+SV_AIGoal_Create(aiGoalCreateStruct_t const*)
+SV_AIGoal_Destroy(aiGoal_s *)
+SV_AIGoal_EnterState(aiGoal_s *,aiStateCreateStruct_t const*)
+SV_AIGoal_ExitState(aiGoal_s *)
+SV_AIGoal_GetError(aiGoal_s *)
+SV_AIGoal_GetObject(aiGoal_s *)
+SV_AIGoal_Init(aiGoal_s *)
+SV_AIGoal_Is(aiGoal_s *,int)
+SV_AIGoal_IsDone(aiGoal_s *)
+SV_AIGoal_Term(aiGoal_s *)
+SV_AIGoal_Update(aiGoal_s *)
+SV_AINav_Block(aiNav_s *,serverObject_s *,int)
+SV_AINav_Create(aiNavCreateStruct_t const*)
+SV_AINav_Destroy(aiNav_s *)
+SV_AINav_Dodge(aiNav_s *,serverObject_s *)
+SV_AINav_FaceDir(aiNav_s *,float *)
+SV_AINav_FacePos(aiNav_s *,float *)
+SV_AINav_GetDodge(aiNav_s *)
+SV_AINav_GetMoveTo(aiNav_s *)
+SV_AINav_GotoObject(aiNav_s *,serverObject_s *,bool,bool)
+SV_AINav_GotoPosition(aiNav_s *,float const*)
+SV_AINav_HandleCollision(aiNav_s *,traceinfo_t *)
+SV_AINav_Init(aiNav_s *)
+SV_AINav_IsArrived(aiNav_s *)
+SV_AINav_IsBlocked(aiNav_s *)
+SV_AINav_IsBridging(aiNav_s *)
+SV_AINav_IsDodging(aiNav_s *)
+SV_AINav_IsMoving(aiNav_s *)
+SV_AINav_Stop(aiNav_s *)
+SV_AINav_Term(aiNav_s *)
+SV_AINav_Update(aiNav_s *)
+SV_AISetSecondaryAnim(serverObject_s *,int)
+SV_AIStateAttackMelee_Init(aiState_s *)
+SV_AIStateAttackMelee_Term(aiState_s *)
+SV_AIStateAttackMelee_Update(aiState_s *)
+SV_AIStateAttackMissile_FireProjectile(aiState_s *)
+SV_AIStateAttackMissile_Init(aiState_s *)
+SV_AIStateAttackMissile_Term(aiState_s *)
+SV_AIStateAttackMissile_Update(aiState_s *)
+SV_AIStateAttackPound_Init(aiState_s *)
+SV_AIStateAttackPound_Term(aiState_s *)
+SV_AIStateAttackPound_Update(aiState_s *)
+SV_AIStateAttackSuicide_Init(aiState_s *)
+SV_AIStateAttackSuicide_Term(aiState_s *)
+SV_AIStateAttackSuicide_Update(aiState_s *)
+SV_AIStateChase_Init(aiState_s *)
+SV_AIStateChase_Term(aiState_s *)
+SV_AIStateChase_Update(aiState_s *)
+SV_AIStateConstruct_Init(aiState_s *)
+SV_AIStateConstruct_Term(aiState_s *)
+SV_AIStateConstruct_Update(aiState_s *)
+SV_AIStateEnterMine_Init(aiState_s *)
+SV_AIStateEnterMine_Term(aiState_s *)
+SV_AIStateEnterMine_Update(aiState_s *)
+SV_AIStateGoto_Init(aiState_s *)
+SV_AIStateGoto_Term(aiState_s *)
+SV_AIStateGoto_Update(aiState_s *)
+SV_AIStateIdle_Init(aiState_s *)
+SV_AIStateIdle_Term(aiState_s *)
+SV_AIStateIdle_Update(aiState_s *)
+SV_AIStateMine_Init(aiState_s *)
+SV_AIStateMine_Term(aiState_s *)
+SV_AIStateMine_Update(aiState_s *)
+SV_AIState_Create(aiStateCreateStruct_t const*)
+SV_AIState_Destroy(aiState_s *)
+SV_AIState_GetError(aiState_s *)
+SV_AIState_Init(aiState_s *)
+SV_AIState_IsDone(aiState_s *)
+SV_AIState_Term(aiState_s *)
+SV_AIState_Update(aiState_s *)
+SV_AITargetObject(client_s *,serverObject_s *,serverObject_s *,int)
+SV_AITargetPosition(client_s *,serverObject_s *,float,float,int)
+SV_AI_CalculateAttackGoal(ai_s *,serverObject_s *)
+SV_AI_ChangeGoal(ai_s *,aiGoalCreateStruct_t const*)
+SV_AI_Create(aiCreateStruct_t const*)
+SV_AI_Destroy(ai_s *)
+SV_AI_EnterGoal(ai_s *,aiGoalCreateStruct_t const*)
+SV_AI_Enter_Mine_Init(serverObject_s *,serverObject_s *,float *)
+SV_AI_ExitGoal(ai_s *)
+SV_AI_FindFleeToObject(ai_s *,serverObject_s *)
+SV_AI_FindFleeToPosition(ai_s *,serverObject_s *,float *)
+SV_AI_FindThreat(ai_s *)
+SV_AI_GetMeleeRange(ai_s *)
+SV_AI_GetMoveTo(ai_s *)
+SV_AI_GetRandomPointCloserTo(ai_s *,float *,serverObject_s *,float *)
+SV_AI_GetRandomPointFartherFrom(ai_s *,float *,serverObject_s *,float *)
+SV_AI_HandleCollision(ai_s *,traceinfo_t *)
+SV_AI_HandleDamage(ai_s *,serverObject_s *,int,int)
+SV_AI_HandleDeath(ai_s *,serverObject_s *,int,int)
+SV_AI_HasResources(ai_s *)
+SV_AI_Init(ai_s *)
+SV_AI_IsAttacking(ai_s *)
+SV_AI_IsHigherCollisionPriority(ai_s *,ai_s *)
+SV_AI_IsIdle(ai_s *)
+SV_AI_IsInRange(ai_s *,serverObject_s *,float)
+SV_AI_IsInVisibleRange(ai_s *,serverObject_s *,float)
+SV_AI_IsMoving(ai_s *)
+SV_AI_IsPeon(ai_s *)
+SV_AI_IsVisible(ai_s *,serverObject_s *)
+SV_AI_RandomTime(int,int)
+SV_AI_Term(ai_s *)
+SV_AI_Update(ai_s *)
+SV_ActivateUpgrade(int,int,uchar)
+SV_AddExperience(client_s *,experienceRewards_enum,int,float)
+SV_AddQueuedRequest(teamInfo_t *,int,int,bool,bool,bool)
+SV_AdjustObjectForNewUpgrade(int,int)
+SV_AdjustStatsForCurrentLevel(serverObject_s *,int)
+SV_AdvanceAIObject(serverObject_s *)
+SV_AdvanceClients(void)
+SV_AdvanceObject(serverObject_s *)
+SV_AdvanceObjects(void)
+SV_AllClientsDisconnected(void)
+SV_AllocObject(uchar,uchar)
+SV_ApplyStateInside(baseObject_s *,int,int)
+SV_ApplyStateToObject(int,int,int,int)
+SV_ApplyStateToRadius(int,float,int,int)
+SV_Attack(serverObject_s *,int)
+SV_Auth_Frame(void)
+SV_Auth_Init(void)
+SV_BanIP_Cmd(int,char **)
+SV_Banlist_Cmd(int,char **)
+SV_Bot_Add_Cmd(int,char **)
+SV_Bot_Axis_Cmd(int,char **)
+SV_Bot_Cmd_List_Cmd(int,char **)
+SV_Bot_Ctrl_Cmd(int,char **)
+SV_Bot_GiveBack_Cmd(int,char **)
+SV_Bot_Give_Cmd(int,char **)
+SV_Bot_Info_Cmd(int,char **)
+SV_Bot_Item_Cmd(int,char **)
+SV_Bot_Kill_Cmd(int,char **)
+SV_Bot_Rem_Cmd(int,char **)
+SV_Bot_Request_Cmd(int,char **)
+SV_Bot_Spawn_Cmd(int,char **)
+SV_Bot_Squad_Cmd(int,char **)
+SV_Bot_Team_Cmd(int,char **)
+SV_Bot_Unit_Cmd(int,char **)
+SV_BroadcastChatMessage(int,char *)
+SV_BroadcastMessage(int,char const*)
+SV_BroadcastNotice(int,int,char *)
+SV_BroadcastObituary(serverObject_s *,client_s *,char const*)
+SV_BroadcastTeamMessage(int,uchar,char const*)
+SV_BuildExtendedInfoString(char *,int,bool)
+SV_BuildInfoString(char *,int)
+SV_BuildObjectTypesString(void)
+SV_BuildPlayerListString(bool)
+SV_BuildingAdvanceResearch(int)
+SV_BuildingCanFit(uchar,float *,float *,uchar,char *)
+SV_BuildingDamaged(serverObject_s *,serverObject_s *,float *,int,int,int)
+SV_BuildingFrame(serverObject_s *)
+SV_BuildingTargetObject(client_s *,serverObject_s *,serverObject_s *,int)
+SV_BuildingWarning(uchar,serverObject_s *,buildingWarnings_enum)
+SV_CalculateObjectRefund(client_s *,uchar)
+SV_CalculateRefund(client_s *,uchar)
+SV_CallVote(int,int,char **)
+SV_CanChat(client_s *)
+SV_CanDamageTarget(serverObject_s *,serverObject_s *,int,int)
+SV_CanGoInStraightLine(int,int,int *,float *)
+SV_CanPurchaseObject(uchar,int,uchar,bool,bool)
+SV_CancelConstruction(int,bool)
+SV_CancelResearchAuto(int)
+SV_ChangeMapVotePassed(void)
+SV_ChangeMapVoteStart(int,int,char **)
+SV_ChangeModVotePassed(void)
+SV_ChangeModVoteStart(int,int,char **)
+SV_Chase(int,int)
+SV_ChaseNextPlayer(int)
+SV_ChaseNextTeammate(int)
+SV_CheckChaseCam(client_s *)
+SV_CheckCvars(void)
+SV_CheckDuplicateName(int,char const*)
+SV_CheckForIPBan(char const*)
+SV_CheckRespawnTimer(client_s *)
+SV_CheckTimes(void)
+SV_CheckUnitsInside(serverObject_s *)
+SV_ClaimBuilding(serverObject_s *,serverObject_s *)
+SV_ClanPlayerName(int)
+SV_ClearBackups(void)
+SV_ClearEvents(void)
+SV_ClientCastVote(client_s *,int)
+SV_ClientConnect(int,char *,uint,bool)
+SV_ClientDisconnect(int,char const*)
+SV_ClientEcho(int,char const*)
+SV_ClientIsCommander(int)
+SV_ClientJoinTeam(client_s *,uchar,bool,bool,bool,bool)
+SV_ClientMeleeAttack(serverObject_s *,int)
+SV_ClientMessage(int,char *)
+SV_ClientRename(int,char const*)
+SV_ClientRequestMoney(client_s *,int,char *)
+SV_ClientStartGameRequest(client_s *)
+SV_ClientVoiceChat(int,int,int)
+SV_ClientVoiceMission(int,int,int)
+SV_CommandCenterDamaged(serverObject_s *,serverObject_s *,float *,int,int,int)
+SV_CommandExecute(serverObject_s *,char *)
+SV_CommanderElect(client_s *,teamInfo_t *)
+SV_CommanderPlaceBuilding(client_s *,uchar,float *,float *,bool)
+SV_CommanderResign(int,bool)
+SV_CommanderTargetObject(int,int,int,int)
+SV_CommanderTargetPosition(int,int,float,float,int)
+SV_CommanderTargetWorkerPos(int,int,int,int,float *)
+SV_ConcedeVoteCallable(int)
+SV_ConcedeVotePassed(void)
+SV_ConcedeVoteStart(int,int,char **)
+SV_ConstructBuilding(serverObject_s *,serverObject_s *,int)
+SV_ConstructObject(serverObject_s *,int,bool)
+SV_CorpseDamage(serverObject_s *,serverObject_s *,float *,int,int,int)
+SV_CorpseKill(serverObject_s *,serverObject_s *,float *,int,int)
+SV_CountNumberUnderConstruction(uchar,uchar)
+SV_CountTeamPlayers(uchar)
+SV_DamageClient(serverObject_s *,client_s *,float *,int,int,int)
+SV_DamagePush(client_s *,float *,int,bool)
+SV_DamageRadius(serverObject_s *,float *,int,float,int,int,int)
+SV_DamageTarget(serverObject_s *,serverObject_s *,float *,int,int,int)
+SV_DeathEvent(serverObject_s *,uchar,uchar,uchar,int,bool)
+SV_DemoMessage(uchar,int,char *)
+SV_DemoteClient(client_s *)
+SV_DemoteOfficer(uchar,int)
+SV_DestroyBuilding(serverObject_s *,bool)
+SV_DestroyBuilding_cmd(int,char **)
+SV_DevWorldCfg_Cmd(int,char **)
+SV_DoOncePerFrameEvents(client_s *)
+SV_DoOncePerInputStateEvents(client_s *)
+SV_DrawVoteCallable(int)
+SV_DrawVotePassed(void)
+SV_DrawVoteStart(int,int,char **)
+SV_DropoffResources(serverObject_s *,serverObject_s *)
+SV_DynamicObjectFrame(serverObject_s *)
+SV_Eject(int)
+SV_ElectCommanderVoteCallable(int)
+SV_ElectCommanderVotePassed(void)
+SV_ElectCommanderVoteStart(int,int,char **)
+SV_EncodePositionOnObject(serverObject_s *,float const*)
+SV_EndGame(uchar)
+SV_EndGame_Cmd(int,char **)
+SV_EnoughVotes(void)
+SV_EnterMine(serverObject_s *)
+SV_ExtendTime(int)
+SV_FallDeath(client_s *)
+SV_FillInBaseStats(serverObject_s *)
+SV_FilterPredictedEvents(playerState_t *)
+SV_FindClosestObject(int,int,int,float,float *)
+SV_FindClosestObjectToPos(int,float *,int,float,float *)
+SV_FindClosestObjects(int *,int,int,int,float,float *)
+SV_FindClosestObjectsToPos(int *,int,float *,int,float,float *)
+SV_FindEntranceAhead(client_s *)
+SV_FindNearestDropoffPoint(serverObject_s *)
+SV_FindObjectsInRadius(int *,int,float,float *,int *,int)
+SV_FindPlayer(char const*,int)
+SV_FindPlayerInString(char const*,int)
+SV_FindPlayerSubString(char *,int *)
+SV_FirstClientConnection(client_s *)
+SV_ForceNextChase_Cmd(int,char **)
+SV_Frame(int)
+SV_FreeClientObject(int)
+SV_FreeNextDecision_Frame(serverObject_s *)
+SV_FreeObject(int)
+SV_FreeObjectFrame(serverObject_s *)
+SV_FrenzyFrame(void)
+SV_GameScriptExecute(serverObject_s *,serverObject_s *,uchar,gameScriptEntryPoint_t)
+SV_GameScriptLoad(gameScript_s **,char const*)
+SV_GenerateCorpse(client_s *,int)
+SV_GetArmor(serverObject_s *,int)
+SV_GetAuthInfo(int)
+SV_GetBase(int)
+SV_GetBoxEdgeEndpoints(float const*,float const(*)[3],float const*,float const*,uchar,float *,float *)
+SV_GetClientGUID(int)
+SV_GetClientUID(int)
+SV_GetDistanceSq(int,int)
+SV_GetHighestPlacementPoint(float,float)
+SV_GetHighestSolidPoint(float,float)
+SV_GetHighestTerrainPoint(float,float)
+SV_GetHighestWeatherPoint(float,float)
+SV_GetIP_Cmd(int,char **)
+SV_GetMaxResources(int *,uchar *,char *)
+SV_GetMeleeDamage(serverObject_s *,int,float,objectData_t *,objectData_t *)
+SV_GetOriginater(int)
+SV_GetPosition(int,float *)
+SV_GetQueuedRequest(int,int *,bool *,bool *,bool *)
+SV_GetRace(int)
+SV_GetRandomPointAroundObject(uchar,float *,float *,uchar,float *,uchar)
+SV_GetSiegeFiringDirection(serverObject_s *,float const*,float *)
+SV_GetSpawnPointAroundObject(uchar,float *,float *,uchar,float *,uchar,ulong)
+SV_GetSpawnPointAroundPoint(uchar,float *,float *,float)
+SV_GetSpawnPointFromBuilding(serverObject_s *,float *,uchar)
+SV_GetTeam(int)
+SV_GetTeamInfo(int)
+SV_GetTriggerFlag(int)
+SV_GiveAwards(int)
+SV_GiveAwardsFrenzy(void)
+SV_GiveBackClient(client_s *)
+SV_GiveBackFromClient(client_s *,int,bool)
+SV_GiveBackUnitFromClient(client_s *,bool)
+SV_GiveClient(client_s *,uchar,bool)
+SV_GiveExp_Cmd(int,char **)
+SV_GiveGold_Cmd(int,char **)
+SV_GiveItem(client_s *,uchar)
+SV_GiveMoney(int,int,bool,int)
+SV_GiveMoney_Cmd(int,char **)
+SV_GiveResourceToPlayer(int,int,int)
+SV_GiveResourceToTeam(uchar,int,int)
+SV_GiveResource_Cmd(int,char **)
+SV_GiveState_Cmd(int,char **)
+SV_GiveUpgradeToTeam(uchar,int)
+SV_GodRef_Cmd(int,char **)
+SV_GoodieBagFrame(serverObject_s *)
+SV_GroupMove(teamInfo_t *,float *,int)
+SV_GroupMoveToObject(teamInfo_t *,int,int)
+SV_GuestRef_Cmd(int,char **)
+SV_HandleAuthMessages(char *,int)
+SV_HandleClientCollisions(int)
+SV_HoldPersistentData(void)
+SV_IgnoreObject(baseObject_s *)
+SV_ImpeachCommanderVoteCallable(int)
+SV_ImpeachCommanderVotePassed(void)
+SV_ImpeachCommanderVoteStart(int,int,char **)
+SV_Impeach_Cmd(int,char **)
+SV_Init(void)
+SV_InitAPIs
+SV_InitBuildings(void)
+SV_InitClientData(int,char *,uint,bool,bool)
+SV_InitClients(void)
+SV_InitEvents(void)
+SV_InitExperience(void)
+SV_InitGameScript(void)
+SV_InitItems(void)
+SV_InitTeams(void)
+SV_InitVotes(void)
+SV_InitWeapons(void)
+SV_IsCloaked(serverObject_s *,serverObject_s *)
+SV_IsItemResearched(uchar,uchar)
+SV_IsOfficer(int)
+SV_IsPlayerStateSpecific(objEvent_t *)
+SV_IsValidEntranceObject(uchar,int)
+SV_IsValidSpawnObject(uchar,int,int)
+SV_ItemActivate(serverObject_s *,int,int)
+SV_ItemActiveFrame(serverObject_s *)
+SV_ItemConstructionComplete(int,int)
+SV_ItemDamage(serverObject_s *,serverObject_s *,float *,int,int,int)
+SV_ItemIdle(serverObject_s *,int,int)
+SV_ItemIdleFrame(serverObject_s *)
+SV_ItemKill(serverObject_s *,serverObject_s *,float *,int,int)
+SV_ItemSleep(serverObject_s *,int,int)
+SV_ItemSleepFrame(serverObject_s *)
+SV_ItemStateTransition(serverObject_s *)
+SV_KeyserverString(char *)
+SV_KickNumVoteStart(int,int,char **)
+SV_KickPlayerVotePassed(void)
+SV_KickPlayerVoteStart(int,int,char **)
+SV_KillClient(client_s *,serverObject_s *,float *,int,int,int,bool)
+SV_LineOfSite(int,int)
+SV_LinkToWorldObject(serverObject_s *,bool,bool)
+SV_ListDemosVoteCallable(int)
+SV_ListDemosVotePassed(void)
+SV_ListDemosVoteStart(int,int,char **)
+SV_ListMaps(int,int,int)
+SV_LoadBans(void)
+SV_LoadClientStats(int,uint)
+SV_LoadGamescripts(char const*,char const*)
+SV_MakeItemSolid(serverObject_s *)
+SV_MakeObjectsVisible(int,uchar,serverObject_s *,bool)
+SV_MessageCommVoteCallable(int)
+SV_MessageCommVotePassed(void)
+SV_MessageCommVoteStart(int,int,char **)
+SV_MessageSelected(teamInfo_t *,int,char *)
+SV_MessageType(char const*,char const*)
+SV_MessageVotePassed(void)
+SV_MessageVoteStart(int,int,char **)
+SV_MineEmpty(serverObject_s *)
+SV_MineResourcesFromBuilding(serverObject_s *,serverObject_s *,int)
+SV_MoveItem(serverObject_s *,bool,bool)
+SV_MutePlayerVotePassed(void)
+SV_MutePlayerVoteStart(int,int,char **)
+SV_Mute_Cmd(int,char **)
+SV_NPCDeathFrame(serverObject_s *)
+SV_NPCKilledPlayer(serverObject_s *,client_s *)
+SV_NewNetSettings(int,char const*)
+SV_NewPatchAvailable(void)
+SV_NextMap(void)
+SV_NextMapVotePassed(void)
+SV_NextMapVoteStart(int,int,char **)
+SV_NormalRef_Cmd(int,char **)
+SV_NotFirewalled(void)
+SV_ObjectDamaged(serverObject_s *,serverObject_s *,float *,int,int,int)
+SV_OvertimeDecay(void)
+SV_PERF_COUNT(void)
+SV_PERF_INIT(void)
+SV_Pause(int,char **)
+SV_PauseGame(int)
+SV_PauseVoteCallable(int)
+SV_PauseVotePassed(void)
+SV_PauseVoteStart(int,int,char **)
+SV_Phys_AddEvent(serverObject_s *,uchar,uchar,uchar)
+SV_Phys_ObjectOnGround(serverObject_s *,traceinfo_t *)
+SV_PickupItem(serverObject_s *,int,uchar)
+SV_PickupItemFrame(serverObject_s *)
+SV_PickupItemKill(serverObject_s *,serverObject_s *,float *,int,int)
+SV_PlayerAtTarget(serverObject_s *)
+SV_PlayerChosenMap(void)
+SV_PlayerClearTarget(serverObject_s *,int)
+SV_PlayerCorpseFrame(serverObject_s *)
+SV_PlayerKilledPlayer(client_s *,client_s *,int,bool)
+SV_PlayerTargetObject(client_s *,serverObject_s *,serverObject_s *,int)
+SV_PlayerTargetPosition(client_s *,serverObject_s *,float,float,int)
+SV_PlayerTargetReached(serverObject_s *)
+SV_PlayerUnitRequest(client_s *,uchar)
+SV_PrintSEPInfo(int)
+SV_ProcessClientInput(int,inputState_t)
+SV_ProcessClientPhysics(int,inputState_t)
+SV_ProcessStates(void)
+SV_ProgressQueuedRequests(serverObject_s *)
+SV_ProjectileFrame(serverObject_s *)
+SV_ProjectileImpact(serverObject_s *,int,traceinfo_t *,int *)
+SV_ProjectileKill(serverObject_s *,serverObject_s *,float *,int,int)
+SV_PromoteClient(int,client_s *,int,bool)
+SV_PurchaseObject(uchar,int,serverObject_s *,bool,bool,bool)
+SV_PurgeInventory(client_s *)
+SV_PutClientIntoGame(client_s *)
+SV_Python_Init(void)
+SV_RaceVoteCallable(int)
+SV_RaceVotePassed(void)
+SV_RaceVoteStart(int,int,char **)
+SV_RecordVoteCallable(int)
+SV_RecordVotePassed(void)
+SV_RecordVoteStart(int,int,char **)
+SV_RefVoteCallable(int)
+SV_RefVotePassed(void)
+SV_RefVoteStart(int,int,char **)
+SV_RefereeCommand(client_s *,int,char **)
+SV_RefereeConnect(uint,int)
+SV_RefreshClientInfo(int)
+SV_RefreshClientScores(void)
+SV_RefreshMOTD(void)
+SV_RefreshTeamInfo(uchar)
+SV_RefreshTimeOfDay(void)
+SV_RegenerateMana(int)
+SV_ReleaseProxy(client_s *)
+SV_RelinquishLife(client_s *)
+SV_ReloadGS_Cmd(int,char **)
+SV_RemoveAttachedItems(client_s *)
+SV_RemoveQueuedRequest(int,int,uchar,bool)
+SV_RemoveStateFromObject(int,int)
+SV_RemoveTeam(uchar)
+SV_RemoveTeamDelayed(uchar)
+SV_RepairBuilding(serverObject_s *,serverObject_s *,int)
+SV_ReplayVoteCallable(int)
+SV_ReplayVotePassed(void)
+SV_ReplayVoteStart(int,int,char **)
+SV_ResearchEverything(teamInfo_t *)
+SV_ResearchObject_Cmd(int,char **)
+SV_Reset(bool)
+SV_ResetInventory(client_s *)
+SV_ResetTeams(void)
+SV_RestartMatch(int)
+SV_RestartMatch_Cmd(int,char **)
+SV_RestartVotePassed(void)
+SV_RestartVoteStart(int,int,char **)
+SV_ReviveClient_cmd(int,char **)
+SV_ReviveCorpse(int,float,bool,int)
+SV_SVChat_Cmd(int,char **)
+SV_SVMem_Cmd(int,char **)
+SV_SaveBans(void)
+SV_SaveClientStats(int,uint,uint)
+SV_ScriptExecute(serverObject_s *,serverObject_s *,uchar,gameScriptEntryPoint_t)
+SV_SelectPlayerUnit(int,char const*)
+SV_SelectedPlayerInventoryChanged(uchar)
+SV_SendAllTU(void)
+SV_SendAllTUToClient(int)
+SV_SendCommanderTeamResources(uchar,int)
+SV_SendCompleteTechUpdate(teamInfo_t *,int)
+SV_SendGlobalMessage(int,char *,bool,bool)
+SV_SendMissionList(client_s *)
+SV_SendMoreMacStateStrings(void)
+SV_SendNonTeamMessage(teamInfo_t *,int,char *,bool,bool)
+SV_SendNotice(int,int,int,char *)
+SV_SendNoticeToTeam(uchar,int,int,char *)
+SV_SendOfficerList(uchar)
+SV_SendPrivateMessage(int,int,char *)
+SV_SendQueue(teamInfo_t *)
+SV_SendScores(int,int,int)
+SV_SendSquadMessage(teamInfo_t *,int,char *,char *,bool,bool,bool)
+SV_SendStats(bool)
+SV_SendTeamMessage(teamInfo_t *,int,char *,bool,bool,bool)
+SV_SendUnreliableTeamMessage(teamInfo_t *,int,char *,bool)
+SV_SetAward(char *,char const*,int)
+SV_SetClanAbbrev(int,char const*)
+SV_SetClientStatus(int,uchar)
+SV_SetCommander(uchar,client_s *,bool)
+SV_SetCommanderAdv(uchar,client_s *,bool,uchar)
+SV_SetControlProxy(client_s *,int)
+SV_SetDefaultUnit(client_s *)
+SV_SetExclusionList(int)
+SV_SetExclusionListLarge_Commander(int)
+SV_SetExp_Cmd(int,char **)
+SV_SetFullProxy(client_s *,int)
+SV_SetGameStatus(int,int,char const*)
+SV_SetGameType(int)
+SV_SetReady(client_s *)
+SV_SetReferee(client_s *,int,bool,bool)
+SV_SetSkillFrequency_Cmd(int,char **)
+SV_SetSmartExclusionList(int)
+SV_SetStats(void)
+SV_SetTime(int)
+SV_SetUrgencyLevel(int)
+SV_SetViewProxy(client_s *,int)
+SV_Setcmdr_Cmd(int,char **)
+SV_Settime_Cmd(int,char **)
+SV_SetupCommandCenter(serverObject_s *)
+SV_ShuffleVoteCallable(int)
+SV_ShuffleVotePassed(void)
+SV_ShuffleVotePassed_Cmd(int,char **)
+SV_ShuffleVoteStart(int,int,char **)
+SV_Shutdown(void)
+SV_Slay_Cmd(int,char **)
+SV_SpawnAIUnit(uchar,uchar,float *,float *)
+SV_SpawnBuilding(uchar,uchar,float *,float *,bool)
+SV_SpawnBuilding_cmd(int,char **)
+SV_SpawnClient(int,float *,float *)
+SV_SpawnDynamicObject(uchar,objectPosition_t)
+SV_SpawnGoodieBag(serverObject_s *,float const*,client_s *)
+SV_SpawnInsideWorkers(serverObject_s *)
+SV_SpawnObject(uchar,uchar,float *,float *)
+SV_SpawnObjectAdv(uchar,uchar,objectPosition_t,bool)
+SV_SpawnPickupItem(uchar,uchar,float *,float *,float *,int,int)
+SV_SpawnPlayerFrom(client_s *,int)
+SV_SpawnReferenceObject(referenceObject_t *,uchar)
+SV_SpawnReferenceObjects(void)
+SV_SpendMoney(int,int)
+SV_StartMatch_Cmd(int,char **)
+SV_StatsInit(void)
+SV_StopVote(void)
+SV_StopVote_Cmd(int,char **)
+SV_SubtractExperience(client_s *,int)
+SV_Switchteam_Cmd(int,char **)
+SV_TU_Apply(uchar,uchar)
+SV_TU_Cleanup(void)
+SV_TU_Init(void)
+SV_TU_Reset(void)
+SV_TallyVote(void)
+SV_TeamFrame(void)
+SV_TestRandomPointAroundObject(uchar,float *,float *,uchar,int,float,float *,uchar)
+SV_TestSpawnArea(uchar,float *,float *,float *)
+SV_TestSpawnPoint(uchar,float *,float *,float *,bool)
+SV_TimeLimitUp(void)
+SV_TimeVoteCallable(int)
+SV_TimeVotePassed(void)
+SV_TimeVoteStart(int,int,char **)
+SV_TraceBox(traceinfo_t *,float const*,float const*,float const*,float const*,int)
+SV_TraceBoxEx(traceinfo_t *,float const*,float const*,float const*,float const*,int,int)
+SV_TransferAllResources(serverObject_s *)
+SV_TransferResources(serverObject_s *,int)
+SV_TriggerAddGScript(char const*)
+SV_TriggerCleanup(void)
+SV_TriggerExecGameScript(serverObject_s *,int,char const*)
+SV_TriggerExecScriptList(serverObject_s *,uint,char const**)
+SV_TriggerFrame(void)
+SV_TriggerReset(void)
+SV_TriggerScriptExecute(serverObject_s *,int,uchar,int,gameScriptEntryPoint_t)
+SV_Trigger_Init(void)
+SV_UnMute_Cmd(int,char **)
+SV_UnbanIP_Cmd(int,char **)
+SV_UnderConstruction(serverObject_s *)
+SV_UnignoreObject(baseObject_s *)
+SV_UnitHeal(int)
+SV_UnlinkFromWorldObject(serverObject_s *)
+SV_Unpause(int,char **)
+SV_UnpauseGame(void)
+SV_UnpauseVoteCallable(int)
+SV_UnpauseVotePassed(void)
+SV_UnpauseVoteStart(int,int,char **)
+SV_UnpausingGame(void)
+SV_UpdateClientObject(int)
+SV_UpdateClientWaypoint(client_s *)
+SV_UpdateGSCvars(void)
+SV_UpdateTeamResearch(uchar)
+SV_UseButton(client_s *)
+SV_UseCommander(void)
+SV_UseItem(int,uchar)
+SV_VClients_Add(int)
+SV_VClients_AutoCheckTeams(void)
+SV_VClients_Count(int)
+SV_VClients_Frame(void)
+SV_VClients_Init(void)
+SV_VClients_ReAssignGoal(client_s *)
+SV_VClients_Rem(int)
+SV_VClients_Reset(void)
+SV_VClients_Wounded(serverObject_s *,serverObject_s *,float *,int,int,int)
+SV_ValidObjectPosition(float *,float *,float,uchar)
+SV_ValidTeamNumber(uchar)
+SV_VoteFrame(void)
+SV_WaitingToBeRevived(client_s *)
+SV_WaypointObj_Cmd(int,char **)
+SV_WaypointPos_Cmd(int,char **)
+SV_WeaponFire(serverObject_s *,float *,uchar,float *)
+SV_WorkerGroupMoveToPos(teamInfo_t *,int,int,float *)
+SV_WorldCfg_Cmd(int,char **)
+SV_WouldObjectBeBlocked(float const*,uchar)
+SearchAuthCache(uint)
+SendToAllServers(char *,ulong)
+Server_API
+SetDynString(char **,int,char **)
+SetFlags(int *,char **,int,char **)
+SetFloat(float *,float,float,int,char **)
+SetFloatRange(floatrange *,float,float,int,char **)
+SetInt(int *,int,int,char **,char const*)
+SetIntEx(int *,configVar_t *,int,char **)
+SetIntRange(intrange *,int,int,int,char **)
+SetModel(void *,configVar_t *,int,int,char **)
+SetObjectBounds(baseObject_s *)
+SetString(char *,int,int,char **)
+SetVariableSafe(char *,char *)
+SetVec3(float (*)[3],float,float,int,char **)
+SetVec4(float (*)[4],float,float,int,char **)
+ShutdownGameDLL
+SkipSpaces(char *)
+Snd(char const*)
+SpawnDuelers(int,int)
+SplitArgs(char *,char **,int)
+StatsThread(int,int)
+StrChrBackwards(char const*,int)
+StringToGametype(char const*)
+StringToVec3(char const*,float *)
+StringToVec4(char const*,float *)
+StripEOL(char *)
+SwapFloat(float)
+SwapIntEndian(int)
+SwapShortEndian(int)
+TUEdit_Cmd(int,char **)
+TUFileCallback(char const*,void *)
+TUList_cmd(int,char **)
+TULoad_Cmd(int,char **)
+TUNames
+TUPut_Cmd(int,char **)
+TUSave_cmd(int,char **)
+TUSelect_Cmd(int,char **)
+TUSet_cmd(int,char **)
+TU_Init(void)
+Tag_MallocGameScript(int)
+TargetFlagNames
+Tech_CheckRequirements(techEntry_t *,researchData_t *)
+Tech_ClearHash(void)
+Tech_FillTree(void)
+Tech_Generate(objectData_t * (*)(uchar))
+Tech_GetEntry(int)
+Tech_GetObjectByName(char const*)
+Tech_GetObjectTypeByName(char const*)
+Tech_HasEntry(int)
+Tech_IsAvailable(int,researchData_t *)
+Tech_IsBuilder(int,uchar)
+Tech_IsResearchType(int)
+Tech_IsResearchable(int,researchData_t *)
+Tech_IsResearched(int,researchData_t *)
+Tex(char const*)
+Traj_GetPos(trajectory_t *,int,float *)
+Traj_GetVelocity(trajectory_t *,int,float *)
+Trigger_List_Cmd(int,char **)
+UAdd_Cmd(int,char **)
+UI(char const*)
+UMul_Cmd(int,char **)
+USet_Cmd(int,char **)
+ValidateObjectNumber(int)
+VoiceCategory_Cmd(int,char **)
+VoiceCommander_Cmd(int,char **)
+VoiceDirectory_Cmd(int,char **)
+VoiceFlag_Cmd(int,char **)
+VoiceItem_Cmd(int,char **)
+VoiceLoad_Cmd(int,char **)
+VoiceMore_Cmd(int,char **)
+VoiceSound_Cmd(int,char **)
+VoiceSquad_Cmd(int,char **)
+WPTechData
+WPTechName(int)
+WPTechNames
+WeaponStateChange(int)
+Worst_Perf_Cmd(int,char **)
+_SV_SortByScore(void const*,void const*)
+__builddate
+__do_global_dtors_aux [main entry]
+__lazyidx__
+__lazyvec__
+__tempidx__
+_checkScanFlags(gameScriptParam_s *)
+_clientStructOffset
+_determineGoalForObject(serverObject_s *,serverObject_s *)
+_getClosestObjectInRegion(float *,float)
+_giveGoalToClient(client_s *,client_s *,char *,serverObject_s *,float *,int)
+_giveGoalToWorker(serverObject_s *,char *,serverObject_s *,float *,int)
+_isVowel(char)
+_scanAroundObject(serverObject_s *,uchar,float,int)
+_sortByDistance(void const*,void const*)
+_sortPhysics(void const*,void const*)
+_sortPhysics2(void const*,void const*)
+_update_GS_Cvars(serverObject_s *)
+accuracyList_deaths
+accuracyList_hits
+accuracyList_kills
+accuracyList_shots
+accuracyList_siegehits
+accuracyList_weapon
+addArchive(char const*,void *)
+addResource_cmd(int,char **)
+addWPTech_cmd(int,char **)
+allocator_aiGoalAttackMelee_t
+allocator_aiGoalAttackMissile_t
+allocator_aiGoalAttackPound_t
+allocator_aiGoalAttackSuicide_t
+allocator_aiGoalConstruct_t
+allocator_aiGoalFlee_t
+allocator_aiGoalFollow_t
+allocator_aiGoalMine_t
+allocator_aiGoal_t
+allocator_aiNav_t
+allocator_aiState_t
+allocator_ai_t
+allocator_objectData_t
+animNames
+arrayindex
+atkEditCurrent
+atkEdit_Cmd(int,char **)
+atkList_Cmd(int,char **)
+atkSet_Cmd(int,char **)
+attackData_desc
+black
+blue
+botRequests
+bots_in
+build_sqrt_table(void)
+buildingWarnings
+chargeFlagNames
+chatAll(char *)
+chatObjPos(serverObject_s *)
+checkCartFull(serverObject_s *)
+checkIfIsLinked(serverObject_s *,int)
+cl_clientSEP
+clanInformation
+core
+cores
+countConfigVars(configVar_t *)
+current_objlist
+current_objpath
+def_file
+default_objlist
+default_objpath
+delResource_cmd(int,char **)
+delWPTech_cmd(int,char **)
+demoPos
+dmgFlagNames
+dropOff(serverObject_s *,serverObject_s *)
+editRace
+editState
+editTU
+editingTU
+effectNames
+enableTriggers
+enterCart(serverObject_s *,serverObject_s *)
+eventNames
+expEdit
+expRace
+experienceTable
+experience_desc
+fastsqrt(float)
+fill_my_buffer(bool *,char *,file_s *)
+findFreeCarried(serverObject_s *,int *)
+findFreeLinked(serverObject_s *,int *)
+findNearestConstruction(serverObject_s *,int)
+findNearestCritter(serverObject_s *,int)
+findNearestEnemyClient(serverObject_s *,int)
+findNearestEnemyObject(serverObject_s *,int)
+findNearestGoodie(serverObject_s *,int)
+findNearestMine(serverObject_s *,int)
+findNearestRepair(serverObject_s *,int)
+findNearestWaitPoint(serverObject_s *)
+findObject(char *)
+floorF(float)
+fmt(char const*,...)
+foolsnumber
+found
+g_allUnitsAvailable
+g_allWeaponsAvailable
+g_bitfield4true
+g_clanServerIP
+g_clientsperofficer
+g_maxofficers
+g_officersMode
+g_squadminperofficer
+gameScriptDictionary
+gameTypes
+game_objdefs
+getClosestWorker(serverObject_s *)
+getSVGameGoal(int)
+getbuf(void)
+goodieBag
+gotLagRestore
+gotoBacktoWaitPos(serverObject_s *)
+gotoWaitPos(serverObject_s *)
+green
+grey
+gs_currentIndex
+gs_game_status
+gs_game_status_end
+gs_game_time
+gs_inventory_count
+gs_inventory_name
+gs_object_dirx
+gs_object_diry
+gs_object_dirz
+gs_object_health
+gs_object_healthmax
+gs_object_healthpercent
+gs_object_id
+gs_object_level
+gs_object_mana
+gs_object_manamax
+gs_object_manapercent
+gs_object_name
+gs_object_nick
+gs_object_posx
+gs_object_posy
+gs_object_posz
+gs_object_scale
+gs_object_team
+gs_object_type
+gs_object_velx
+gs_object_vely
+gs_object_velz
+gs_parent_dirx
+gs_parent_diry
+gs_parent_dirz
+gs_parent_id
+gs_parent_posx
+gs_parent_posy
+gs_parent_posz
+gs_parent_scale
+gs_state_name
+gs_teams
+gs_transmits
+held
+in
+init_Stampede(aiGoal_s *)
+knownAuth
+laggingAttacks
+lastCached
+lastHeartbeatTime
+lattice
+lc_basemeleeping
+lc_baseping
+lc_blockcompensationfrm
+lc_blockcompensationmax
+lc_blockcompensationmin
+lc_blockcompensationmul
+lc_compensatestun
+lc_compensatestunnegmul
+lc_extramcompensation
+lc_extrarcompensation
+lc_maxcompensation
+lc_maxmeleecompensation
+lc_maxstuncompensation
+lc_stunincrease
+linkWorkerToCart(serverObject_s *,serverObject_s *)
+listDemosFirst
+listDemosLast
+listEvents_Cmd(int,char **)
+listNames(int,char **)
+listObjects_Cmd(int,char **)
+listResources_cmd(int,char **)
+listStates_Cmd(int,char **)
+listTU_Cmd(int,char **)
+listWPTech_cmd(int,char **)
+mapListFirst
+mapListLast
+map_fallmult
+map_prefix_last
+mapclient
+mapindex
+maplist
+mappos
+mdlTable
+msgTable
+net_farclip
+noLinkedWorkers(serverObject_s *)
+normalize_line_endings(_object *)
+null
+numPeonNames
+numScripts
+objAttack(serverObject_s *)
+objBackupCartPos(serverObject_s *)
+objBreakLoop_Cmd(int,char **)
+objClearBackup(serverObject_s *)
+objConstruct(serverObject_s *)
+objData
+objDist
+objDoWaypoint(serverObject_s *,serverObject_s *)
+objDropoff(serverObject_s *)
+objEditCurrent
+objEdit_Cmd(int,char **)
+objFileCallback(char const*,void *)
+objFollow(serverObject_s *,serverObject_s *)
+objGoto(serverObject_s *,serverObject_s *)
+objGotoBackup(serverObject_s *)
+objGotoNearestDropoff(serverObject_s *)
+objGotoPos(serverObject_s *,float *)
+objGotoWaitPos(serverObject_s *,serverObject_s *)
+objIfReturned(serverObject_s *)
+objList
+objList_Cmd(int,char **)
+objLoad_Cmd(int,char **)
+objLoop_Cmd(int,char **)
+objMine(serverObject_s *)
+objOrder
+objPut_Cmd_Temp(int,char **)
+objRename_Cmd(int,char **)
+objSave_Cmd(int,char **)
+objSet_Cmd(int,char **)
+objTypeFunc
+objWorkerMine(serverObject_s *)
+objclassNames
+objectData_desc
+objectList_Active
+objectList_Construct
+objectList_Health
+objectList_MaxHealth
+objectList_Name
+objectList_Team
+objectList_Type
+objectNames
+oldAngles
+oldin
+p
+pThreadClass
+pThreadObject
+p_aircontrol
+p_attackingSpeed
+p_autoRunSpeed
+p_autoRunTime
+p_backwardsSpeed
+p_blockSpeed
+p_cooldownRate
+p_damageCameraThrowAngleMax
+p_damageCameraThrowAngleMult
+p_damageCameraThrowOnlyUp
+p_damageCameraThrowThreshold
+p_damageCameraThrowTimeMax
+p_damageCameraThrowTimeMult
+p_dodgeStaminaCost
+p_fallingDamage
+p_focusAngleAmplify
+p_focusMaxAngleChange
+p_focusMinAngleChange
+p_freeflyAccel
+p_freeflyAngleLerp
+p_friction
+p_grabRange
+p_gravity
+p_groundfriction
+p_jumpStaminaCost
+p_jumpheight
+p_landDuration
+p_leapUphill
+p_leapUphillTime
+p_levelHealthBonus
+p_lunge
+p_maxBlockTime
+p_minfallDamage
+p_minslope
+p_out
+p_pushForce
+p_pushRange
+p_shimmyBuilding
+p_shimmyTerrain
+p_slowWeaponAttack
+p_specspeed
+p_speed
+p_sprintBurst
+p_sprintDeadZone
+p_sprintRegainDelay
+p_sprintRegainLandDelay
+p_sprintRegenFast
+p_sprintRegenSlow
+p_sprintSpeed
+p_staminaDepleteSpeed
+p_steepSlopeDecel
+p_stepheight
+p_strafeSpeed
+p_throwForce
+path
+peonNames
+perf_counts
+phys_isServerCall
+pink
+posInLineOfSite(int,float *)
+predictedlag
+printCartResources(serverObject_s *)
+printWorkers(serverObject_s *)
+printWorkersCarried(serverObject_s *)
+projActionNames
+projReactionNames
+ps
+psh_threads
+psh_utils
+psv_bots
+psv_events
+psv_newerth
+psv_refs
+pyBots_Add
+pyBots_Frame
+pyBots_Init
+pyBots_Wounded
+pyCharRet
+pyFloatRet
+pyIntRet
+py_Broadcast(_object *,_object *)
+py_CommandBuffer(_object *,_object *)
+py_CommandExec(_object *,_object *)
+py_ConsolePrint(_object *,_object *)
+py_CvarGetString(_object *,_object *)
+py_CvarGetValue(_object *,_object *)
+py_CvarSetString(_object *,_object *)
+py_CvarSetValue(_object *,_object *)
+py_GameScript(_object *,_object *)
+py_GetAccuracyList(_object *,_object *)
+py_GetButton(_object *,_object *)
+py_GetGameInfo(_object *,_object *)
+py_GetInventCharge(_object *,_object *)
+py_GetInventRange(_object *,_object *)
+py_GetInventReady(_object *,_object *)
+py_GetInventSel(_object *,_object *)
+py_GetInventType(_object *,_object *)
+py_GetMoney(_object *,_object *)
+py_GetObjectAng(_object *,_object *)
+py_GetObjectList(_object *,_object *)
+py_GetObjectPos(_object *,_object *)
+py_GetStatus(_object *,_object *)
+py_GetTeamList(_object *,_object *)
+py_NavGetGoal(_object *,_object *)
+py_NavGetOrder(_object *,_object *)
+py_NavGetState(_object *,_object *)
+py_NavGetTargetObj(_object *,_object *)
+py_NavGetTargetPos(_object *,_object *)
+py_NavGetType(_object *,_object *)
+py_NavGetWayPoint(_object *,_object *)
+py_NavIsBridging(_object *,_object *)
+py_NavMeshSubtract(_object *,_object *)
+py_NavSetTargetObj(_object *,_object *)
+py_NavSetTargetPos(_object *,_object *)
+py_NavTargetVisible(_object *,_object *)
+py_NavUpdate(_object *,_object *)
+py_Notify(_object *,_object *)
+py_RegisterCmd(_object *,_object *)
+py_RequestItem(_object *,_object *)
+py_RequestMoney(_object *,_object *)
+py_RequestUnit(_object *,_object *)
+py_SearchInvent(_object *,_object *)
+py_SetAngle(_object *,_object *)
+py_SetButton(_object *,_object *)
+py_SetInventSel(_object *,_object *)
+py_SetMotion(_object *,_object *)
+py_SetName(_object *,_object *)
+py_SetRefStatus(_object *,_object *)
+py_SwitchButton(_object *,_object *)
+pyhThreads_Frame
+pyhUtils_CheckSyntax
+pysEvents_CallVote
+pysEvents_Frame
+pysEvents_Init
+pysEvents_Status
+pysNewerth_BestSquad
+pysNewerth_Init
+pysNewerth_MapStats
+pysRefs_Execute
+raceActivate_cmd(int,char **)
+raceData
+raceData_desc
+raceEdit_cmd(int,char **)
+raceList_cmd(int,char **)
+raceNames
+raceSet_cmd(int,char **)
+red
+refID
+refType
+refUID
+resetStampedeUnit(serverObject_s *)
+resourceData
+resourceNames
+restorelag
+returnToNearestDropoff(serverObject_s *)
+return_cart_home(serverObject_s *)
+root
+rootpath
+rotationloops
+saveConfig_cmd(int,char **)
+save_error_info
+save_error_type
+selectedObj
+sendCartMessage(serverObject_s *)
+setGoodieBag_cmd(int,char **)
+showGamePerf
+sinData
+sl
+soundTable
+spawnCartGuard(serverObject_s *)
+spawnCartGuardAndAttack(serverObject_s *)
+spawnCartGuards(serverObject_s *)
+spawnCartWorker(serverObject_s *)
+spawnCartWorkers(serverObject_s *)
+spawnCartWorkersAndConstruct(serverObject_s *)
+spawnCartWorkersAndGotoSafety(serverObject_s *)
+spawnCartWorkersAndMine(serverObject_s *)
+stateData
+stateData_desc
+stateEdit_cmd(int,char **)
+stateFileCallback(char const*,void *)
+stateList_cmd(int,char **)
+stateLoad_Cmd(int,char **)
+stateNames
+statePut_Cmd(int,char **)
+stateSave_cmd(int,char **)
+stateSet_cmd(int,char **)
+str_match(char const*,char const*)
+strcatnet(char *,char const*,uint,uint,uint *)
+strlwr(char *)
+strncpySafe(char *,char const*,int)
+strset(char *,char)
+structureScale
+strupr(char *)
+svAuthSocket
+sv_Milestone1Team1Unit
+sv_Milestone1Team1Weapon
+sv_Milestone1Team2Unit
+sv_Milestone1Team2Weapon
+sv_Milestone2Team1Unit
+sv_Milestone2Team1Weapon
+sv_Milestone2Team2Unit
+sv_Milestone2Team2Weapon
+sv_Milestone3Team1Unit
+sv_Milestone3Team1Weapon
+sv_Milestone3Team2Unit
+sv_Milestone3Team2Weapon
+sv_NonSEPSpamFrequency
+sv_SEPVersion
+sv_ServerPerfPrint
+sv_UseCorePlaceCode
+sv_aiIgnoreSlope
+sv_aiPredict
+sv_allowAllBuildAngles
+sv_allowAllSpawnPositions
+sv_allowBuildRequests
+sv_allowComplaints
+sv_allowConcedeVotes
+sv_allowDrawVotes
+sv_allowElectVotes
+sv_allowGuestReferee
+sv_allowImpeachVotes
+sv_allowItemDropAction
+sv_allowItemDropDeath
+sv_allowItemPickEnemy
+sv_allowJoinReplayTeam
+sv_allowKickVotes
+sv_allowListDemos
+sv_allowMapVotes
+sv_allowModVotes
+sv_allowMoneyRequests
+sv_allowMsgVotes
+sv_allowMuteVotes
+sv_allowNextMapVotes
+sv_allowNonDuels
+sv_allowPauseVotes
+sv_allowPausing
+sv_allowPowerupRequests
+sv_allowPromoteRequests
+sv_allowRaceVotes
+sv_allowRecordVotes
+sv_allowRefVotes
+sv_allowReplayVotes
+sv_allowRestartVotes
+sv_allowShuffleVotes
+sv_allowSlapping
+sv_allowTimeVotes
+sv_allowUnpauseVotes
+sv_allowWarmupAllSpawnLocs
+sv_allowWarmupAllTechs
+sv_allowWarmupElect
+sv_allowWarmupInfiniteGold
+sv_allowWarmupTeamKill
+sv_allowWorkAnims
+sv_aprilfools
+sv_authserver
+sv_authserverport
+sv_autoPatchMyServer
+sv_autoPause
+sv_autoSquadClients
+sv_autoSquadMinimum
+sv_autojoin
+sv_balanceLenience
+sv_balancedTeams
+sv_baseDamage
+sv_beginsignup
+sv_benchCriticalLimit
+sv_benchServerPerf
+sv_blockArcMult
+sv_blockFullStun
+sv_botEnable
+sv_botTeams
+sv_buffingisnothacking
+sv_buildingDmgScale
+sv_buildingInitialHealthPercent
+sv_cancelCurrentCartOperations(unitSelection_t *)
+sv_chatCommFloodCount
+sv_chatFloodCount
+sv_chatFloodInterval
+sv_chatFloodPenaltyTime
+sv_claimableBuildings
+sv_clientConnectMoney
+sv_clientVoteTime
+sv_commanderNoRespawn
+sv_ctfTime
+sv_cullPlayerObjects
+sv_damagePushScale
+sv_debug
+sv_demolishInterval
+sv_disableVoting
+sv_doSetup
+sv_doWarmup
+sv_doubleKillTime
+sv_duelautoheal
+sv_duelautoitem
+sv_duelautoress
+sv_duelbreaktime
+sv_duelcanforfeit
+sv_duelcomp
+sv_duelforfeitmintime
+sv_duelitem1t1
+sv_duelitem1t2
+sv_duelitem2t1
+sv_duelitem2t2
+sv_duelitem3t1
+sv_duelitem3t2
+sv_duelitem4t1
+sv_duelitem4t2
+sv_duelitem5t1
+sv_duelitem5t2
+sv_duelmaxexp
+sv_duelmaxgain
+sv_duelmaxmore
+sv_duelmessagesignup
+sv_duelmessagespam
+sv_duelrefuseglobal
+sv_duelserver
+sv_duelsounds
+sv_duelspamfrequency
+sv_duelstarttime
+sv_duelteam1unit
+sv_duelteam1weapona
+sv_duelteam1weaponb
+sv_duelteam1weaponc
+sv_duelteam2unit
+sv_duelteam2weapona
+sv_duelteam2weaponb
+sv_duelteam2weaponc
+sv_dueluseglobal
+sv_duelwaypoints
+sv_electcommanders
+sv_enableTithe
+sv_enableTypekills
+sv_enablesquads
+sv_endGameTime
+sv_endsignup
+sv_fallingdamage
+sv_fastTech
+sv_firstduelstarttime
+sv_fogRevealTime
+sv_forceBuffFullPool
+sv_forceCheck
+sv_forceSEP
+sv_forceTeam
+sv_forceXR
+sv_forcedrounds
+sv_forcesacdamage
+sv_fraglimit
+sv_frenzyMilestone1
+sv_frenzyMilestone2
+sv_frenzyMilestone3
+sv_frenzyNeededStone
+sv_frenzyNumMilestones
+sv_frenzyResource
+sv_frenzyRespawnTime
+sv_frenzyStartLevel
+sv_fullSpectateTest
+sv_gamePaused
+sv_gameScripts
+sv_gametype
+sv_giveOverflowToTeam
+sv_goodieAmmoChance
+sv_goodieBags
+sv_goodieBigMoneyChance
+sv_goodieDuration
+sv_goodieMaxMoney
+sv_goodieMeOnlyTime
+sv_goodiesForAll
+sv_hitStructureRewardScale
+sv_hitStunTime
+sv_ignoreMoney
+sv_impeachPenaltyTime
+sv_inWarmup
+sv_infinitegold
+sv_infiniteresources
+sv_invincibleTime
+sv_invincibleTime_respawn
+sv_itemDropDuration
+sv_itemPickDistance
+sv_itemShowOwner
+sv_killDelay
+sv_killGoldLost
+sv_killRespawnTime
+sv_kpmTriggerLevel
+sv_kpmWarningLevel
+sv_landminedistance
+sv_lastServerName
+sv_lockExclusion
+sv_logRefCommands
+sv_logSEPmsgcmd
+sv_logScripting
+sv_map_config
+sv_map_devmode
+sv_map_gametype
+sv_map_objlist
+sv_map_objpath
+sv_map_tag
+sv_map_user
+sv_maxComplaints
+sv_maxMoney
+sv_maxPing
+sv_maxPingTimeout
+sv_maxPingWarning
+sv_maxPlayersPerTeam
+sv_maxPush
+sv_maxTeamZeroDamage
+sv_maxTeams
+sv_maxnoduelresponse
+sv_megaKillAmount
+sv_megaKillTime
+sv_meleeInterpFrames
+sv_meleeonly
+sv_minAwardTime
+sv_minClaimInterval
+sv_minPlayers
+sv_minVotePercent
+sv_mineDepletion
+sv_minfall
+sv_motd1
+sv_motd2
+sv_motd3
+sv_motd4
+sv_motd5
+sv_motd6
+sv_multiKillAmount
+sv_multiKillTime
+sv_musicResetTime
+sv_navMeshSize
+sv_netsmartculledInterval
+sv_newPatchAvailable
+sv_nextMap
+sv_nextStatus
+sv_noCommanderBuffs
+sv_noScripting
+sv_npcSixthSense
+sv_npcfallmult
+sv_npcs
+sv_numAwards
+sv_numTeams
+sv_officerCommandRadius
+sv_overtime_decay
+sv_perf_counts
+sv_perf_critical_counts
+sv_perf_critical_frames
+sv_perf_frames
+sv_perf_global_counts
+sv_perf_global_frames
+sv_perf_maximum
+sv_placeBuildingTestScale
+sv_placementLeniency
+sv_playerChosenMap
+sv_projRestSlope
+sv_projRestVelocity
+sv_pureBlockTest
+sv_puremethod
+sv_quakeMultiplyer
+sv_radiusTweak
+sv_rangedHitStructureRewardScale
+sv_readyPercent
+sv_refGodPassword
+sv_ref_allowdestroy
+sv_ref_allowkick
+sv_ref_allowmute
+sv_ref_allowpause
+sv_ref_allowpromotedemote
+sv_ref_allowrename
+sv_ref_allowrestartmatch
+sv_ref_allowsetcmdr
+sv_ref_allowsetrace
+sv_ref_allowshuffle
+sv_ref_allowslay
+sv_ref_allowstartmatch
+sv_ref_allowstopvote
+sv_ref_allowswitchteam
+sv_ref_allowtime
+sv_ref_allowworld
+sv_refereePassword
+sv_reorder_physics
+sv_repairCost
+sv_repairMult
+sv_respamsignup
+sv_respawnMultiplier
+sv_respawnNPCInterval
+sv_respawnNPCs
+sv_respawnTime
+sv_ressurectTime
+sv_reviveMoneyReward
+sv_roundmaxlength
+sv_runningVoteTime
+sv_sendSpecialCoreCharacters
+sv_sendStatsFrequency
+sv_sendStatsSEP
+sv_serverNotes
+sv_setupTime
+sv_showNotifications
+sv_simultaneousInputs
+sv_skillCapEnabled
+sv_skillCheckFrequency
+sv_skillKickPros
+sv_skillProbationTime
+sv_skillfullKillDist
+sv_smartculling
+sv_spawnBuildingMaxHP
+sv_startingTeamGold
+sv_startingTeamStone
+sv_stoplagspikes
+sv_summoner_mana
+sv_switchStun
+sv_teamBuildingDamage
+sv_teamDamage
+sv_teamDamagePercent
+sv_teamItemDamage
+sv_teamMeleeDamage
+sv_teamSiegeDamage
+sv_teamSwitchConnectFreedom
+sv_teamSwitchDelay
+sv_teamWeaponDamage
+sv_team_races
+sv_timeForCommander
+sv_timeLimit
+sv_tithe_teams
+sv_todSpeed
+sv_todStart
+sv_tutorialmode
+sv_tutorialteam
+sv_ucrounds
+sv_unitAngleLerp
+sv_unlinkWorkers(unitSelection_t *)
+sv_unrefPassword
+sv_useCommanders
+sv_useDamageBuffers
+sv_useRespawnWindow
+sv_uselagcompensation
+sv_vetnerf_blockPowerMult
+sv_vetnerf_enable
+sv_vetnerf_fullHealthMult
+sv_vetnerf_killsnoreloc
+sv_vetnerf_kpdmax
+sv_vetnerf_kpdmin
+sv_vetnerf_maxStaminaMult
+sv_vetnerf_meleeRangeMult
+sv_vetnerf_minkills
+sv_vetnerf_unitPierceMult
+sv_voteduration
+sv_voteprecheckfail
+sv_voteprecheckpass
+sv_voteprechecktime
+sv_warmupTime
+sv_xp_adjust_by_level
+sv_xp_allow_level_loss
+sv_xp_build
+sv_xp_cap_at_level
+sv_xp_commander_demolish
+sv_xp_commander_gather
+sv_xp_commander_order_followed
+sv_xp_commander_order_given
+sv_xp_commander_order_interval
+sv_xp_commander_powerup_given
+sv_xp_commander_raze
+sv_xp_commander_request_ignore
+sv_xp_commander_research
+sv_xp_commander_structure
+sv_xp_connect
+sv_xp_die
+sv_xp_heal_player
+sv_xp_hero
+sv_xp_honor
+sv_xp_kill_item
+sv_xp_kill_npc
+sv_xp_kill_player
+sv_xp_kill_siege
+sv_xp_kill_worker
+sv_xp_legend
+sv_xp_max_gain
+sv_xp_max_level
+sv_xp_mine
+sv_xp_mult
+sv_xp_raze
+sv_xp_repair
+sv_xp_revive_player
+sv_xp_skill
+sv_xp_structure_damage
+sv_xp_survival
+sv_xp_survival_interval
+sv_xp_team_kill
+sv_xppmTriggerLevel
+sv_xppmWarningLevel
+sv_zeroRelocVelocity
+sv_zoomhackdmg
+tUpgrades
+teamList_Base
+teamList_Commander
+teamList_Missions
+teamList_RaceDesc
+teamList_RaceName
+teamToRemove
+teamUpgrade_desc
+techtree
+temporaryModOverride
+texTable
+tu_address
+uiTable
+unLinkWorker(serverObject_s *,serverObject_s *)
+unit
+unitcube_max
+unitcube_min
+up
+updateWG(uchar,uchar,int)
+upgradeTypeNames
+useLagCompensation
+useWorldCfg
+vec2(float,float)
+vec3(float,float,float)
+vec4(float,float,float,float)
+voiceMenus
+votables
+wantedReplay
+weEditCurrent
+weEdit_Cmd(int,char **)
+weFileCallback(char const*,void *)
+weList_Cmd(int,char **)
+weLookup(char *)
+weSave_Cmd(int,char **)
+weSet_Cmd(int,char **)
+weatherEffectData
+weatherEffectData_desc
+weatherSubEffectData_desc
+weclassnames
+wfEditCurrent
+wfEdit_Cmd(int,char **)
+wfList_Cmd(int,char **)
+wfSet_Cmd(int,char **)
+white
+xInit(configVar_t *,int,void *,int,bool)
+xList(configVar_t *,int,void *,int)
+xMakeString(configVar_t *,int,void *,char const*,char *,char *,int)
+xSave(file_s *,configVar_t *,int,void *,char const*,int)
+xSet(configVar_t *,int,void *,int,char **)
+xSetVar(configVar_t *,int,void *,int,int,char **)
+yellow
+zero_vec
