@@ -10,7 +10,7 @@ import java.util.Date;
 
 @Component
 @Entity
-@Inheritance
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Table(name = "accuracy_stats")
 public class AccuracyStats implements Serializable {
 
