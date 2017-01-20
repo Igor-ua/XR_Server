@@ -77,6 +77,25 @@ public class MapStats implements Serializable {
 	}
 
 	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		MapStats mapStats = (MapStats) o;
+
+		return id == mapStats.id && (mapName != null ? mapName.equals(mapStats.mapName) : mapStats.mapName == null) &&
+				(mapTimeStamp != null ? mapTimeStamp.equals(mapStats.mapTimeStamp) : mapStats.mapTimeStamp == null);
+	}
+
+	@Override
+	public int hashCode() {
+		int result = (int) (id ^ (id >>> 32));
+		result = 31 * result + (mapName != null ? mapName.hashCode() : 0);
+		result = 31 * result + (mapTimeStamp != null ? mapTimeStamp.hashCode() : 0);
+		return result;
+	}
+
+	@Override
 	public String toString() {
 		return "MapStats{" +
 				"id=" + id +

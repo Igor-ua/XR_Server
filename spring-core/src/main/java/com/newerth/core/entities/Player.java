@@ -23,7 +23,7 @@ public class Player {
 	private long uid;
 
 	@JsonView(View.Summary.class)
-	@Column(name = "last_used_name", nullable = false, length = 20)
+	@Column(name = "last_used_name", nullable = false, length = 50)
 	private String lastUsedName;
 
 	public Player() {
@@ -52,6 +52,23 @@ public class Player {
 
 	public void setLastUsedName(String lastUsedName) {
 		this.lastUsedName = lastUsedName;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Player player = (Player) o;
+
+		return id == player.id && uid == player.uid;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = (int) (id ^ (id >>> 32));
+		result = 31 * result + (int) (uid ^ (uid >>> 32));
+		return result;
 	}
 
 	@Override

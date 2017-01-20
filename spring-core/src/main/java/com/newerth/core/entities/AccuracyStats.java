@@ -5,6 +5,8 @@ import com.newerth.core.View;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -30,6 +32,8 @@ public class AccuracyStats implements Serializable {
 
 	@Column(name = "accuracy_percent")
 	@JsonView(View.Summary.class)
+	@Min(0)
+	@Max(100)
 	private int accuracyPercent;
 
 	@Column(name = "game_ts")
@@ -81,6 +85,23 @@ public class AccuracyStats implements Serializable {
 
 	public void setGameTimeStamp(Date gameTimeStamp) {
 		this.gameTimeStamp = gameTimeStamp;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		AccuracyStats that = (AccuracyStats) o;
+
+		return (player != null ? player.equals(that.player) : that.player == null) && (gameTimeStamp != null ? gameTimeStamp.equals(that.gameTimeStamp) : that.gameTimeStamp == null);
+	}
+
+	@Override
+	public int hashCode() {
+		int result = player != null ? player.hashCode() : 0;
+		result = 31 * result + (gameTimeStamp != null ? gameTimeStamp.hashCode() : 0);
+		return result;
 	}
 
 	@Override
