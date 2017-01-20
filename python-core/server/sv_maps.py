@@ -17,6 +17,7 @@ import csv
 import sys
 import random
 import urllib
+import os
 
 random.seed()
 
