@@ -1,9 +1,9 @@
-#---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
 #           Name: sv_defs.py
 #         Author: Anthony Beaucamp (aka Mohican)
 #  Last Modified: 11/12/2010
 #    Description: Server-side Global Definitions
-#---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
 
 import __builtin__
 
@@ -14,7 +14,7 @@ global gameTime
 global objectList_Active    # Is Object active?
 global objectList_Team      # Which Team does the Object belong to?
 global objectList_Type      # What Type of Object? (see OBJTYPE_***)
-global objectList_Name      # Name of Object (ex: 'human_nomad') 
+global objectList_Name      # Name of Object (ex: 'human_nomad')
 global objectList_Health    # Object's Health Point
 global objectList_MaxHealth # Object's Max Health Point
 global objectList_Construct # Is Object under construction? (only applies to Buildings)
@@ -52,7 +52,7 @@ __builtin__.INFO_ACTIVE	= 0       # Is Client active?
 __builtin__.INFO_TEAM = 1         # Client's Team
 __builtin__.INFO_NAME = 2         # Client's Name
 __builtin__.INFO_UID = 3          # Client's UID
-__builtin__.INFO_GUID = 4         # Client's GUID 
+__builtin__.INFO_GUID = 4         # Client's GUID
 __builtin__.INFO_CLANID = 5       # Client's CLANID
 __builtin__.INFO_STATUS = 6       # Client's status
 __builtin__.INFO_TYPING	= 7       # Is Client typing?
@@ -175,6 +175,10 @@ __builtin__.STATE_MOVING = 1
 __builtin__.STATE_WAITING = 2
 
 # Bot Names (For Samurai Wars: Names from Rurouni Kenshin and Ranma 1/2)
-__builtin__.BOT_NAMES_LEGION = ['Beastslayer','Bravearmor','Grimpick','Doombellows','Shaletracker','Lockkiller','Deephunter','Goodpacer','Graverunner','Stonekiller','Bladesmither','Wraithtracker','Shalefighter','Blackcairn','Rockspirit','Goodgold']
-__builtin__.BOT_NAMES_BEAST = ['Ogrunt','Ugfang','Skablug','Zodrunt','Shaksog','Waaog','Skarsnik','Uggul','Dregshak','Skumdreg','Wazgut','Mugdreg','Badog','Zoggog','Waagrub','Morskab']
-__builtin__.BOT_NAMES_SAMURAI = ['Aoshi','Sanosuke','Kenshin','Yahiko','Shishio','Hajime','Kenshiro','Ryuken','Raoh','Toki','Shin','Ranma','Ryoga','Genma','Kuno','Soun']
+__builtin__.BOT_NAMES_LEGION = ['Beastslayer', 'Bravearmor', 'Grimpick', 'Doombellows', 'Shaletracker', 'Lockkiller',
+                                'Deephunter', 'Goodpacer', 'Graverunner', 'Stonekiller', 'Bladesmither',
+                                'Wraithtracker', 'Shalefighter', 'Blackcairn', 'Rockspirit', 'Goodgold']
+__builtin__.BOT_NAMES_BEAST = ['Ogrunt', 'Ugfang', 'Skablug', 'Zodrunt', 'Shaksog', 'Waaog', 'Skarsnik', 'Uggul',
+                               'Dregshak', 'Skumdreg', 'Wazgut', 'Mugdreg', 'Badog', 'Zoggog', 'Waagrub', 'Morskab']
+__builtin__.BOT_NAMES_SAMURAI = ['Aoshi', 'Sanosuke', 'Kenshin', 'Yahiko', 'Shishio', 'Hajime', 'Kenshiro', 'Ryuken',
+                                 'Raoh', 'Toki', 'Shin', 'Ranma', 'Ryoga', 'Genma', 'Kuno', 'Soun']

@@ -1,10 +1,10 @@
-# ----------------------------------------------------
+# -----------------------------------------------------------------------------------------------
 #           Python 2.7
 #           Name: cmd_converter.py
 #           Description: Receives a command from the console client and executes it on the server
 #                        - arg[1]   -> sends back the value of the core.CvarGetValue(arg[1])
 #                        - arg[1,2] -> executes core.CvarSetValue(arg[1], int(arg[2]))
-# ----------------------------------------------------
+# -----------------------------------------------------------------------------------------------
 
 # Savage API
 import core
@@ -16,7 +16,6 @@ import SocketServer
 from multiprocessing import Process
 import socket
 import sv_custom_utils
-
 
 HOST = "localhost"
 PORT = 3322
@@ -66,7 +65,8 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
                         print(">   Wrong params")
                         self.request.send("Wrong params")
                 elif len(params) == 1:
-                    result = str("%s = %s | %s" % (params[0], core.CvarGetValue(params[0]), core.CvarGetString(params[0])))
+                    result = str(
+                        "%s = %s | %s" % (params[0], core.CvarGetValue(params[0]), core.CvarGetString(params[0])))
                     print(">   Result: %s" % result)
                     self.request.send(result)
         except:
@@ -95,6 +95,7 @@ def execute_thread():
     print("[*]   Server is up: %s:%d\n" % (HOST, PORT))
     server = SocketServer.TCPServer((HOST, PORT), MyTCPHandler)
     server.serve_forever()
+
 
 if __name__ == "__main__":
     init()

@@ -1,7 +1,7 @@
 # ---------------------------------------------------------------------------
 #           Name: sv_stats.py
-#           Description: server trigger that has to send/receive stats
-#                        from the remote database via HTTP/JSON requests
+#    Description: Server trigger that has to send/receive stats from the
+#                 remote database via HTTP/JSON requests
 # ---------------------------------------------------------------------------
 
 # Savage API
@@ -15,7 +15,6 @@ import __builtin__
 import requests
 import sv_custom_utils
 import time
-
 
 run_once_flag = False
 
@@ -80,7 +79,7 @@ class AccuracyStats:
 
     def __str__(self):
         return "Coil Rifle: [UID: %s], [ACCURACY: %s], [SHOTS: %s], [FRAGS: %s], [HITS: %s]" % (
-        self.uid, self.accuracy_percent, self.shots, self.frags, self.hits)
+            self.uid, self.accuracy_percent, self.shots, self.frags, self.hits)
 
 
 # Gets the accuracy for the selected player by GUID
@@ -90,7 +89,8 @@ def get_accuracy(guid):
     coil_stats = AccuracyStats()
     try:
         [accuracyList_weapon, accuracyList_shots, accuracyList_kills, accuracyList_deaths,
-                 accuracyList_hits, accuracyList_siegehits, accuracyList_damage, accuracyList_last] = server.GetAccuracyList(guid)
+         accuracyList_hits, accuracyList_siegehits, accuracyList_damage, accuracyList_last] = server.GetAccuracyList(
+            guid)
 
         for weap in range(0, accuracyList_last):
             if str(accuracyList_weapon[weap]) == 'Coil Rifle':

@@ -5,8 +5,12 @@
 #    Description: Assets loading/saving manager
 # ---------------------------------------------------------------------------
 
-import core, gui
-import os, shutil, zipfile
+import core
+import gui
+import os
+import shutil
+import zipfile
+
 
 def refresh():
     # Clear scrollbuffer
@@ -17,7 +21,8 @@ def refresh():
     for path, names, filenames in os.walk(tempdir):
         for filename in filenames:
             core.CommandExec('o_scrollbuffer print assets_sb "%s"' % (filename))
-            
+
+
 def importFile():
     # Does file exist?
     filepath = core.CvarGetString('le_asset_import')
@@ -28,14 +33,15 @@ def importFile():
     tempdir = os.path.join(os.getcwd(), '_assets_')
     if not os.path.isdir(tempdir):
         os.makedirs(tempdir)
-    
+
     # Copy file into it
     (path, file) = os.path.split(filepath)
     shutil.copyfile(filepath, os.path.join(tempdir, file))
-    
+
     # Refresh GUI
     refresh()
-    
+
+
 def exportFile():
     # Does file exist?
     file = core.CvarGetString('_assets_sb_variable')
@@ -46,13 +52,14 @@ def exportFile():
     # Copy file to export folder
     filepath = core.CvarGetString('le_asset_export')
     shutil.copyfile(os.path.join(tempdir, file), os.path.join(filepath, file))
-    
+
+
 def remove():
     # Delete currently selected file 
     file = core.CvarGetString('_assets_sb_variable')
     tempdir = os.path.join(os.getcwd(), '_assets_')
     os.remove(os.path.join(tempdir, file))
-    
+
     # Refresh GUI
     refresh()
 
@@ -62,21 +69,21 @@ def remove():
 # -------------------------------
 def deflate(map_name):
     # Prepare file paths
-    map_path = os.path.join(os.getcwd(), '../game/world/' + map_name + '.s2z')    
+    map_path = os.path.join(os.getcwd(), '../game/world/' + map_name + '.s2z')
     tempdir = os.path.join(os.getcwd(), '_assets_')
-    
+
     # Empty any existing dir /_assets_/
     if os.path.isdir(tempdir):
         shutil.rmtree(tempdir)
     os.makedirs(tempdir)
-        
+
     # Unzip assets
     map_zip = zipfile.ZipFile(map_path, "r", zipfile.ZIP_DEFLATED)
     for member in map_zip.namelist():
         # only keep /assets/
         if '/assets/' not in member:
             continue
-        
+
         # skip directories
         filename = os.path.basename(member)
         if not filename:
@@ -89,12 +96,13 @@ def deflate(map_name):
         source.close()
         target.close()
 
+
 # -------------------------------
 # Called directly by Silverback
 # -------------------------------
 def inflate(map_name):
     # Prepare file paths
-    map_path = os.path.join(os.getcwd(), '../game/world/' + map_name + '.s2z')    
+    map_path = os.path.join(os.getcwd(), '../game/world/' + map_name + '.s2z')
     tempdir = os.path.join(os.getcwd(), '_assets_')
     reldir = 'world/' + map_name + '/assets'
 
@@ -102,7 +110,7 @@ def inflate(map_name):
     map_zip = zipfile.ZipFile(map_path, "a", zipfile.ZIP_DEFLATED)
     for path, names, filenames in os.walk(tempdir):
         for filename in filenames:
-            absolute_path = os.path.join(path,filename)
-            relative_path = os.path.join(reldir,filename)
+            absolute_path = os.path.join(path, filename)
+            relative_path = os.path.join(reldir, filename)
             map_zip.write(absolute_path, relative_path)
     map_zip.close()

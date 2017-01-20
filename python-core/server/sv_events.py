@@ -1,8 +1,6 @@
 # ---------------------------------------------------------------------------
 #           Name: sv_events.py
-#         Author: Anthony Beaucamp (aka Mohican)
 #    Description: Silverback Event Entries (init, frame, status changes)
-#          State: modified
 # ---------------------------------------------------------------------------
 
 # Savage API
@@ -167,5 +165,3 @@ def clientconnect(guid):
 
 def clientdisconnect(guid):
     core.ConsolePrint('   <- Disconnected GUID: %i\n' % guid)
-
-

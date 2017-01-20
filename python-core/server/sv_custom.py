@@ -1,6 +1,6 @@
 # ---------------------------------------------------------------------------
 #           Name: sv_custom.py
-#           Description: Entry point to run custom scripts on the xr server
+#    Description: Entry point to run custom scripts on the xr server
 # ---------------------------------------------------------------------------
 
 

@@ -1,6 +1,6 @@
 # ---------------------------------------------------------------------------
 #           Name: sv_instagib.py
-#           Description: instagib server trigger
+#    Description: Instagib server trigger
 # ---------------------------------------------------------------------------
 
 # Savage API

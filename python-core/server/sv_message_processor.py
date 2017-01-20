@@ -1,6 +1,6 @@
 # ---------------------------------------------------------------------------
 #           Name: sv_message_processor.py
-#           Description: Processing messages from sv_events
+#    Description: Processing messages from sv_events
 # ---------------------------------------------------------------------------
 
 # Savage API
@@ -15,7 +15,6 @@ import __builtin__
 import sys
 import time
 import sv_custom_utils
-
 
 this = sys.modules[__name__]
 
@@ -75,9 +74,9 @@ def parse_request(message, guid):
         message = message.lower()
         process_request(guid, message)
         # if message == this.MSG_INFO:
-            # ac = sv_stats.get_accuracy(0)
-            # print ac
-            # pass
+        # ac = sv_stats.get_accuracy(0)
+        # print ac
+        # pass
     except:
         sv_custom_utils.simple_exception_info()
 
