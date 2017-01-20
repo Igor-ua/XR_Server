@@ -1,7 +1,7 @@
 package com.newerth.api;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.newerth.core.GameService;
+import com.newerth.core.DataService;
 import com.newerth.core.View;
 import com.newerth.core.entities.Player;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/stats")
 public class StatsAPI {
 	@Autowired
-	private GameService gameService;
+	private DataService service;
 
 	@RequestMapping(
 			value = "/add",
@@ -21,7 +21,7 @@ public class StatsAPI {
 	@ResponseBody
 	public boolean savePlayer() {
 		Player player = new Player();
-		return gameService.saveOne(player);
+		return service.saveOne(player);
 	}
 
 	@RequestMapping(
@@ -29,7 +29,7 @@ public class StatsAPI {
 			method = RequestMethod.GET)
 	@JsonView(View.Summary.class)
 	public List<Player> getPlayers() {
-		return gameService.findAll();
+		return service.findAll();
 	}
 
 	@RequestMapping(
@@ -38,6 +38,6 @@ public class StatsAPI {
 			method = RequestMethod.GET)
 	@ResponseBody
 	public Player findOne(@RequestParam(value = "id") long id) {
-		return gameService.findOne(id);
+		return service.findOne(id);
 	}
 }

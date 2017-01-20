@@ -1,15 +1,41 @@
 package com.newerth.core;
 
+import com.newerth.core.dao.JPAPlayerDAO;
 import com.newerth.core.entities.Player;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public interface DataService {
-	Player findOne(Long id);
+@Service
+public class DataService {
 
-	List<Player> findAll();
+	private JPAPlayerDAO jpaPlayerDAO;
 
-	boolean saveOne(Player player);
+	@Autowired
+	private void setPlayer(JPAPlayerDAO jpaPlayerDAO) {
+		this.jpaPlayerDAO = jpaPlayerDAO;
+	}
 
-	boolean saveAll(List<Player> players);
+	public Player findOne(Long id) {
+		return jpaPlayerDAO.findOne(id);
+	}
+
+	public List<Player> findAll() {
+		return jpaPlayerDAO.findAll();
+	}
+
+	public boolean saveOne(Player player) {
+		try {
+			jpaPlayerDAO.save(player);
+			return true;
+		} catch (RuntimeException e) {
+			// ignored
+		}
+		return false;
+	}
+
+	public boolean saveAll(List<Player> players) {
+		return false;
+	}
 }

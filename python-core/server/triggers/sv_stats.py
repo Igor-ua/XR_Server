@@ -14,6 +14,8 @@ import sv_utils
 import __builtin__
 import requests
 import sv_custom_utils
+import time
+
 
 run_once_flag = False
 
@@ -73,11 +75,12 @@ class AccuracyStats:
     shots = 0
     frags = 0
     hits = 0
-    accuracy = 0
+    accuracy_percent = 0
+    timestamp = 0
 
     def __str__(self):
         return "Coil Rifle: [UID: %s], [ACCURACY: %s], [SHOTS: %s], [FRAGS: %s], [HITS: %s]" % (
-        self.uid, self.accuracy, self.shots, self.frags, self.hits)
+        self.uid, self.accuracy_percent, self.shots, self.frags, self.hits)
 
 
 # Gets the accuracy for the selected player by GUID
@@ -95,7 +98,8 @@ def get_accuracy(guid):
                 coil_stats.shots = int(accuracyList_shots[weap])
                 coil_stats.frags = int(accuracyList_kills[weap])
                 coil_stats.hits = int(accuracyList_hits[weap])
-                coil_stats.accuracy = coil_stats.hits * 100 / coil_stats.shots
+                coil_stats.accuracy_percent = coil_stats.hits * 100 / coil_stats.shots
+                coil_stats.timestamp = int(round(time.time() * 1000))
     except:
         sv_custom_utils.simple_exception_info()
     return coil_stats
