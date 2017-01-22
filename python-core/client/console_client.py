@@ -6,7 +6,6 @@
 # External modules
 import socket
 import sys
-import sv_custom_utils
 
 HOST, PORT = "localhost", 3322
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
