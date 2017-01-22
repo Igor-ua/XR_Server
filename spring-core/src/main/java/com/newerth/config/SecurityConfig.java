@@ -19,6 +19,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/stats/**")
 				.access("hasIpAddress('0.0.0.0/16')" +
 						" or hasIpAddress('127.0.0.1/32')" +
-						" or hasIpAddress('0:0:0:0:0:0:0:1')");
+						" or hasIpAddress('0:0:0:0:0:0:0:1')")
+				.and()
+				.csrf().disable()
+		;
 	}
 }

@@ -17,15 +17,19 @@ public class DataService {
 		this.jpaPlayerDAO = jpaPlayerDAO;
 	}
 
-	public Player findOne(Long id) {
-		return jpaPlayerDAO.findOne(id);
+	public Player findOne(Long uid) {
+		return jpaPlayerDAO.findByUid(uid);
 	}
 
 	public List<Player> findAll() {
 		return jpaPlayerDAO.findAll();
 	}
 
-	public boolean saveOne(Player player) {
+	public boolean saveOrUpdate(Player player) {
+		Player p = findOne(player.getUid());
+		if (p != null) {
+			player.setId(p.getId());
+		}
 		try {
 			jpaPlayerDAO.save(player);
 			return true;

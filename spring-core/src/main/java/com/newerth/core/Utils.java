@@ -13,7 +13,8 @@ public class Utils {
 		Logger log = LoggerFactory.getLogger(clazz);
 		log.info("Request: "
 				+ "IP: [" + request.getRemoteAddr() + "] "
-				+ "URL: " + request.getRequestURL()
+				+ "URL: " + request.getRequestURL() + " "
+				+ "METHOD: " + request.getMethod()
 		);
 	}
 }

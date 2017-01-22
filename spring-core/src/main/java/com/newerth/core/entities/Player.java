@@ -19,7 +19,6 @@ public class Player {
 
 	@Column(name = "uid", unique=true, nullable = false)
 	@JsonView(View.Summary.class)
-	@JoinColumn(nullable = false)
 	private long uid;
 
 	@JsonView(View.Summary.class)

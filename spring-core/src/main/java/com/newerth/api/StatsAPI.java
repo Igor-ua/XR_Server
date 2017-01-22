@@ -24,31 +24,36 @@ public class StatsAPI {
 	}
 
 	@RequestMapping(
-			value = "/add",
-			method = RequestMethod.GET)
+			value = "/save",
+			method = RequestMethod.POST)
 	@ResponseBody
-	public boolean savePlayer(HttpServletRequest request) {
+	public boolean savePlayer(
+			@RequestParam("uid") Long uid,
+			@RequestParam("lastUsedName") String lastName,
+			HttpServletRequest request) {
 		Utils.logRequest(request, this.getClass());
 		Player player = new Player();
-		return service.saveOne(player);
+		player.setUid(uid);
+		player.setLastUsedName(lastName);
+		return service.saveOrUpdate(player);
 	}
 
 	@RequestMapping(
 			value = "/all",
 			method = RequestMethod.GET)
 	@JsonView(View.Summary.class)
-	public List<Player> getPlayers(HttpServletRequest request) {
+	public List<Player> findAll(HttpServletRequest request) {
 		Utils.logRequest(request, this.getClass());
 		return service.findAll();
 	}
 
 	@RequestMapping(
 			value = "/one",
-			params = {"id"},
+			params = {"uid"},
 			method = RequestMethod.GET)
 	@ResponseBody
-	public Player findOne(@RequestParam(value = "id") long id, HttpServletRequest request) {
+	public Player findOne(@RequestParam(value = "uid") long uid, HttpServletRequest request) {
 		Utils.logRequest(request, this.getClass());
-		return service.findOne(id);
+		return service.findOne(uid);
 	}
 }
