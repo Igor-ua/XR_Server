@@ -25,8 +25,21 @@ public class Player {
 	@Column(name = "last_used_name", nullable = false, length = 50)
 	private String lastUsedName;
 
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JsonView(View.Summary.class)
+	private AccuracyStats accuracyStats;
+
 	public Player() {
 		this.uid = 0;
+	}
+
+	public AccuracyStats getAccuracyStats() {
+		return accuracyStats;
+	}
+
+	public void setAccuracyStats(AccuracyStats accuracyStats) {
+		this.accuracyStats = accuracyStats;
 	}
 
 	public long getId() {
@@ -76,6 +89,7 @@ public class Player {
 				"id=" + id +
 				", uid=" + uid +
 				", lastUsedName='" + lastUsedName + '\'' +
+				", accuracyStats=" + accuracyStats +
 				'}';
 	}
 }

@@ -115,9 +115,10 @@ def process_request(guid, message):
         sv_custom_utils.simple_exception_info()
 
 
-__builtin__.MSG_INFO = "info"
-__builtin__.MSG_LAST = "last"
+# CLIENT API:
+__builtin__.MSG_INFO     = "info"
+__builtin__.MSG_LAST     = "last"
 __builtin__.MSG_AIM_BOTS = "aimbots"
-__builtin__.MSG_SADISTS = "sadists"
-__builtin__.MSG_NOOBS = "noobs"
-__builtin__.MSG_RANDOM = "random"
+__builtin__.MSG_SADISTS  = "sadists"
+__builtin__.MSG_NOOBS    = "noobs"
+__builtin__.MSG_RANDOM   = "random"

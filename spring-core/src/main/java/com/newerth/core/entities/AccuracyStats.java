@@ -17,7 +17,7 @@ import java.util.Date;
 public class AccuracyStats implements Serializable {
 
 	@Id
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	@JoinColumn(name = "player_uid", referencedColumnName = "uid", nullable = false)
 	@JsonView(View.Summary.class)
 	private Player player;
