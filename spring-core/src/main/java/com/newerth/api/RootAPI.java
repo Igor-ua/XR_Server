@@ -27,7 +27,7 @@ public class RootAPI implements ErrorController {
 
 	private void test() {
 		Player p = new Player();
-		p.setUid(123);
+		p.setUid(123L);
 		p.setLastUsedName("Mike");
 		ServiceInfo info = new ServiceInfo();
 		ServiceUpdater updater = new ServiceUpdater();

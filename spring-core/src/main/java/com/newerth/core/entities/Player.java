@@ -5,6 +5,7 @@ import com.newerth.core.View;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Component
 @Entity
@@ -15,46 +16,40 @@ public class Player {
 	@GeneratedValue
 	@JsonView(View.Summary.class)
 	@Column(name = "id")
-	private long id;
+	private Long id;
 
-	@Column(name = "uid", unique=true, nullable = false)
+	@Column(name = "uid", unique = true, nullable = false)
 	@JsonView(View.Summary.class)
-	private long uid;
+	private Long uid = 0L;
 
 	@JsonView(View.Summary.class)
 	@Column(name = "last_used_name", nullable = false, length = 50)
 	private String lastUsedName;
 
-
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "player", cascade = CascadeType.ALL)
 	@JsonView(View.Summary.class)
 	private AccuracyStats accuracyStats;
 
+	@OneToOne(mappedBy = "player", cascade = CascadeType.ALL)
+	@JsonView(View.Summary.class)
+	private Awards awards;
+
 	public Player() {
-		this.uid = 0;
 	}
 
-	public AccuracyStats getAccuracyStats() {
-		return accuracyStats;
-	}
-
-	public void setAccuracyStats(AccuracyStats accuracyStats) {
-		this.accuracyStats = accuracyStats;
-	}
-
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public long getUid() {
+	public Long getUid() {
 		return uid;
 	}
 
-	public void setUid(long uid) {
+	public void setUid(Long uid) {
 		this.uid = uid;
 	}
 
@@ -73,13 +68,13 @@ public class Player {
 
 		Player player = (Player) o;
 
-		return id == player.id && uid == player.uid;
+		return Objects.equals(id, player.id) && Objects.equals(uid, player.uid);
 	}
 
 	@Override
 	public int hashCode() {
-		int result = (int) (id ^ (id >>> 32));
-		result = 31 * result + (int) (uid ^ (uid >>> 32));
+		int result = id != null ? id.hashCode() : 0;
+		result = 31 * result + (uid != null ? uid.hashCode() : 0);
 		return result;
 	}
 
@@ -88,8 +83,7 @@ public class Player {
 		return "Player{" +
 				"id=" + id +
 				", uid=" + uid +
-				", lastUsedName='" + lastUsedName + '\'' +
-				", accuracyStats=" + accuracyStats +
+				", lastUsedName='" + lastUsedName +
 				'}';
 	}
 }

@@ -12,7 +12,12 @@ import java.io.Serializable;
 @Table(name = "awards")
 public class Awards implements Serializable {
 	@Id
-	@OneToOne(cascade = CascadeType.ALL)
+	@GeneratedValue
+	@JsonView(View.Summary.class)
+	@Column(name = "id")
+	private Long id;
+
+	@OneToOne
 	@JoinColumn(name = "player_uid", referencedColumnName = "uid", nullable = false)
 	@JsonView(View.Summary.class)
 	private Player player;

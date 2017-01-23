@@ -17,8 +17,13 @@ import java.util.Date;
 public class AccuracyStats implements Serializable {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.TABLE)
+	@JsonView(View.Summary.class)
+	@Column(name = "id")
+	private Long id;
+
 	@OneToOne
-	@JoinColumn(name = "player_uid", referencedColumnName = "uid", nullable = false)
+	@JoinColumn(name = "player_uid", referencedColumnName = "uid")
 	@JsonView(View.Summary.class)
 	private Player player;
 
@@ -45,6 +50,14 @@ public class AccuracyStats implements Serializable {
 
 	public AccuracyStats(Player player) {
 		this.player = player;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Player getPlayer() {
@@ -94,13 +107,14 @@ public class AccuracyStats implements Serializable {
 
 		AccuracyStats that = (AccuracyStats) o;
 
-		return (player != null ? player.equals(that.player) : that.player == null) && (gameTimeStamp != null ? gameTimeStamp.equals(that.gameTimeStamp) : that.gameTimeStamp == null);
+		return (id != null ? id.equals(that.id) : that.id == null) &&
+				(player != null ? player.equals(that.player) : that.player == null);
 	}
 
 	@Override
 	public int hashCode() {
-		int result = player != null ? player.hashCode() : 0;
-		result = 31 * result + (gameTimeStamp != null ? gameTimeStamp.hashCode() : 0);
+		int result = id != null ? id.hashCode() : 0;
+		result = 31 * result + (player != null ? player.hashCode() : 0);
 		return result;
 	}
 

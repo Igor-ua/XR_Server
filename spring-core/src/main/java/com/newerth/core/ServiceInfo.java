@@ -57,7 +57,7 @@ public class ServiceInfo {
 	 * Get info about the last game of the player by his UID
 	 */
 	public LastAccuracyStats findPlayerLastAccuracy(Long uid) {
-		return lastAccuracyDAO.findByUid(uid);
+		return lastAccuracyDAO.findByPlayer(findPlayer(uid));
 	}
 
 	/**
