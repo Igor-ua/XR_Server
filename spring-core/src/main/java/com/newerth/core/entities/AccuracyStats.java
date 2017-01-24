@@ -23,7 +23,7 @@ public class AccuracyStats implements Serializable {
 	private Long id;
 
 	@OneToOne
-	@JoinColumn(name = "player_uid", referencedColumnName = "uid")
+	@JoinColumn(name = "player_uid", referencedColumnName = "uid", nullable = false)
 	@JsonView(View.Summary.class)
 	private Player player;
 

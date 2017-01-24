@@ -48,7 +48,10 @@ public class ServiceInfo {
 	 * Get general info about the player by his UID
 	 */
 	public AccuracyStats findPlayerAccuracy(Long uid) {
-//		return accuracyDAO.findByPlayerUid(uid);
+		Player p = findPlayer(uid);
+		if (p != null) {
+			return accuracyDAO.findByPlayer(p);
+		}
 		return null;
 	}
 
@@ -57,7 +60,11 @@ public class ServiceInfo {
 	 * Get info about the last game of the player by his UID
 	 */
 	public LastAccuracyStats findPlayerLastAccuracy(Long uid) {
-		return lastAccuracyDAO.findByPlayer(findPlayer(uid));
+		Player p = findPlayer(uid);
+		if (p != null) {
+			return lastAccuracyDAO.findByPlayer(p);
+		}
+		return null;
 	}
 
 	/**

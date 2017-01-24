@@ -72,9 +72,10 @@ public class ServiceUpdater {
 	}
 
 	/**
-	 * Saves or updates accuracy for the player by his UID
+	 * Saves or updates accuracy for the player
 	 */
 	public boolean saveOrUpdateAccuracy(AccuracyStats accuracy) {
+		saveOrUpdatePlayer(accuracy.getPlayer());
 		AccuracyStats as = info.findPlayerAccuracy(accuracy.getPlayer().getUid());
 		if (as != null) {
 			accuracy.setPlayer(info.findPlayer(as.getPlayer().getUid()));
@@ -89,9 +90,20 @@ public class ServiceUpdater {
 	}
 
 	/**
-	 * Saves or updates last accuracy for the player by his UID
+	 * Saves or updates last accuracy for the player
 	 */
 	public boolean saveOrUpdateLastAccuracy(LastAccuracyStats lastAccuracy) {
+		saveOrUpdatePlayer(lastAccuracy.getPlayer());
+		LastAccuracyStats las = info.findPlayerLastAccuracy(lastAccuracy.getPlayer().getUid());
+		if (las != null) {
+			lastAccuracy.setPlayer(info.findPlayer(las.getPlayer().getUid()));
+		}
+		try {
+			accuracyDAO.save(lastAccuracy);
+			return true;
+		} catch (RuntimeException e) {
+			// ignored; fix it
+		}
 		return false;
 	}
 }
