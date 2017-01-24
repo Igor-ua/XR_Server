@@ -1,6 +1,7 @@
 package com.newerth.core;
 
 import com.newerth.core.dao.JPAAccuracyDAO;
+import com.newerth.core.dao.JPALastAccuracyDAO;
 import com.newerth.core.dao.JPAPlayerDAO;
 import com.newerth.core.entities.AccuracyStats;
 import com.newerth.core.entities.LastAccuracyStats;
@@ -18,11 +19,17 @@ public class ServiceUpdater {
 
 	private JPAPlayerDAO playerDAO;
 	private JPAAccuracyDAO accuracyDAO;
+	private JPALastAccuracyDAO lastAccuracyDAO;
 	private ServiceInfo info;
 
 	@Autowired
 	private void setPlayerDAO(JPAPlayerDAO jpaPlayerDAO) {
 		this.playerDAO = jpaPlayerDAO;
+	}
+
+	@Autowired
+	private void setLastAccuracyDAO(JPALastAccuracyDAO jpaLastAccuracyDAO) {
+		this.lastAccuracyDAO = jpaLastAccuracyDAO;
 	}
 
 	@Autowired
@@ -99,7 +106,7 @@ public class ServiceUpdater {
 			lastAccuracy.setPlayer(info.findPlayer(las.getPlayer().getUid()));
 		}
 		try {
-			accuracyDAO.save(lastAccuracy);
+			lastAccuracyDAO.save(lastAccuracy);
 			return true;
 		} catch (RuntimeException e) {
 			// ignored; fix it
