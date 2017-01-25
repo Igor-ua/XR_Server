@@ -1,7 +1,7 @@
 package com.newerth.api;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.newerth.core.Informer;
+import com.newerth.core.Reference;
 import com.newerth.core.Updater;
 import com.newerth.core.Utils;
 import com.newerth.core.View;
@@ -19,11 +19,11 @@ import java.util.List;
 @RequestMapping("/stats")
 public class ClientAPI {
 
-	private Informer info;
+	private Reference info;
 	private Updater updater;
 
 	@Autowired
-	private void setServiceInfo(Informer serviceInfo) {
+	private void setServiceInfo(Reference serviceInfo) {
 		this.info = serviceInfo;
 	}
 
@@ -69,6 +69,6 @@ public class ClientAPI {
 	@ResponseBody
 	public Player findOne(@RequestParam(value = "uid") long uid, HttpServletRequest request) {
 		Utils.logRequest(request, this.getClass());
-		return info.findPlayer(uid);
+		return info.findPlayerByUid(uid);
 	}
 }

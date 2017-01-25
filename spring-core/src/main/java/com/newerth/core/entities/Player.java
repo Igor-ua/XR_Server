@@ -12,13 +12,8 @@ import javax.persistence.*;
 public class Player {
 
 	@Id
-	@GeneratedValue
 	@JsonView(View.Summary.class)
-	@Column(name = "id")
-	private Long id;
-
-	@Column(name = "uid", unique = true, nullable = false)
-	@JsonView(View.Summary.class)
+	@Column(name = "uid")
 	private Long uid;
 
 	@JsonView(View.Summary.class)
@@ -31,40 +26,49 @@ public class Player {
 
 	@OneToOne(mappedBy = "player", cascade = CascadeType.ALL)
 	@JsonView(View.Summary.class)
+	private LastAccuracyStats lastAccuracyStats;
+
+	@OneToOne(mappedBy = "player", cascade = CascadeType.ALL)
+	@JsonView(View.Summary.class)
 	private Awards awards;
 
 	public Player() {
+		this.accuracyStats = new AccuracyStats(this);
+		this.lastAccuracyStats = new LastAccuracyStats(this);
+		this.awards = new Awards(this);
 	}
 
-	public AccuracyStats getAccuracyStats() {
-		return accuracyStats;
+	public Player(Long uid) {
+		this();
+		this.uid = uid;
+	}
+
+	public void setUid(Long uid) {
+		this.uid = uid;
 	}
 
 	public void updateAccuracyStats(AccuracyStats as) {
-		if (this.accuracyStats == null) {
-			this.accuracyStats = as;
-		} else {
-			this.accuracyStats.setShots(this.accuracyStats.getShots() + as.getShots());
-			this.accuracyStats.setFrags(this.accuracyStats.getFrags() + as.getFrags());
-			this.accuracyStats.setHits(this.accuracyStats.getHits() + as.getHits());
-			this.accuracyStats.setGameTimeStamp(as.getGameTimeStamp());
-		}
+		this.accuracyStats.updateAccuracyStats(as);
 	}
 
-	public Long getId() {
-		return id;
+	public void updateLastAccuracyStats(LastAccuracyStats las) {
+		this.lastAccuracyStats = las;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void updateAwards(Awards awards) {
+		this.awards.updateAwards(awards);
 	}
 
 	public Long getUid() {
 		return uid;
 	}
 
-	public void setUid(Long uid) {
-		this.uid = uid;
+	public AccuracyStats getAccuracyStats() {
+		return accuracyStats;
+	}
+
+	public Awards getAwards() {
+		return awards;
 	}
 
 	public String getLastUsedName() {
@@ -82,22 +86,21 @@ public class Player {
 
 		Player player = (Player) o;
 
-		return (id != null ? id.equals(player.id) : player.id == null) &&
-				(uid != null ? uid.equals(player.uid) : player.uid == null);
+		return uid != null ? uid.equals(player.uid) : player.uid == null;
 	}
 
 	@Override
 	public int hashCode() {
-		int result = id != null ? id.hashCode() : 0;
-		result = 31 * result + (uid != null ? uid.hashCode() : 0);
-		return result;
+		return uid != null ? uid.hashCode() : 0;
 	}
 
 	@Override
 	public String toString() {
 		return "Player{" +
-				"id=" + id +
-				", uid=" + uid +
-				", lastUsedName='" + lastUsedName + "'}";
+				"uid=" + uid +
+				", lastUsedName='" + lastUsedName + '\'' +
+				", accuracyStats=" + accuracyStats +
+				", awards=" + awards +
+				'}';
 	}
 }

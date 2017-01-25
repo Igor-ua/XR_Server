@@ -24,4 +24,36 @@ public class Awards implements Serializable {
 
 	public Awards() {
 	}
+
+	public Awards(Player player) {
+		this.player = player;
+	}
+
+	void updateAwards(Awards awards) {
+		// update awards here
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+
+	@Override
+	public String toString() {
+		return "Awards{" +
+				"id=" + id +
+				", player_uid=" + player.getUid() +
+				'}';
+	}
 }

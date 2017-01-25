@@ -20,7 +20,7 @@ public class Updater {
 	private JPAPlayerDAO playerDAO;
 	private JPAAccuracyDAO accuracyDAO;
 	private JPALastAccuracyDAO lastAccuracyDAO;
-	private Informer informer;
+	private Reference reference;
 
 	@Autowired
 	private void setPlayerDAO(JPAPlayerDAO jpaPlayerDAO) {
@@ -38,17 +38,17 @@ public class Updater {
 	}
 
 	@Autowired
-	private void setInformer(Informer informer){
-		this.informer = informer;
+	private void setInformer(Reference reference){
+		this.reference = reference;
 	}
 
 	/**
 	 * Saves new player or updates old player if he exists
 	 */
 	public boolean saveOrUpdatePlayer(Player player) {
-		Player p = informer.findPlayer(player.getUid());
+		Player p = reference.findPlayerByUid(player.getUid());
 		if (p != null) {
-			player.setId(p.getId());
+			player.setUid(p.getUid());
 		}
 		try {
 			playerDAO.save(player);
@@ -65,9 +65,9 @@ public class Updater {
 	 */
 	public boolean saveOrUpdatePlayers(List<Player> players) {
 		players.forEach(player -> {
-			Player p = informer.findPlayer(player.getUid());
+			Player p = reference.findPlayerByUid(player.getUid());
 			if (p != null) {
-				player.setId(p.getId());
+				player.setUid(p.getUid());
 			}
 		});
 		try {
@@ -84,9 +84,9 @@ public class Updater {
 	 */
 	public boolean saveOrUpdateAccuracy(AccuracyStats accuracy) {
 		saveOrUpdatePlayer(accuracy.getPlayer());
-		AccuracyStats as = informer.findPlayerAccuracy(accuracy.getPlayer().getUid());
+		AccuracyStats as = reference.findPlayerAccuracy(accuracy.getPlayer().getUid());
 		if (as != null) {
-			accuracy.setPlayer(informer.findPlayer(as.getPlayer().getUid()));
+			accuracy.setPlayer(reference.findPlayerByUid(as.getPlayer().getUid()));
 		}
 		try {
 			accuracyDAO.save(accuracy);
@@ -102,9 +102,9 @@ public class Updater {
 	 */
 	public boolean saveOrUpdateLastAccuracy(LastAccuracyStats lastAccuracy) {
 		saveOrUpdatePlayer(lastAccuracy.getPlayer());
-		LastAccuracyStats las = informer.findPlayerLastAccuracy(lastAccuracy.getPlayer().getUid());
+		LastAccuracyStats las = reference.findPlayerLastAccuracy(lastAccuracy.getPlayer().getUid());
 		if (las != null) {
-			lastAccuracy.setPlayer(informer.findPlayer(las.getPlayer().getUid()));
+			lastAccuracy.setPlayer(reference.findPlayerByUid(las.getPlayer().getUid()));
 		}
 		try {
 			lastAccuracyDAO.save(lastAccuracy);

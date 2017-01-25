@@ -1,6 +1,6 @@
 package com.newerth;
 
-import com.newerth.core.Informer;
+import com.newerth.core.Reference;
 import com.newerth.core.Updater;
 import com.newerth.core.entities.AccuracyStats;
 import com.newerth.core.entities.Player;
@@ -10,8 +10,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
-
-import java.util.Date;
 
 @SpringBootApplication
 public class Main extends SpringBootServletInitializer implements CommandLineRunner {
@@ -31,7 +29,7 @@ public class Main extends SpringBootServletInitializer implements CommandLineRun
 	}
 
 	@Autowired
-	private Informer informer;
+	private Reference ref;
 	@Autowired
 	private Updater updater;
 
@@ -41,24 +39,27 @@ public class Main extends SpringBootServletInitializer implements CommandLineRun
 		Player p = new Player();
 		p.setUid(123L);
 		p.setLastUsedName("Mike");
-//		updater.saveOrUpdatePlayer(p);
-
-		AccuracyStats as = new AccuracyStats();
-
-		as.setPlayer(p);
-		as.setShots(10);
-		as.setHits(4);
-		as.setFrags(4);
-		as.setGameTimeStamp(new Date());
-
-		p.updateAccuracyStats(as);
 
 		updater.saveOrUpdatePlayer(p);
-
-
-//		p = informer.findPlayer(123L);
-		p = informer.findOne("Mike");
+		p = ref.findPlayerByUid(123L);
 		System.out.println("found: " + p);
+
+
+//		AccuracyStats as = new AccuracyStats();
+//
+//		as.setPlayer(p);
+//		as.setShots(10);
+//		as.setHits(4);
+//		as.setFrags(4);
+//
+//		p.updateAccuracyStats(as);
+//
+//		updater.saveOrUpdatePlayer(p);
+//
+//
+//		p = ref.findPlayerByUid(123L);
+//		System.out.println("found: " + p);
+
 //		as = new AccuracyStats();
 //		as.setPlayer(p);
 //		as.setShots(20);

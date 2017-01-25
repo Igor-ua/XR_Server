@@ -23,7 +23,7 @@ public class AccuracyStats implements Serializable {
 	private Long id;
 
 	@OneToOne
-	@JoinColumn(name = "player_uid", referencedColumnName = "uid", nullable = false)
+	@JoinColumn(name = "player_uid", referencedColumnName = "uid", nullable = false, unique = true)
 	@JsonView(View.Summary.class)
 	private Player player;
 
@@ -56,12 +56,17 @@ public class AccuracyStats implements Serializable {
 		this.player = player;
 	}
 
-	@PrePersist
-	@PreUpdate
-	private void updateAccuracyPercent() {
+	protected void updateAccuracyPercent() {
 		if (this.hits > 0 && this.shots > 0) {
 			this.accuracyPercent = hits * 100 / shots;
 		}
+	}
+
+	void updateAccuracyStats(AccuracyStats as) {
+		this.shots += as.getShots();
+		this.hits += as.getHits();
+		this.frags += as.getFrags();
+		updateAccuracyPercent();
 	}
 
 	public Long getId() {
@@ -108,7 +113,9 @@ public class AccuracyStats implements Serializable {
 		return gameTimeStamp;
 	}
 
-	public void setGameTimeStamp(Date gameTimeStamp) {
+	@PrePersist
+	@PreUpdate
+	private void updateGameTimeStamp() {
 		this.gameTimeStamp = gameTimeStamp;
 	}
 
@@ -133,7 +140,7 @@ public class AccuracyStats implements Serializable {
 	@Override
 	public String toString() {
 		return "AccuracyStats{" +
-				"player=" + player +
+				"player_uid=" + player.getUid() +
 				", shots=" + shots +
 				", hits=" + hits +
 				", accuracyPercent=" + accuracyPercent +

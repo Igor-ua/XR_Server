@@ -15,7 +15,7 @@ import java.util.List;
  * Service that only _gets_ information from the DB
  */
 @Service
-public class Informer {
+public class Reference {
 
 	private JPAPlayerDAO playerDAO;
 	private JPAAccuracyDAO accuracyDAO;
@@ -37,20 +37,19 @@ public class Informer {
 	}
 
 	/**
-	 * Get player by his UID
+	 * Gets player by his UID
 	 */
-	public Player findPlayer(Long uid) {
+	public Player findPlayerByUid(Long uid) {
 		return playerDAO.findByUid(uid);
 	}
-
 
 	/**
 	 * Get general info about the player by his UID
 	 */
 	public AccuracyStats findPlayerAccuracy(Long uid) {
-		Player p = findPlayer(uid);
+		Player p = playerDAO.findByUid(uid);
 		if (p != null) {
-			return accuracyDAO.findByPlayer(p);
+			return p.getAccuracyStats();
 		}
 		return null;
 	}
@@ -60,7 +59,7 @@ public class Informer {
 	 * Get info about the last game of the player by his UID
 	 */
 	public LastAccuracyStats findPlayerLastAccuracy(Long uid) {
-		Player p = findPlayer(uid);
+		Player p = playerDAO.findByUid(uid);
 		if (p != null) {
 			return lastAccuracyDAO.findByPlayer(p);
 		}
@@ -73,9 +72,4 @@ public class Informer {
 	public List<Player> findAllPlayers() {
 		return playerDAO.findAll();
 	}
-
-	public Player findOne(String name) {
-		return playerDAO.findByLastUsedName(name);
-	}
-
 }
