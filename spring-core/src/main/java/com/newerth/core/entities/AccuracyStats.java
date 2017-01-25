@@ -35,6 +35,10 @@ public class AccuracyStats implements Serializable {
 	@JsonView(View.Summary.class)
 	private int hits;
 
+	@Column(name = "frags")
+	@JsonView(View.Summary.class)
+	private int frags;
+
 	@Column(name = "accuracy_percent")
 	@JsonView(View.Summary.class)
 	@Min(0)
@@ -52,12 +56,16 @@ public class AccuracyStats implements Serializable {
 		this.player = player;
 	}
 
-	public Long getId() {
-		return id;
+	@PrePersist
+	@PreUpdate
+	private void updateAccuracyPercent() {
+		if (this.hits > 0 && this.shots > 0) {
+			this.accuracyPercent = hits * 100 / shots;
+		}
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public Long getId() {
+		return id;
 	}
 
 	public Player getPlayer() {
@@ -76,6 +84,14 @@ public class AccuracyStats implements Serializable {
 		this.shots = shots;
 	}
 
+	public int getFrags() {
+		return frags;
+	}
+
+	public void setFrags(int frags) {
+		this.frags = frags;
+	}
+
 	public int getHits() {
 		return hits;
 	}
@@ -86,10 +102,6 @@ public class AccuracyStats implements Serializable {
 
 	public int getAccuracyPercent() {
 		return accuracyPercent;
-	}
-
-	public void setAccuracyPercent(int accuracyPercent) {
-		this.accuracyPercent = accuracyPercent;
 	}
 
 	public Date getGameTimeStamp() {

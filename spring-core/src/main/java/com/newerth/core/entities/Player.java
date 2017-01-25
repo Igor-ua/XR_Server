@@ -5,7 +5,6 @@ import com.newerth.core.View;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Component
 @Entity
@@ -20,7 +19,7 @@ public class Player {
 
 	@Column(name = "uid", unique = true, nullable = false)
 	@JsonView(View.Summary.class)
-	private Long uid = 0L;
+	private Long uid;
 
 	@JsonView(View.Summary.class)
 	@Column(name = "last_used_name", nullable = false, length = 50)
@@ -35,6 +34,21 @@ public class Player {
 	private Awards awards;
 
 	public Player() {
+	}
+
+	public AccuracyStats getAccuracyStats() {
+		return accuracyStats;
+	}
+
+	public void updateAccuracyStats(AccuracyStats as) {
+		if (this.accuracyStats == null) {
+			this.accuracyStats = as;
+		} else {
+			this.accuracyStats.setShots(this.accuracyStats.getShots() + as.getShots());
+			this.accuracyStats.setFrags(this.accuracyStats.getFrags() + as.getFrags());
+			this.accuracyStats.setHits(this.accuracyStats.getHits() + as.getHits());
+			this.accuracyStats.setGameTimeStamp(as.getGameTimeStamp());
+		}
 	}
 
 	public Long getId() {
@@ -68,7 +82,8 @@ public class Player {
 
 		Player player = (Player) o;
 
-		return Objects.equals(id, player.id) && Objects.equals(uid, player.uid);
+		return (id != null ? id.equals(player.id) : player.id == null) &&
+				(uid != null ? uid.equals(player.uid) : player.uid == null);
 	}
 
 	@Override
@@ -83,7 +98,6 @@ public class Player {
 		return "Player{" +
 				"id=" + id +
 				", uid=" + uid +
-				", lastUsedName='" + lastUsedName +
-				'}';
+				", lastUsedName='" + lastUsedName + "'}";
 	}
 }

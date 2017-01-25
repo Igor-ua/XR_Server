@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface JPAPlayerDAO extends JpaRepository<Player, Long> {
 	Player findByUid(Long uid);
+
+	Player findByLastUsedName(String name);
 }

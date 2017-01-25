@@ -1,8 +1,8 @@
 package com.newerth.api;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.newerth.core.ServiceInfo;
-import com.newerth.core.ServiceUpdater;
+import com.newerth.core.Informer;
+import com.newerth.core.Updater;
 import com.newerth.core.Utils;
 import com.newerth.core.View;
 import com.newerth.core.entities.Player;
@@ -19,16 +19,16 @@ import java.util.List;
 @RequestMapping("/stats")
 public class ClientAPI {
 
-	private ServiceInfo info;
-	private ServiceUpdater updater;
+	private Informer info;
+	private Updater updater;
 
 	@Autowired
-	private void setServiceInfo(ServiceInfo serviceInfo) {
+	private void setServiceInfo(Informer serviceInfo) {
 		this.info = serviceInfo;
 	}
 
 	@Autowired
-	private void setServiceUpdater(ServiceUpdater serviceUpdater) {
+	private void setServiceUpdater(Updater serviceUpdater) {
 		this.updater = serviceUpdater;
 	}
 

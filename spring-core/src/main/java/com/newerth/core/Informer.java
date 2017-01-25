@@ -15,7 +15,7 @@ import java.util.List;
  * Service that only _gets_ information from the DB
  */
 @Service
-public class ServiceInfo {
+public class Informer {
 
 	private JPAPlayerDAO playerDAO;
 	private JPAAccuracyDAO accuracyDAO;
@@ -72,6 +72,10 @@ public class ServiceInfo {
 	 */
 	public List<Player> findAllPlayers() {
 		return playerDAO.findAll();
+	}
+
+	public Player findOne(String name) {
+		return playerDAO.findByLastUsedName(name);
 	}
 
 }

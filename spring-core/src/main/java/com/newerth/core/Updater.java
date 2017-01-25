@@ -15,12 +15,12 @@ import java.util.List;
  * Service for changing information in the DB
  */
 @Service
-public class ServiceUpdater {
+public class Updater {
 
 	private JPAPlayerDAO playerDAO;
 	private JPAAccuracyDAO accuracyDAO;
 	private JPALastAccuracyDAO lastAccuracyDAO;
-	private ServiceInfo info;
+	private Informer informer;
 
 	@Autowired
 	private void setPlayerDAO(JPAPlayerDAO jpaPlayerDAO) {
@@ -38,15 +38,15 @@ public class ServiceUpdater {
 	}
 
 	@Autowired
-	private void setInfo(ServiceInfo serviceInfo){
-		this.info = serviceInfo;
+	private void setInformer(Informer informer){
+		this.informer = informer;
 	}
 
 	/**
 	 * Saves new player or updates old player if he exists
 	 */
 	public boolean saveOrUpdatePlayer(Player player) {
-		Player p = info.findPlayer(player.getUid());
+		Player p = informer.findPlayer(player.getUid());
 		if (p != null) {
 			player.setId(p.getId());
 		}
@@ -54,7 +54,8 @@ public class ServiceUpdater {
 			playerDAO.save(player);
 			return true;
 		} catch (RuntimeException e) {
-			// ignored; fix it
+//			e.printStackTrace();
+//			ignored; fix it
 		}
 		return false;
 	}
@@ -64,7 +65,7 @@ public class ServiceUpdater {
 	 */
 	public boolean saveOrUpdatePlayers(List<Player> players) {
 		players.forEach(player -> {
-			Player p = info.findPlayer(player.getUid());
+			Player p = informer.findPlayer(player.getUid());
 			if (p != null) {
 				player.setId(p.getId());
 			}
@@ -83,9 +84,9 @@ public class ServiceUpdater {
 	 */
 	public boolean saveOrUpdateAccuracy(AccuracyStats accuracy) {
 		saveOrUpdatePlayer(accuracy.getPlayer());
-		AccuracyStats as = info.findPlayerAccuracy(accuracy.getPlayer().getUid());
+		AccuracyStats as = informer.findPlayerAccuracy(accuracy.getPlayer().getUid());
 		if (as != null) {
-			accuracy.setPlayer(info.findPlayer(as.getPlayer().getUid()));
+			accuracy.setPlayer(informer.findPlayer(as.getPlayer().getUid()));
 		}
 		try {
 			accuracyDAO.save(accuracy);
@@ -101,9 +102,9 @@ public class ServiceUpdater {
 	 */
 	public boolean saveOrUpdateLastAccuracy(LastAccuracyStats lastAccuracy) {
 		saveOrUpdatePlayer(lastAccuracy.getPlayer());
-		LastAccuracyStats las = info.findPlayerLastAccuracy(lastAccuracy.getPlayer().getUid());
+		LastAccuracyStats las = informer.findPlayerLastAccuracy(lastAccuracy.getPlayer().getUid());
 		if (las != null) {
-			lastAccuracy.setPlayer(info.findPlayer(las.getPlayer().getUid()));
+			lastAccuracy.setPlayer(informer.findPlayer(las.getPlayer().getUid()));
 		}
 		try {
 			lastAccuracyDAO.save(lastAccuracy);
