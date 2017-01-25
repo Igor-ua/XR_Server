@@ -34,8 +34,9 @@ public class Player {
 
 	public Player() {
 		this.accuracyStats = new AccuracyStats(this);
-		this.lastAccuracyStats = new LastAccuracyStats(this);
+//		this.lastAccuracyStats = new LastAccuracyStats(this);
 		this.awards = new Awards(this);
+		this.uid = 0L;
 	}
 
 	public Player(Long uid) {
