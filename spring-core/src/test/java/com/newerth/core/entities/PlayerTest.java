@@ -27,9 +27,9 @@ public class PlayerTest {
 		p.setUid(123L);
 		p.setLastUsedName("Mike");
 		AccuracyStats as = new AccuracyStats();
-		as.setHits(10);
-		as.setShots(25);
-		as.setFrags(5);
+		as.setLastHits(10);
+		as.setLastShots(25);
+		as.setLastFrags(5);
 		p.updateAccuracyStats(as);
 		return p;
 	}
@@ -67,5 +67,13 @@ public class PlayerTest {
 		Player p2 = repo.findByUid(p1.getUid());
 		System.out.println(p2);
 		assertThat(p2).isEqualTo(p1);
+	}
+
+	@Test
+	public void findAndUpdate() {
+		Player p1 = preparePlayerWithFields();
+		this.entityManager.persist(p1);
+		Player p2 = repo.findByUid(p1.getUid());
+		p2.getAccuracyStats().setLastHits(3);
 	}
 }

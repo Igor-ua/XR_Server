@@ -13,7 +13,6 @@ import java.util.Date;
 
 @Component
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Table(name = "accuracy_stats")
 public class AccuracyStats implements Serializable {
 
@@ -27,52 +26,55 @@ public class AccuracyStats implements Serializable {
 	@JoinColumn(name = "player_uid", referencedColumnName = "uid", unique = true)
 	@JsonView(View.Summary.class)
 	private Player player;
-
-	@Column(name = "shots")
+	//----Last accuracy stats---------------------------------------------------------------
+	@Column(name = "last_shots")
 	@JsonView(View.Summary.class)
-	private int shots;
+	private int lastShots;
 
-	@Column(name = "hits")
+	@Column(name = "last_hits")
 	@JsonView(View.Summary.class)
-	private int hits;
+	private int lastHits;
 
-	@Column(name = "frags")
+	@Column(name = "last_frags")
 	@JsonView(View.Summary.class)
-	private int frags;
+	private int lastFrags;
+
+	@Column(name = "last_accuracy_percent")
+	@JsonView(View.Summary.class)
+	@Min(0)
+	@Max(100)
+	private int lastAccuracyPercent;
+	//----Accumulated accuracy stats--------------------------------------------------------
+	@Column(name = "last_shots")
+	@JsonView(View.Summary.class)
+	private int accumulatedShots;
+
+	@Column(name = "last_hits")
+	@JsonView(View.Summary.class)
+	private int accumulatedHits;
+
+	@Column(name = "last_frags")
+	@JsonView(View.Summary.class)
+	private int accumulatedFrags;
 
 	@Column(name = "accuracy_percent")
 	@JsonView(View.Summary.class)
 	@Min(0)
 	@Max(100)
-	private int accuracyPercent;
-
+	private int accumulatedAccuracyPercent;
+	//--------------------------------------------------------------------------------------
 	@Column(name = "game_ts")
 	@JsonView(View.Summary.class)
 	private Date gameTimeStamp;
 
 	@Transient
 	private SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+	//--------------------------------------------------------------------------------------
 
 	public AccuracyStats() {
 	}
 
-	public AccuracyStats(Player player) {
-		this.player = player;
-	}
-
-	protected void updateAccuracyPercent() {
-		if (this.hits > 0 && this.shots > 0) {
-			this.accuracyPercent = hits * 100 / shots;
-		}
-	}
-
-	void updateAccuracyStats(AccuracyStats as) {
-		this.shots += as.getShots();
-		this.hits += as.getHits();
-		this.frags += as.getFrags();
-		updateAccuracyPercent();
-	}
-
+	//----Getters---------------------------------------------------------------------------
 	public Long getId() {
 		return id;
 	}
@@ -81,41 +83,56 @@ public class AccuracyStats implements Serializable {
 		return player;
 	}
 
+	public int getLastShots() {
+		return lastShots;
+	}
+
+	public int getLastFrags() {
+		return lastFrags;
+	}
+
+	public int getLastHits() {
+		return lastHits;
+	}
+	//----Setters---------------------------------------------------------------------------
+
+
+
+
+
+	protected void updateAccuracyPercent() {
+		if (this.lastHits > 0 && this.lastShots > 0) {
+			this.lastAccuracyPercent = lastHits * 100 / lastShots;
+		}
+	}
+
+	void updateAccuracyStats(AccuracyStats as) {
+		this.lastShots += as.getLastShots();
+		this.lastHits += as.getLastHits();
+		this.lastFrags += as.getLastFrags();
+		updateAccuracyPercent();
+	}
+
+
+
+
+	public void setLastShots(int lastShots) {
+		this.lastShots = lastShots;
+	}
+
+	public void setLastFrags(int lastFrags) {
+		this.lastFrags = lastFrags;
+	}
+
+	public void setLastHits(int lastHits) {
+		this.lastHits = lastHits;
+	}
+
 	public void setPlayer(Player player) {
 		this.player = player;
 	}
 
-	public int getShots() {
-		return shots;
-	}
 
-	public void setShots(int shots) {
-		this.shots = shots;
-	}
-
-	public int getFrags() {
-		return frags;
-	}
-
-	public void setFrags(int frags) {
-		this.frags = frags;
-	}
-
-	public int getHits() {
-		return hits;
-	}
-
-	public void setHits(int hits) {
-		this.hits = hits;
-	}
-
-	public int getAccuracyPercent() {
-		return accuracyPercent;
-	}
-
-	public Date getGameTimeStamp() {
-		return gameTimeStamp;
-	}
 
 	@PrePersist
 	@PreUpdate
@@ -145,9 +162,9 @@ public class AccuracyStats implements Serializable {
 	public String toString() {
 		return "AccuracyStats{" +
 				"player_uid=" + player.getUid() +
-				", shots=" + shots +
-				", hits=" + hits +
-				", accuracyPercent=" + accuracyPercent +
+				", lastShots=" + lastShots +
+				", lastHits=" + lastHits +
+				", lastAccuracyPercent=" + lastAccuracyPercent +
 				", gameTimeStamp=" + sdf.format(gameTimeStamp) +
 				'}';
 	}

@@ -1,10 +1,8 @@
 package com.newerth.core;
 
 import com.newerth.core.repository.AccuracyRepository;
-import com.newerth.core.repository.LastAccuracyRepository;
 import com.newerth.core.repository.PlayerRepository;
 import com.newerth.core.entities.AccuracyStats;
-import com.newerth.core.entities.LastAccuracyStats;
 import com.newerth.core.entities.Player;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,17 +17,11 @@ public class Updater {
 
 	private PlayerRepository playerDAO;
 	private AccuracyRepository accuracyDAO;
-	private LastAccuracyRepository lastAccuracyDAO;
 	private Reference reference;
 
 	@Autowired
 	private void setPlayerDAO(PlayerRepository jpaPlayerDAO) {
 		this.playerDAO = jpaPlayerDAO;
-	}
-
-	@Autowired
-	private void setLastAccuracyDAO(LastAccuracyRepository jpaLastAccuracyDAO) {
-		this.lastAccuracyDAO = jpaLastAccuracyDAO;
 	}
 
 	@Autowired
@@ -90,24 +82,6 @@ public class Updater {
 		}
 		try {
 			accuracyDAO.save(accuracy);
-			return true;
-		} catch (RuntimeException e) {
-			// ignored; fix it
-		}
-		return false;
-	}
-
-	/**
-	 * Saves or updates last accuracy for the player
-	 */
-	public boolean saveOrUpdateLastAccuracy(LastAccuracyStats lastAccuracy) {
-		saveOrUpdatePlayer(lastAccuracy.getPlayer());
-		LastAccuracyStats las = reference.findPlayerLastAccuracy(lastAccuracy.getPlayer().getUid());
-		if (las != null) {
-			lastAccuracy.setPlayer(reference.findPlayerByUid(las.getPlayer().getUid()));
-		}
-		try {
-			lastAccuracyDAO.save(lastAccuracy);
 			return true;
 		} catch (RuntimeException e) {
 			// ignored; fix it

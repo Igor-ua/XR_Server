@@ -26,15 +26,10 @@ public class Player {
 
 	@OneToOne(mappedBy = "player", cascade = CascadeType.ALL)
 	@JsonView(View.Summary.class)
-	private LastAccuracyStats lastAccuracyStats;
-
-	@OneToOne(mappedBy = "player", cascade = CascadeType.ALL)
-	@JsonView(View.Summary.class)
 	private Awards awards;
 
 	public Player() {
 		this.accuracyStats = new AccuracyStats(this);
-		this.lastAccuracyStats = new LastAccuracyStats(this);
 		this.awards = new Awards(this);
 		this.uid = 0L;
 		this.lastUsedName = "";
@@ -49,12 +44,8 @@ public class Player {
 		this.uid = uid;
 	}
 
-	public void updateAccuracyStats(AccuracyStats as) {
-		this.accuracyStats.updateAccuracyStats(as);
-	}
-
-	public void updateLastAccuracyStats(LastAccuracyStats las) {
-		this.lastAccuracyStats = las;
+	public void setAccuracyStats(AccuracyStats accuracyStats) {
+		this.accuracyStats = accuracyStats;
 	}
 
 	public void updateAwards(Awards awards) {
@@ -100,7 +91,6 @@ public class Player {
 	public String toString() {
 		return "Player{uid=" + uid + ", name='" + lastUsedName + "'"+
 				",\n\t" + accuracyStats +
-				",\n\t" + lastAccuracyStats +
 				",\n\t" + awards +
 				"\n\t}";
 	}
