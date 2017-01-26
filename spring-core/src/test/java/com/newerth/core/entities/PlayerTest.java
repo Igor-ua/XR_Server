@@ -26,11 +26,7 @@ public class PlayerTest {
 		Player p = new Player();
 		p.setUid(123L);
 		p.setLastUsedName("Mike");
-		AccuracyStats as = new AccuracyStats();
-		as.setLastHits(10);
-		as.setLastShots(25);
-		as.setLastFrags(5);
-		p.updateAccuracyStats(as);
+		p.getAccuracyStats().setStats(10, 7, 7);
 		return p;
 	}
 
@@ -74,6 +70,5 @@ public class PlayerTest {
 		Player p1 = preparePlayerWithFields();
 		this.entityManager.persist(p1);
 		Player p2 = repo.findByUid(p1.getUid());
-		p2.getAccuracyStats().setLastHits(3);
 	}
 }

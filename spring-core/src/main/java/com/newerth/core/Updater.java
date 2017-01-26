@@ -75,17 +75,17 @@ public class Updater {
 	 * Saves or updates accuracy for the player
 	 */
 	public boolean saveOrUpdateAccuracy(AccuracyStats accuracy) {
-		saveOrUpdatePlayer(accuracy.getPlayer());
-		AccuracyStats as = reference.findPlayerAccuracy(accuracy.getPlayer().getUid());
-		if (as != null) {
-			accuracy.setPlayer(reference.findPlayerByUid(as.getPlayer().getUid()));
-		}
-		try {
-			accuracyDAO.save(accuracy);
-			return true;
-		} catch (RuntimeException e) {
-			// ignored; fix it
-		}
+//		saveOrUpdatePlayer(accuracy.getPlayer());
+//		AccuracyStats as = reference.findPlayerAccuracy(accuracy.getPlayer().getUid());
+//		if (as != null) {
+//			accuracy.setPlayer(reference.findPlayerByUid(as.getPlayer().getUid()));
+//		}
+//		try {
+//			accuracyDAO.save(accuracy);
+//			return true;
+//		} catch (RuntimeException e) {
+//			// ignored; fix it
+//		}
 		return false;
 	}
 }

@@ -45,19 +45,19 @@ public class AccuracyStats implements Serializable {
 	@Max(100)
 	private int lastAccuracyPercent;
 	//----Accumulated accuracy stats--------------------------------------------------------
-	@Column(name = "last_shots")
+	@Column(name = "accumulated_shots")
 	@JsonView(View.Summary.class)
 	private int accumulatedShots;
 
-	@Column(name = "last_hits")
+	@Column(name = "accumulated_hits")
 	@JsonView(View.Summary.class)
 	private int accumulatedHits;
 
-	@Column(name = "last_frags")
+	@Column(name = "accumulated_frags")
 	@JsonView(View.Summary.class)
 	private int accumulatedFrags;
 
-	@Column(name = "accuracy_percent")
+	@Column(name = "accumulated_accuracy_percent")
 	@JsonView(View.Summary.class)
 	@Min(0)
 	@Max(100)
@@ -69,9 +69,19 @@ public class AccuracyStats implements Serializable {
 
 	@Transient
 	private SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+
+	private class Updater {
+		private int shots;
+		private int hits;
+		private int frags;
+	}
+
+	@Transient
+	private Updater updater;
 	//--------------------------------------------------------------------------------------
 
 	public AccuracyStats() {
+		this.updater = new Updater();
 	}
 
 	//----Getters---------------------------------------------------------------------------
@@ -94,49 +104,45 @@ public class AccuracyStats implements Serializable {
 	public int getLastHits() {
 		return lastHits;
 	}
+
 	//----Setters---------------------------------------------------------------------------
+	void setStats(int shots, int hits, int frags) {
+		setLastShots(shots);
+		setLastHits(hits);
+		setLastFrags(frags);
+		makeLastAccuracyPercent();
+	}
 
+	private void setLastShots(int shots) {
+		this.lastShots = shots;
+		updater.shots = shots;
+	}
 
+	private void setLastHits(int hits) {
+		this.lastHits = hits;
+		updater.hits = hits;
+	}
 
+	private void setLastFrags(int frags) {
+		this.lastFrags = frags;
+		updater.frags = frags;
+	}
 
-
-	protected void updateAccuracyPercent() {
+	private void makeLastAccuracyPercent() {
 		if (this.lastHits > 0 && this.lastShots > 0) {
 			this.lastAccuracyPercent = lastHits * 100 / lastShots;
 		}
 	}
 
-	void updateAccuracyStats(AccuracyStats as) {
-		this.lastShots += as.getLastShots();
-		this.lastHits += as.getLastHits();
-		this.lastFrags += as.getLastFrags();
-		updateAccuracyPercent();
-	}
-
-
-
-
-	public void setLastShots(int lastShots) {
-		this.lastShots = lastShots;
-	}
-
-	public void setLastFrags(int lastFrags) {
-		this.lastFrags = lastFrags;
-	}
-
-	public void setLastHits(int lastHits) {
-		this.lastHits = lastHits;
-	}
-
-	public void setPlayer(Player player) {
-		this.player = player;
-	}
-
-
-
 	@PrePersist
 	@PreUpdate
-	private void updateGameTimeStamp() {
+	private void accumulatedStatsUpdater() {
+		accumulatedShots += updater.shots;
+		accumulatedHits += updater.hits;
+		accumulatedFrags += updater.frags;
+		if (accumulatedHits > 0 && accumulatedShots > 0) {
+			accumulatedAccuracyPercent = accumulatedHits * 100 / accumulatedShots;
+		}
 		this.gameTimeStamp = new Date();
 	}
 
@@ -161,11 +167,15 @@ public class AccuracyStats implements Serializable {
 	@Override
 	public String toString() {
 		return "AccuracyStats{" +
-				"player_uid=" + player.getUid() +
-				", lastShots=" + lastShots +
-				", lastHits=" + lastHits +
-				", lastAccuracyPercent=" + lastAccuracyPercent +
-				", gameTimeStamp=" + sdf.format(gameTimeStamp) +
+				"[lastShots: " + lastShots +
+				", lastHits: " + lastHits +
+				", lastFrags: " + lastFrags +
+				", lastAccuracyPercent: " + lastAccuracyPercent + "], [" +
+				", accumulatedShots: " + accumulatedShots +
+				", accumulatedHits: " + accumulatedHits +
+				", accumulatedFrags" + accumulatedFrags +
+				", accumulatedAccuracyPercent: " + accumulatedAccuracyPercent + "], [" +
+				", gameTimeStamp=" + sdf.format(gameTimeStamp) + "]" +
 				'}';
 	}
 }
