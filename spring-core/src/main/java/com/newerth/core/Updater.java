@@ -1,8 +1,8 @@
 package com.newerth.core;
 
-import com.newerth.core.dao.JPAAccuracyDAO;
-import com.newerth.core.dao.JPALastAccuracyDAO;
-import com.newerth.core.dao.JPAPlayerDAO;
+import com.newerth.core.repository.AccuracyRepository;
+import com.newerth.core.repository.LastAccuracyRepository;
+import com.newerth.core.repository.PlayerRepository;
 import com.newerth.core.entities.AccuracyStats;
 import com.newerth.core.entities.LastAccuracyStats;
 import com.newerth.core.entities.Player;
@@ -17,28 +17,28 @@ import java.util.List;
 @Service
 public class Updater {
 
-	private JPAPlayerDAO playerDAO;
-	private JPAAccuracyDAO accuracyDAO;
-	private JPALastAccuracyDAO lastAccuracyDAO;
+	private PlayerRepository playerDAO;
+	private AccuracyRepository accuracyDAO;
+	private LastAccuracyRepository lastAccuracyDAO;
 	private Reference reference;
 
 	@Autowired
-	private void setPlayerDAO(JPAPlayerDAO jpaPlayerDAO) {
+	private void setPlayerDAO(PlayerRepository jpaPlayerDAO) {
 		this.playerDAO = jpaPlayerDAO;
 	}
 
 	@Autowired
-	private void setLastAccuracyDAO(JPALastAccuracyDAO jpaLastAccuracyDAO) {
+	private void setLastAccuracyDAO(LastAccuracyRepository jpaLastAccuracyDAO) {
 		this.lastAccuracyDAO = jpaLastAccuracyDAO;
 	}
 
 	@Autowired
-	private void setAccuracyDAO(JPAAccuracyDAO jpaAccuracyDAO) {
+	private void setAccuracyDAO(AccuracyRepository jpaAccuracyDAO) {
 		this.accuracyDAO = jpaAccuracyDAO;
 	}
 
 	@Autowired
-	private void setInformer(Reference reference){
+	private void setReference(Reference reference){
 		this.reference = reference;
 	}
 

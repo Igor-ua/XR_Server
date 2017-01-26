@@ -34,9 +34,10 @@ public class Player {
 
 	public Player() {
 		this.accuracyStats = new AccuracyStats(this);
-//		this.lastAccuracyStats = new LastAccuracyStats(this);
+		this.lastAccuracyStats = new LastAccuracyStats(this);
 		this.awards = new Awards(this);
 		this.uid = 0L;
+		this.lastUsedName = "";
 	}
 
 	public Player(Long uid) {
@@ -97,11 +98,10 @@ public class Player {
 
 	@Override
 	public String toString() {
-		return "Player{" +
-				"uid=" + uid +
-				", lastUsedName='" + lastUsedName + '\'' +
-				", accuracyStats=" + accuracyStats +
-				", awards=" + awards +
-				'}';
+		return "Player{uid=" + uid + ", name='" + lastUsedName + "'"+
+				",\n\t" + accuracyStats +
+				",\n\t" + lastAccuracyStats +
+				",\n\t" + awards +
+				"\n\t}";
 	}
 }

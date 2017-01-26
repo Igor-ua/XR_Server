@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Component
@@ -23,7 +24,7 @@ public class AccuracyStats implements Serializable {
 	private Long id;
 
 	@OneToOne
-	@JoinColumn(name = "player_uid", referencedColumnName = "uid", nullable = false, unique = true)
+	@JoinColumn(name = "player_uid", referencedColumnName = "uid", unique = true)
 	@JsonView(View.Summary.class)
 	private Player player;
 
@@ -48,6 +49,9 @@ public class AccuracyStats implements Serializable {
 	@Column(name = "game_ts")
 	@JsonView(View.Summary.class)
 	private Date gameTimeStamp;
+
+	@Transient
+	private SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 
 	public AccuracyStats() {
 	}
@@ -116,7 +120,7 @@ public class AccuracyStats implements Serializable {
 	@PrePersist
 	@PreUpdate
 	private void updateGameTimeStamp() {
-		this.gameTimeStamp = gameTimeStamp;
+		this.gameTimeStamp = new Date();
 	}
 
 	@Override
@@ -144,7 +148,7 @@ public class AccuracyStats implements Serializable {
 				", shots=" + shots +
 				", hits=" + hits +
 				", accuracyPercent=" + accuracyPercent +
-				", gameTimeStamp=" + gameTimeStamp +
+				", gameTimeStamp=" + sdf.format(gameTimeStamp) +
 				'}';
 	}
 }
