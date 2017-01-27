@@ -5,8 +5,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.Configuration;
 
 @SpringBootApplication
+@Configuration
 public class Main extends SpringBootServletInitializer implements CommandLineRunner {
 
 	@Override
@@ -20,6 +22,6 @@ public class Main extends SpringBootServletInitializer implements CommandLineRun
 
 	@Override
 	public void run(String... strings) throws Exception {
-		// empty for now
 	}
+
 }

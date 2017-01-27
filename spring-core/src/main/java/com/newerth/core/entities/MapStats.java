@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 @Component
 @Entity
@@ -18,7 +19,7 @@ public class MapStats implements Serializable {
 	@GeneratedValue
 	@JsonView(View.Summary.class)
 	@Column(name = "id")
-	private long id;
+	private Long id;
 
 	@Column(name = "map_name")
 	@JsonView(View.Summary.class)
@@ -36,11 +37,11 @@ public class MapStats implements Serializable {
 	@JsonView(View.Summary.class)
 	private Date mapTimeStamp;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -83,15 +84,14 @@ public class MapStats implements Serializable {
 
 		MapStats mapStats = (MapStats) o;
 
-		return id == mapStats.id && (mapName != null ? mapName.equals(mapStats.mapName) : mapStats.mapName == null) &&
-				(mapTimeStamp != null ? mapTimeStamp.equals(mapStats.mapTimeStamp) : mapStats.mapTimeStamp == null);
+		return (id != null ? id.equals(mapStats.id) : mapStats.id == null) &&
+				(mapName != null ? mapName.equals(mapStats.mapName) : mapStats.mapName == null);
 	}
 
 	@Override
 	public int hashCode() {
-		int result = (int) (id ^ (id >>> 32));
+		int result = id != null ? id.hashCode() : 0;
 		result = 31 * result + (mapName != null ? mapName.hashCode() : 0);
-		result = 31 * result + (mapTimeStamp != null ? mapTimeStamp.hashCode() : 0);
 		return result;
 	}
 

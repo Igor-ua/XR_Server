@@ -12,37 +12,52 @@ import javax.persistence.*;
 public class Player {
 
 	@Id
-	@GeneratedValue
 	@JsonView(View.Summary.class)
-	@Column(name = "id")
-	private long id;
-
-	@Column(name = "uid", unique=true, nullable = false)
-	@JsonView(View.Summary.class)
-	private long uid;
+	@Column(name = "uid")
+	private Long uid;
 
 	@JsonView(View.Summary.class)
 	@Column(name = "last_used_name", nullable = false, length = 50)
 	private String lastUsedName;
 
+	@OneToOne(mappedBy = "player", cascade = CascadeType.ALL)
+	@JsonView(View.Summary.class)
+	private AccuracyStats accuracyStats;
+
+	@OneToOne(mappedBy = "player", cascade = CascadeType.ALL)
+	@JsonView(View.Summary.class)
+	private Awards awards;
+
 	public Player() {
-		this.uid = 0;
+		this.accuracyStats = new AccuracyStats();
+		this.awards = new Awards(this);
+		this.uid = 0L;
+		this.lastUsedName = "";
 	}
 
-	public long getId() {
-		return id;
+	public Player(Long uid) {
+		this();
+		this.uid = uid;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setUid(Long uid) {
+		this.uid = uid;
 	}
 
-	public long getUid() {
+	public void updateAwards(Awards awards) {
+		this.awards.updateAwards(awards);
+	}
+
+	public Long getUid() {
 		return uid;
 	}
 
-	public void setUid(long uid) {
-		this.uid = uid;
+	public AccuracyStats getAccuracyStats() {
+		return accuracyStats;
+	}
+
+	public Awards getAwards() {
+		return awards;
 	}
 
 	public String getLastUsedName() {
@@ -60,22 +75,19 @@ public class Player {
 
 		Player player = (Player) o;
 
-		return id == player.id && uid == player.uid;
+		return uid != null ? uid.equals(player.uid) : player.uid == null;
 	}
 
 	@Override
 	public int hashCode() {
-		int result = (int) (id ^ (id >>> 32));
-		result = 31 * result + (int) (uid ^ (uid >>> 32));
-		return result;
+		return uid != null ? uid.hashCode() : 0;
 	}
 
 	@Override
 	public String toString() {
-		return "Player{" +
-				"id=" + id +
-				", uid=" + uid +
-				", lastUsedName='" + lastUsedName + '\'' +
-				'}';
+		return "Player{uid=" + uid + ", name='" + lastUsedName + "'"+
+				",\n\t" + accuracyStats +
+				",\n\t" + awards +
+				"\n\t}";
 	}
 }

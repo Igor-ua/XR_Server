@@ -1,7 +1,8 @@
 package com.newerth.api;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.newerth.core.DataService;
+import com.newerth.core.Reference;
+import com.newerth.core.Updater;
 import com.newerth.core.Utils;
 import com.newerth.core.View;
 import com.newerth.core.entities.Player;
@@ -11,11 +12,25 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * API for clients to get any kind of information from the DB
+ */
 @RestController
 @RequestMapping("/stats")
-public class StatsAPI {
+public class ClientAPI {
+
+	private Reference info;
+	private Updater updater;
+
 	@Autowired
-	private DataService service;
+	private void setServiceInfo(Reference serviceInfo) {
+		this.info = serviceInfo;
+	}
+
+	@Autowired
+	private void setServiceUpdater(Updater serviceUpdater) {
+		this.updater = serviceUpdater;
+	}
 
 	@RequestMapping("")
 	public String index(HttpServletRequest request) {
@@ -35,7 +50,7 @@ public class StatsAPI {
 		Player player = new Player();
 		player.setUid(uid);
 		player.setLastUsedName(lastName);
-		return service.saveOrUpdate(player);
+		return updater.saveOrUpdatePlayer(player);
 	}
 
 	@RequestMapping(
@@ -44,7 +59,7 @@ public class StatsAPI {
 	@JsonView(View.Summary.class)
 	public List<Player> findAll(HttpServletRequest request) {
 		Utils.logRequest(request, this.getClass());
-		return service.findAll();
+		return info.findAllPlayers();
 	}
 
 	@RequestMapping(
@@ -54,6 +69,6 @@ public class StatsAPI {
 	@ResponseBody
 	public Player findOne(@RequestParam(value = "uid") long uid, HttpServletRequest request) {
 		Utils.logRequest(request, this.getClass());
-		return service.findOne(uid);
+		return info.findPlayerByUid(uid);
 	}
 }
