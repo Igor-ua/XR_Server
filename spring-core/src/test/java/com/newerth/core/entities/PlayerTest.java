@@ -10,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static com.newerth.DataPreparer.*;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration
@@ -21,14 +22,6 @@ public class PlayerTest {
 
 	@Autowired
 	private PlayerRepository repo;
-
-	private Player preparePlayerWithFields() {
-		Player p = new Player();
-		p.setUid(123L);
-		p.setLastUsedName("Mike");
-		p.getAccuracyStats().setStats(10, 5, 5);
-		return p;
-	}
 
 	@Test
 	public void createOne() {
@@ -52,13 +45,13 @@ public class PlayerTest {
 
 	@Test
 	public void saveWithFields() {
-		Player p = preparePlayerWithFields();
+		Player p = getPlayerWithFields();
 		assertThat(repo.save(p));
 	}
 
 	@Test
 	public void saveWithFieldsAndFind() {
-		Player p1 = preparePlayerWithFields();
+		Player p1 = getPlayerWithFields();
 		assertThat(repo.save(p1));
 		Player p2 = repo.findByUid(p1.getUid());
 		System.out.println(p2);
@@ -67,7 +60,7 @@ public class PlayerTest {
 
 	@Test
 	public void findAndUpdate() {
-		Player p1 = preparePlayerWithFields();
+		Player p1 = getPlayerWithFields();
 		this.entityManager.persist(p1);
 		Player p2 = repo.findByUid(p1.getUid());
 		assertThat(p1.getAccuracyStats()).isEqualTo(p2.getAccuracyStats());
@@ -75,7 +68,7 @@ public class PlayerTest {
 
 	@Test
 	public void updateMultipleTimes() {
-		Player p1 = preparePlayerWithFields();
+		Player p1 = getPlayerWithFields();
 		this.entityManager.persist(p1);
 		Player p2 = repo.findByUid(p1.getUid());
 		p2.getAccuracyStats().setStats(2, 1, 1);
@@ -93,7 +86,7 @@ public class PlayerTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void wrongAccuracyParams() {
-		Player p = preparePlayerWithFields();
+		Player p = getPlayerWithFields();
 		p.getAccuracyStats().setStats(10, 20, 5);
 	}
 }

@@ -74,6 +74,15 @@ public class AccuracyStats implements Serializable {
 		private int shots;
 		private int hits;
 		private int frags;
+
+		@Override
+		public String toString() {
+			return "Updater{" +
+					"shots=" + shots +
+					", hits=" + hits +
+					", frags=" + frags +
+					'}';
+		}
 	}
 
 	@Transient
@@ -82,6 +91,7 @@ public class AccuracyStats implements Serializable {
 
 	public AccuracyStats() {
 		this.updater = new Updater();
+		this.gameTimeStamp = new Date();
 	}
 
 	//----Getters---------------------------------------------------------------------------
@@ -166,11 +176,13 @@ public class AccuracyStats implements Serializable {
 	@PrePersist
 	@PreUpdate
 	private void accumulatedStatsUpdater() {
+		System.out.println("PrePersist: updater: " + updater);
 		accumulatedShots += updater.shots;
 		accumulatedHits += updater.hits;
 		accumulatedFrags += updater.frags;
 		accumulatedAccuracyPercent = calculateAccuracy(accumulatedShots, accumulatedHits);
 		this.gameTimeStamp = new Date();
+		System.out.println("PrePersist: " + this);
 	}
 
 	@Override
@@ -200,9 +212,9 @@ public class AccuracyStats implements Serializable {
 				", lastAccuracyPercent: " + lastAccuracyPercent + "], [" +
 				", accumulatedShots: " + accumulatedShots +
 				", accumulatedHits: " + accumulatedHits +
-				", accumulatedFrags" + accumulatedFrags +
+				", accumulatedFrags: " + accumulatedFrags +
 				", accumulatedAccuracyPercent: " + accumulatedAccuracyPercent + "], [" +
 				", gameTimeStamp=" + sdf.format(gameTimeStamp) + "]" +
-				'}';
+				'}' + updater;
 	}
 }

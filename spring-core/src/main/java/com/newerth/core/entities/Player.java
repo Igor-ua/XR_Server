@@ -56,6 +56,10 @@ public class Player {
 		return accuracyStats;
 	}
 
+	public void setAccuracyStats(int shots, int hits, int frags) {
+		accuracyStats.setStats(shots, hits, frags);
+	}
+
 	public Awards getAwards() {
 		return awards;
 	}

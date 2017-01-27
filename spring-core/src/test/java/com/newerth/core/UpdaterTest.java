@@ -17,35 +17,35 @@ import static com.newerth.DataPreparer.*;
 @ContextConfiguration
 @DataJpaTest(showSql = false)
 @ComponentScan("com.newerth.core")
-public class ReferenceTest {
+public class UpdaterTest {
 
 	@Autowired
 	private TestEntityManager entityManager;
 
 	@Autowired
+	private Updater updater;
+
+	@Autowired
 	private Reference ref;
 
 	@Test
-	public void findPlayerByUid() {
-		Player p = getPlayerWithFields();
-		this.entityManager.persist(p);
-		assertThat(ref.findPlayerByUid(p.getUid()).getUid()).isEqualTo(p.getUid());
+	public void saveOrUpdatePlayer() {
+		Player p1 = getPlayerWithFields(1L);
+		System.out.println("p1_before: " + p1);
+		assertThat(updater.saveOrUpdatePlayer(p1));
+		p1 = ref.findPlayerByUid(p1.getUid());
+		System.out.println("p1_after: " + p1);
+
+//		p1.setAccuracyStats(4, 1, 1);
+//		assertThat(updater.saveOrUpdatePlayer(p1));
+//		p1 = ref.findPlayerByUid(p1.getUid());
+//
+//		System.out.println(p1);
+//		assertThat(p1.getAccuracyStats().getAccumulatedAccuracyPercent()).isEqualTo(43);
 	}
 
 	@Test
-	public void findPlayerByName() {
-		Player p = getPlayerWithFields();
-		this.entityManager.persist(p);
-		assertThat(ref.findPlayerByName(p.getLastUsedName()).getLastUsedName())
-				.isEqualTo(p.getLastUsedName());
-	}
+	public void saveOrUpdatePlayers() {
 
-	@Test
-	public void findAllPlayers() {
-		Player p1 = new Player(1L);
-		Player p2 = new Player(2L);
-		this.entityManager.persist(p1);
-		this.entityManager.persist(p2);
-		assertThat(ref.findAllPlayers().size()).isEqualTo(2);
 	}
 }
