@@ -97,12 +97,32 @@ public class AccuracyStats implements Serializable {
 		return lastShots;
 	}
 
+	public int getLastHits() {
+		return lastHits;
+	}
+
+	public int getLastAccuracyPercent() {
+		return lastAccuracyPercent;
+	}
+
 	public int getLastFrags() {
 		return lastFrags;
 	}
 
-	public int getLastHits() {
-		return lastHits;
+	public int getAccumulatedShots() {
+		return accumulatedShots;
+	}
+
+	public int getAccumulatedHits() {
+		return accumulatedHits;
+	}
+
+	public int getAccumulatedFrags() {
+		return accumulatedFrags;
+	}
+
+	public int getAccumulatedAccuracyPercent() {
+		return accumulatedAccuracyPercent;
 	}
 
 	//----Setters---------------------------------------------------------------------------
@@ -129,9 +149,15 @@ public class AccuracyStats implements Serializable {
 	}
 
 	private void makeLastAccuracyPercent() {
-		if (this.lastHits > 0 && this.lastShots > 0) {
-			this.lastAccuracyPercent = lastHits * 100 / lastShots;
+		this.lastAccuracyPercent = calculateAccuracy(this.lastShots, this.lastHits);
+	}
+
+	private int calculateAccuracy(int shots, int hits) {
+		int result = 0;
+		if (hits > 0 && shots > 0) {
+			result = (int) Math.ceil((double) hits * 100 / shots);
 		}
+		return result;
 	}
 
 	@PrePersist
@@ -140,9 +166,7 @@ public class AccuracyStats implements Serializable {
 		accumulatedShots += updater.shots;
 		accumulatedHits += updater.hits;
 		accumulatedFrags += updater.frags;
-		if (accumulatedHits > 0 && accumulatedShots > 0) {
-			accumulatedAccuracyPercent = accumulatedHits * 100 / accumulatedShots;
-		}
+		accumulatedAccuracyPercent = calculateAccuracy(accumulatedShots, accumulatedHits);
 		this.gameTimeStamp = new Date();
 	}
 

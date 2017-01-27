@@ -26,7 +26,7 @@ public class PlayerTest {
 		Player p = new Player();
 		p.setUid(123L);
 		p.setLastUsedName("Mike");
-		p.getAccuracyStats().setStats(10, 7, 7);
+		p.getAccuracyStats().setStats(10, 5, 5);
 		return p;
 	}
 
@@ -70,5 +70,24 @@ public class PlayerTest {
 		Player p1 = preparePlayerWithFields();
 		this.entityManager.persist(p1);
 		Player p2 = repo.findByUid(p1.getUid());
+		assertThat(p1.getAccuracyStats()).isEqualTo(p2.getAccuracyStats());
+	}
+
+	@Test
+	public void updateMultipleTimes() {
+		Player p1 = preparePlayerWithFields();
+		this.entityManager.persist(p1);
+		Player p2 = repo.findByUid(p1.getUid());
+		p2.getAccuracyStats().setStats(2, 1, 1);
+		repo.save(p2);
+		p2 = repo.findByUid(p1.getUid());
+		p2.getAccuracyStats().setStats(3, 1, 1);
+		repo.save(p2);
+		p2 = repo.findByUid(p1.getUid());
+		assertThat(p2.getAccuracyStats().getAccumulatedShots()).isEqualTo(15);
+		assertThat(p2.getAccuracyStats().getAccumulatedHits()).isEqualTo(7);
+		assertThat(p2.getAccuracyStats().getAccumulatedFrags()).isEqualTo(7);
+		assertThat(p2.getAccuracyStats().getAccumulatedAccuracyPercent()).isEqualTo(47);
+		assertThat(p2.getAccuracyStats().getAccumulatedAccuracyPercent()).isNotEqualTo(46);
 	}
 }
