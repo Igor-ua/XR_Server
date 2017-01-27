@@ -90,4 +90,10 @@ public class PlayerTest {
 		assertThat(p2.getAccuracyStats().getAccumulatedAccuracyPercent()).isEqualTo(47);
 		assertThat(p2.getAccuracyStats().getAccumulatedAccuracyPercent()).isNotEqualTo(46);
 	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void wrongAccuracyParams() {
+		Player p = preparePlayerWithFields();
+		p.getAccuracyStats().setStats(10, 20, 5);
+	}
 }

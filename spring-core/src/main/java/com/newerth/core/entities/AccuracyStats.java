@@ -130,6 +130,9 @@ public class AccuracyStats implements Serializable {
 		setLastShots(shots);
 		setLastHits(hits);
 		setLastFrags(frags);
+		if (hits > shots) {
+			throw new IllegalArgumentException("Shots more than hits: [shots: " + shots + ", hits: " + hits + "]");
+		}
 		makeLastAccuracyPercent();
 	}
 
