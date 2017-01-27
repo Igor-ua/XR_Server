@@ -1,6 +1,5 @@
 package com.newerth.core;
 
-import com.newerth.core.repository.AccuracyRepository;
 import com.newerth.core.repository.PlayerRepository;
 import com.newerth.core.entities.Player;
 import org.slf4j.Logger;
@@ -17,24 +16,12 @@ import java.util.List;
 public class Updater {
 
 	private PlayerRepository playerRepo;
-	private AccuracyRepository accuracyDAO;
-	private Reference ref;
 
 	private static Logger log = LoggerFactory.getLogger(Updater.class);
 
 	@Autowired
 	private void setPlayerRepo(PlayerRepository repository) {
 		this.playerRepo = repository;
-	}
-
-	@Autowired
-	private void setAccuracyRepo(AccuracyRepository repository) {
-		this.accuracyDAO = repository;
-	}
-
-	@Autowired
-	private void setReference(Reference ref){
-		this.ref = ref;
 	}
 
 	/**

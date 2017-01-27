@@ -10,6 +10,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static com.newerth.DataPreparer.*;
 
@@ -31,26 +34,27 @@ public class UpdaterTest {
 	@Test
 	public void saveOrUpdatePlayer() {
 		Player p1 = getPlayerWithFields(1L);
-		System.out.println("p1_before: " + p1);
 		assertThat(updater.saveOrUpdatePlayer(p1));
 		p1 = ref.findPlayerByUid(p1.getUid());
-		System.out.println("p1_after: " + p1);
 
 		p1.setAccuracyStats(4, 1, 1);
 		assertThat(updater.saveOrUpdatePlayer(p1));
 		p1 = ref.findPlayerByUid(p1.getUid());
-		System.out.println(p1);
 		assertThat(p1.getAccuracyStats().getAccumulatedAccuracyPercent()).isEqualTo(43);
 
 		p1.setAccuracyStats(4 , 2, 2);
 		updater.saveOrUpdatePlayer(p1);
 		p1 = ref.findPlayerByUid(p1.getUid());
-		System.out.println(p1);
 		assertThat(p1.getAccuracyStats().getAccumulatedAccuracyPercent()).isEqualTo(44);
 	}
 
 	@Test
 	public void saveOrUpdatePlayers() {
-
+		Player p1 = getPlayerWithFields(1L);
+		Player p2 = getPlayerWithFields(2L);
+		List<Player> players = new ArrayList<>();
+		players.add(p1);
+		players.add(p2);
+		assertThat(updater.saveOrUpdatePlayers(players));
 	}
 }

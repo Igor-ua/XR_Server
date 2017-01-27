@@ -40,6 +40,11 @@ public class Player {
 		this.uid = uid;
 	}
 
+	public Player(Long uid, String name) {
+		this(uid);
+		this.setLastUsedName(name);
+	}
+
 	public void setUid(Long uid) {
 		this.uid = uid;
 	}
