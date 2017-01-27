@@ -70,27 +70,9 @@ public class AccuracyStats implements Serializable {
 	@Transient
 	private SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 
-	private class Updater {
-		private int shots;
-		private int hits;
-		private int frags;
-
-		@Override
-		public String toString() {
-			return "Updater{" +
-					"shots=" + shots +
-					", hits=" + hits +
-					", frags=" + frags +
-					'}';
-		}
-	}
-
-	@Transient
-	private Updater updater;
 	//--------------------------------------------------------------------------------------
 
 	public AccuracyStats() {
-		this.updater = new Updater();
 		this.gameTimeStamp = new Date();
 	}
 
@@ -137,28 +119,17 @@ public class AccuracyStats implements Serializable {
 
 	//----Setters---------------------------------------------------------------------------
 	void setStats(int shots, int hits, int frags) {
-		setLastShots(shots);
-		setLastHits(hits);
-		setLastFrags(frags);
 		if (hits > shots) {
 			throw new IllegalArgumentException("Shots more than hits: [shots: " + shots + ", hits: " + hits + "]");
 		}
-		makeLastAccuracyPercent();
-	}
-
-	private void setLastShots(int shots) {
 		this.lastShots = shots;
-		updater.shots = shots;
-	}
-
-	private void setLastHits(int hits) {
 		this.lastHits = hits;
-		updater.hits = hits;
-	}
-
-	private void setLastFrags(int frags) {
 		this.lastFrags = frags;
-		updater.frags = frags;
+		this.makeLastAccuracyPercent();
+		this.accumulatedShots += shots;
+		this.accumulatedHits += hits;
+		this.accumulatedFrags += frags;
+		this.accumulatedAccuracyPercent = calculateAccuracy(this.accumulatedShots, this.accumulatedHits);
 	}
 
 	private void makeLastAccuracyPercent() {
@@ -168,7 +139,7 @@ public class AccuracyStats implements Serializable {
 	private int calculateAccuracy(int shots, int hits) {
 		int result = 0;
 		if (hits > 0 && shots > 0) {
-			result = (int) Math.ceil((double) hits * 100 / shots);
+			result = (int) Math.round((double) hits * 100 / shots);
 		}
 		return result;
 	}
@@ -176,13 +147,7 @@ public class AccuracyStats implements Serializable {
 	@PrePersist
 	@PreUpdate
 	private void accumulatedStatsUpdater() {
-		System.out.println("PrePersist: updater: " + updater);
-		accumulatedShots += updater.shots;
-		accumulatedHits += updater.hits;
-		accumulatedFrags += updater.frags;
-		accumulatedAccuracyPercent = calculateAccuracy(accumulatedShots, accumulatedHits);
 		this.gameTimeStamp = new Date();
-		System.out.println("PrePersist: " + this);
 	}
 
 	@Override
@@ -215,6 +180,6 @@ public class AccuracyStats implements Serializable {
 				", accumulatedFrags: " + accumulatedFrags +
 				", accumulatedAccuracyPercent: " + accumulatedAccuracyPercent + "], [" +
 				", gameTimeStamp=" + sdf.format(gameTimeStamp) + "]" +
-				'}' + updater;
+				'}';
 	}
 }

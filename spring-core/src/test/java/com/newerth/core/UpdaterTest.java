@@ -36,12 +36,17 @@ public class UpdaterTest {
 		p1 = ref.findPlayerByUid(p1.getUid());
 		System.out.println("p1_after: " + p1);
 
-//		p1.setAccuracyStats(4, 1, 1);
-//		assertThat(updater.saveOrUpdatePlayer(p1));
-//		p1 = ref.findPlayerByUid(p1.getUid());
-//
-//		System.out.println(p1);
-//		assertThat(p1.getAccuracyStats().getAccumulatedAccuracyPercent()).isEqualTo(43);
+		p1.setAccuracyStats(4, 1, 1);
+		assertThat(updater.saveOrUpdatePlayer(p1));
+		p1 = ref.findPlayerByUid(p1.getUid());
+		System.out.println(p1);
+		assertThat(p1.getAccuracyStats().getAccumulatedAccuracyPercent()).isEqualTo(43);
+
+		p1.setAccuracyStats(4 , 2, 2);
+		updater.saveOrUpdatePlayer(p1);
+		p1 = ref.findPlayerByUid(p1.getUid());
+		System.out.println(p1);
+		assertThat(p1.getAccuracyStats().getAccumulatedAccuracyPercent()).isEqualTo(44);
 	}
 
 	@Test
