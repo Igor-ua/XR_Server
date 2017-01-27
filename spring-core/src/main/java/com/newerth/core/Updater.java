@@ -16,7 +16,6 @@ import java.util.List;
 public class Updater {
 
 	private PlayerRepository playerRepo;
-
 	private static Logger log = LoggerFactory.getLogger(Updater.class);
 
 	@Autowired

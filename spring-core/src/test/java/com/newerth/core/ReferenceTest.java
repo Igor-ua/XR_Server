@@ -4,6 +4,8 @@ import com.newerth.core.entities.Player;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.jdbc.EmbeddedDatabaseConnection;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.ComponentScan;
@@ -17,6 +19,7 @@ import static com.newerth.DataPreparer.*;
 @ContextConfiguration
 @DataJpaTest(showSql = false)
 @ComponentScan("com.newerth.core")
+@AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 public class ReferenceTest {
 
 	@Autowired

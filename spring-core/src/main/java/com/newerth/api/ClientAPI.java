@@ -2,7 +2,6 @@ package com.newerth.api;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.newerth.core.Reference;
-import com.newerth.core.Updater;
 import com.newerth.core.Utils;
 import com.newerth.core.View;
 import com.newerth.core.entities.Player;
@@ -10,65 +9,35 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
- * API for clients to get any kind of information from the DB
+ * API for clients to _GET_ any kind of information from the DB
  */
 @RestController
 @RequestMapping("/stats")
 public class ClientAPI {
 
-	private Reference info;
-	private Updater updater;
+	private static final String SERVICE_NAME = "Internal filtered stats API";
+	private Reference ref;
 
 	@Autowired
-	private void setServiceInfo(Reference serviceInfo) {
-		this.info = serviceInfo;
-	}
-
-	@Autowired
-	private void setServiceUpdater(Updater serviceUpdater) {
-		this.updater = serviceUpdater;
+	private void setRef(Reference reference) {
+		this.ref = reference;
 	}
 
 	@RequestMapping("")
 	public String index(HttpServletRequest request) {
 		Utils.logRequest(request, this.getClass());
-		return "Internal filtered stats API";
+		return SERVICE_NAME;
 	}
 
 	@RequestMapping(
-			value = "/save",
-			method = RequestMethod.POST)
-	@ResponseBody
-	public boolean savePlayer(
-			@RequestParam("uid") Long uid,
-			@RequestParam("lastUsedName") String lastName,
-			HttpServletRequest request) {
-		Utils.logRequest(request, this.getClass());
-		Player player = new Player();
-		player.setUid(uid);
-		player.setLastUsedName(lastName);
-		return updater.saveOrUpdatePlayer(player);
-	}
-
-	@RequestMapping(
-			value = "/all",
+			value = "/{uid}",
 			method = RequestMethod.GET)
+	@ResponseBody
 	@JsonView(View.Summary.class)
-	public List<Player> findAll(HttpServletRequest request) {
+	public Player findOne(@PathVariable("uid") long uid, HttpServletRequest request) {
 		Utils.logRequest(request, this.getClass());
-		return info.findAllPlayers();
-	}
-
-	@RequestMapping(
-			value = "/one",
-			params = {"uid"},
-			method = RequestMethod.GET)
-	@ResponseBody
-	public Player findOne(@RequestParam(value = "uid") long uid, HttpServletRequest request) {
-		Utils.logRequest(request, this.getClass());
-		return info.findPlayerByUid(uid);
+		return ref.findPlayerByUid(uid);
 	}
 }

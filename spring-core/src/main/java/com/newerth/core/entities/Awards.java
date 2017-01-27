@@ -18,7 +18,7 @@ public class Awards implements Serializable {
 	private Long id;
 
 	@OneToOne
-	@JoinColumn(name = "player_uid", referencedColumnName = "uid", nullable = false)
+	@JoinColumn(name = "player_uid", referencedColumnName = "uid", nullable = false, unique = true)
 	@JsonView(View.Summary.class)
 	private Player player;
 

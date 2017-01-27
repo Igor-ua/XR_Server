@@ -10,22 +10,24 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 public class RootAPI implements ErrorController {
 
-	private static final String PATH = "/error";
+	private static final String SERVICE_NAME = "XR Server instagib API";
+	private static final String ERROR_PATH = "/error";
+	private static final String ERROR_MSG = "Error/403";
 
 	@RequestMapping("/")
 	public String index(HttpServletRequest request) {
 		Utils.logRequest(request, this.getClass());
-		return "XR Server instagib API";
+		return SERVICE_NAME;
 	}
 
-	@RequestMapping(value = PATH)
+	@RequestMapping(value = ERROR_PATH)
 	public String error(HttpServletRequest request) {
 		Utils.logRequest(request, this.getClass());
-		return "Error/403";
+		return ERROR_MSG;
 	}
 
 	@Override
 	public String getErrorPath() {
-		return PATH;
+		return ERROR_PATH;
 	}
 }
