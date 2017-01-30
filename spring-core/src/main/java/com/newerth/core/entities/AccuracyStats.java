@@ -1,5 +1,6 @@
 package com.newerth.core.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.newerth.core.View;
 import org.springframework.stereotype.Component;
@@ -25,6 +26,7 @@ public class AccuracyStats implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "player_uid", referencedColumnName = "uid", unique = true, nullable = false)
 	@JsonView(View.Summary.class)
+	@JsonBackReference
 	private Player player;
 	//----Last accuracy stats---------------------------------------------------------------
 	@Column(name = "last_shots")

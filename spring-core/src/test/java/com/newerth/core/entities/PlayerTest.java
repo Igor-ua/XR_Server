@@ -2,7 +2,7 @@ package com.newerth.core.entities;
 
 import com.newerth.core.Reference;
 import com.newerth.core.Updater;
-import com.newerth.core.repository.PlayerRepository;
+import com.newerth.core.Utils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,7 +12,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestData
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -128,5 +127,11 @@ public class PlayerTest {
 		assertThat(as.getLastHits()).isEqualTo(5);
 		assertThat(as.getLastFrags()).isEqualTo(5);
 		assertThat(p.getUid()).isEqualTo(1);
+	}
+
+	@Test
+	public void objectToJson() {
+		String json = Utils.getJsonFromObject(player);
+		System.out.println(json);
 	}
 }

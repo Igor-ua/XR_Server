@@ -6,7 +6,9 @@ import com.newerth.core.entities.Player;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 /**
  * API to make any changes in the DB
@@ -35,6 +37,17 @@ public class ServerAPI {
 		player.setUid(uid);
 		player.setLastUsedName(lastName);
 		return updater.saveOrUpdatePlayer(player);
+	}
+
+	@RequestMapping(
+			value = "/save-json",
+			method = RequestMethod.POST)
+	@ResponseBody
+	public String saveJsonPlayer(
+			@RequestBody String body,
+			HttpServletRequest request) throws IOException, ServletException {
+		Utils.logRequest(request, this.getClass());
+		return body;
 	}
 
 }
