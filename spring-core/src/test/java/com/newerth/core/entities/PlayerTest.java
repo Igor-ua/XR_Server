@@ -81,20 +81,22 @@ public class PlayerTest {
 
 	@Test
 	public void updateMultipleTimes() {
-		Player p1 = player;
-		this.entityManager.persist(p1);
-		Player p2 = repo.findByUid(p1.getUid());
-		p2.getAccuracyStats().setStats(2, 1, 1);
-		repo.save(p2);
-		p2 = repo.findByUid(p1.getUid());
-		p2.getAccuracyStats().setStats(3, 1, 1);
-		repo.save(p2);
-		p2 = repo.findByUid(p1.getUid());
-		assertThat(p2.getAccuracyStats().getAccumulatedShots()).isEqualTo(15);
-		assertThat(p2.getAccuracyStats().getAccumulatedHits()).isEqualTo(7);
-		assertThat(p2.getAccuracyStats().getAccumulatedFrags()).isEqualTo(7);
-		assertThat(p2.getAccuracyStats().getAccumulatedAccuracyPercent()).isEqualTo(47);
-		assertThat(p2.getAccuracyStats().getAccumulatedAccuracyPercent()).isNotEqualTo(46);
+		this.entityManager.persist(player);
+
+		Player p = repo.findByUid(player.getUid());
+		p.getAccuracyStats().setStats(4, 1, 1);
+		repo.save(p);
+
+		p = repo.findByUid(player.getUid());
+		p.getAccuracyStats().setStats(4, 2, 2);
+		repo.save(p);
+
+		p = repo.findByUid(player.getUid());
+		assertThat(p.getAccuracyStats().getAccumulatedShots()).isEqualTo(18);
+		assertThat(p.getAccuracyStats().getAccumulatedHits()).isEqualTo(8);
+		assertThat(p.getAccuracyStats().getAccumulatedFrags()).isEqualTo(8);
+		assertThat(p.getAccuracyStats().getAccumulatedAccuracyPercent()).isEqualTo(44);
+		assertThat(p.getAccuracyStats().getAccumulatedAccuracyPercent()).isNotEqualTo(43);
 	}
 
 	@Test(expected = IllegalArgumentException.class)

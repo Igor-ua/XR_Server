@@ -153,6 +153,7 @@ public class AccuracyStats implements Serializable {
 	@PreUpdate
 	private void accumulatedStatsUpdater() {
 		this.gameTimeStamp = new Date();
+		isAccumulated = false;
 	}
 
 	@Override
