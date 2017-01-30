@@ -23,7 +23,7 @@ public class AccuracyStats implements Serializable {
 	private Long id;
 
 	@OneToOne
-	@JoinColumn(name = "player_uid", referencedColumnName = "uid", unique = true)
+	@JoinColumn(name = "player_uid", referencedColumnName = "uid", unique = true, nullable = false)
 	@JsonView(View.Summary.class)
 	private Player player;
 	//----Last accuracy stats---------------------------------------------------------------
@@ -78,6 +78,11 @@ public class AccuracyStats implements Serializable {
 
 	public AccuracyStats() {
 		this.gameTimeStamp = new Date();
+	}
+
+	public AccuracyStats(Player player) {
+		this();
+		this.player = player;
 	}
 
 	//----Getters---------------------------------------------------------------------------
@@ -140,6 +145,12 @@ public class AccuracyStats implements Serializable {
 			isAccumulated = true;
 		}
 	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	//--------------------------------------------------------------------------------------
 
 	private int calculateAccuracy(int shots, int hits) {
 		int result = 0;

@@ -33,9 +33,10 @@ public class Updater {
 	 * Saves new player or updates old player if he exists
 	 */
 	public boolean saveOrUpdatePlayer(Player player) {
-		Player p = ref.findPlayerByUid(player.getUid());
-		if (p != null) {
-			player.setUid(p.getUid());
+		Player found = ref.findPlayerByUid(player.getUid());
+		if (found != null) {
+			player.getAccuracyStats().setId(found.getAccuracyStats().getId());
+			player.getAwards().setId(found.getAwards().getId());
 		}
 		try {
 			playerRepo.save(player);
@@ -51,9 +52,10 @@ public class Updater {
 	 */
 	public boolean saveOrUpdatePlayers(List<Player> players) {
 		players.forEach(player -> {
-			Player p = ref.findPlayerByUid(player.getUid());
-			if (p != null) {
-				player.setUid(p.getUid());
+			Player found = ref.findPlayerByUid(player.getUid());
+			if (found != null) {
+				player.getAccuracyStats().setId(found.getAccuracyStats().getId());
+				player.getAwards().setId(found.getAwards().getId());
 			}
 		});
 		try {

@@ -29,10 +29,10 @@ public class Player {
 	private Awards awards;
 
 	public Player() {
-		this.accuracyStats = new AccuracyStats();
-		this.awards = new Awards(this);
 		this.uid = 0L;
 		this.lastUsedName = "";
+		this.accuracyStats = new AccuracyStats(this);
+		this.awards = new Awards(this);
 	}
 
 	public Player(Long uid) {

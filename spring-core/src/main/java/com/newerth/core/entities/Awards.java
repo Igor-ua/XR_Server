@@ -18,7 +18,7 @@ public class Awards implements Serializable {
 	private Long id;
 
 	@OneToOne
-	@JoinColumn(name = "player_uid", referencedColumnName = "uid", nullable = false, unique = true)
+	@JoinColumn(name = "player_uid", referencedColumnName = "uid", unique = true, nullable = false)
 	@JsonView(View.Summary.class)
 	private Player player;
 
@@ -26,6 +26,7 @@ public class Awards implements Serializable {
 	}
 
 	public Awards(Player player) {
+		this();
 		this.player = player;
 	}
 
@@ -53,7 +54,6 @@ public class Awards implements Serializable {
 	public String toString() {
 		return "Awards{" +
 				"id=" + id +
-				", player_uid=" + player.getUid() +
 				'}';
 	}
 }
