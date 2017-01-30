@@ -1,6 +1,7 @@
 package com.newerth.core;
 
 import com.newerth.core.entities.Player;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static com.newerth.DataPreparer.*;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration
@@ -34,27 +34,41 @@ public class UpdaterTest {
 	@Autowired
 	private Reference ref;
 
+	private Player player;
+
+	// Runs before every test
+	@Before
+	public void setup() {
+		this.player = new Player(1L);
+		player.setLastUsedName("Mike");
+		player.setAccuracyStats(10, 5, 5);
+	}
+
 	@Test
 	public void saveOrUpdatePlayer() {
-		Player p1 = getPlayerWithFields(1L);
-		assertThat(updater.saveOrUpdatePlayer(p1));
-		p1 = ref.findPlayerByUid(p1.getUid());
-
-		p1.setAccuracyStats(4, 1, 1);
-		assertThat(updater.saveOrUpdatePlayer(p1));
-		p1 = ref.findPlayerByUid(p1.getUid());
-		assertThat(p1.getAccuracyStats().getAccumulatedAccuracyPercent()).isEqualTo(43);
-
-		p1.setAccuracyStats(4 , 2, 2);
-		updater.saveOrUpdatePlayer(p1);
-		p1 = ref.findPlayerByUid(p1.getUid());
-		assertThat(p1.getAccuracyStats().getAccumulatedAccuracyPercent()).isEqualTo(44);
+		Player player = new Player();
+		player.setUid(1L);
+		player.setAccuracyStats(4, 1, 1);
+		// First save
+		assertThat(updater.saveOrUpdatePlayer(player));
+		player = ref.findPlayerByUid(player.getUid());
+		// 1 * 100 / 4 = 25
+		assertThat(player.getAccuracyStats().getAccumulatedAccuracyPercent()).isEqualTo(25);
+		// 2 * 100 / 4 = 50
+		// 3 * 100 / 8 = 37.5 (Math.round() -> 38)
+		player.setAccuracyStats(4 , 2, 2);
+		assertThat(player.getAccuracyStats().getLastAccuracyPercent()).isEqualTo(50);
+		assertThat(player.getAccuracyStats().getAccumulatedAccuracyPercent()).isEqualTo(38);
+		// Second update
+		assertThat(updater.saveOrUpdatePlayer(player));
+		Player p2 = ref.findPlayerByUid(1L);
+		assertThat(p2).isEqualTo(player);
 	}
 
 	@Test
 	public void saveOrUpdatePlayers() {
-		Player p1 = getPlayerWithFields(1L);
-		Player p2 = getPlayerWithFields(2L);
+		Player p1 = new Player(1L);
+		Player p2 = new Player(2L);
 		List<Player> players = new ArrayList<>();
 		players.add(p1);
 		players.add(p2);

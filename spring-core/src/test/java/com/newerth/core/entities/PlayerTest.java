@@ -1,6 +1,7 @@
 package com.newerth.core.entities;
 
 import com.newerth.core.repository.PlayerRepository;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,11 +9,11 @@ import org.springframework.boot.autoconfigure.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static com.newerth.DataPreparer.*;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration
@@ -25,6 +26,16 @@ public class PlayerTest {
 
 	@Autowired
 	private PlayerRepository repo;
+
+	private Player player;
+
+	// Runs before every test
+	@Before
+	public void setup() {
+		this.player = new Player(1L);
+		player.setLastUsedName("Mike");
+		player.setAccuracyStats(10, 5, 5);
+	}
 
 	@Test
 	public void createOne() {
@@ -48,13 +59,12 @@ public class PlayerTest {
 
 	@Test
 	public void saveWithFields() {
-		Player p = getPlayerWithFields();
-		assertThat(repo.save(p));
+		assertThat(repo.save(player));
 	}
 
 	@Test
 	public void saveWithFieldsAndFind() {
-		Player p1 = getPlayerWithFields();
+		Player p1 = player;
 		assertThat(repo.save(p1));
 		Player p2 = repo.findByUid(p1.getUid());
 		System.out.println(p2);
@@ -63,7 +73,7 @@ public class PlayerTest {
 
 	@Test
 	public void findAndUpdate() {
-		Player p1 = getPlayerWithFields();
+		Player p1 = player;
 		this.entityManager.persist(p1);
 		Player p2 = repo.findByUid(p1.getUid());
 		assertThat(p1.getAccuracyStats()).isEqualTo(p2.getAccuracyStats());
@@ -71,7 +81,7 @@ public class PlayerTest {
 
 	@Test
 	public void updateMultipleTimes() {
-		Player p1 = getPlayerWithFields();
+		Player p1 = player;
 		this.entityManager.persist(p1);
 		Player p2 = repo.findByUid(p1.getUid());
 		p2.getAccuracyStats().setStats(2, 1, 1);
@@ -89,7 +99,25 @@ public class PlayerTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void wrongAccuracyParams() {
-		Player p = getPlayerWithFields();
+		Player p = player;
 		p.getAccuracyStats().setStats(10, 20, 5);
+	}
+
+	@Test(expected = DataIntegrityViolationException.class)
+	public void saveOneTwice() {
+		Player p = player;
+		System.out.println(p);
+		repo.save(p);
+		repo.save(p);
+	}
+
+	@Test
+	public void accuracyGetters() {
+		Player p = player;
+		AccuracyStats as = p.getAccuracyStats();
+		assertThat(as.getLastShots()).isEqualTo(10);
+		assertThat(as.getLastHits()).isEqualTo(5);
+		assertThat(as.getLastFrags()).isEqualTo(5);
+		assertThat(p.getUid()).isEqualTo(1);
 	}
 }

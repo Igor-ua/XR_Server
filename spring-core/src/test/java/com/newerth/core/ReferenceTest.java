@@ -1,6 +1,7 @@
 package com.newerth.core;
 
 import com.newerth.core.entities.Player;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static com.newerth.DataPreparer.*;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration
@@ -28,16 +28,26 @@ public class ReferenceTest {
 	@Autowired
 	private Reference ref;
 
+	private Player player;
+
+	// Runs before every test
+	@Before
+	public void setup() {
+		this.player = new Player(1L);
+		player.setLastUsedName("Mike");
+		player.setAccuracyStats(10, 5, 5);
+	}
+
 	@Test
 	public void findPlayerByUid() {
-		Player p = getPlayerWithFields();
+		Player p = player;
 		this.entityManager.persist(p);
 		assertThat(ref.findPlayerByUid(p.getUid()).getUid()).isEqualTo(p.getUid());
 	}
 
 	@Test
 	public void findPlayerByName() {
-		Player p = getPlayerWithFields();
+		Player p = player;
 		this.entityManager.persist(p);
 		assertThat(ref.findPlayerByName(p.getLastUsedName()).getLastUsedName())
 				.isEqualTo(p.getLastUsedName());

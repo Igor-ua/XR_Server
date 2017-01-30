@@ -70,6 +70,10 @@ public class AccuracyStats implements Serializable {
 	@Transient
 	private SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 
+	// Flag that indicates that accumulated logic was called once
+	@Transient
+	private boolean isAccumulated = false;
+
 	//--------------------------------------------------------------------------------------
 
 	public AccuracyStats() {
@@ -128,10 +132,13 @@ public class AccuracyStats implements Serializable {
 		this.lastFrags = frags;
 		this.lastAccuracyPercent = calculateAccuracy(this.lastShots, this.lastHits);
 
-		this.accumulatedShots += shots;
-		this.accumulatedHits += hits;
-		this.accumulatedFrags += frags;
-		this.accumulatedAccuracyPercent = calculateAccuracy(this.accumulatedShots, this.accumulatedHits);
+		if (!isAccumulated) {
+			this.accumulatedShots += shots;
+			this.accumulatedHits += hits;
+			this.accumulatedFrags += frags;
+			this.accumulatedAccuracyPercent = calculateAccuracy(this.accumulatedShots, this.accumulatedHits);
+			isAccumulated = true;
+		}
 	}
 
 	private int calculateAccuracy(int shots, int hits) {
