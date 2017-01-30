@@ -16,6 +16,7 @@ import java.util.List;
 public class Updater {
 
 	private PlayerRepository playerRepo;
+	private Reference ref;
 	private static Logger log = LoggerFactory.getLogger(Updater.class);
 
 	@Autowired
@@ -23,10 +24,19 @@ public class Updater {
 		this.playerRepo = repository;
 	}
 
+	@Autowired
+	private void setReference(Reference reference){
+		this.ref = reference;
+	}
+
 	/**
 	 * Saves new player or updates old player if he exists
 	 */
 	public boolean saveOrUpdatePlayer(Player player) {
+		Player p = ref.findPlayerByUid(player.getUid());
+		if (p != null) {
+			player.setUid(p.getUid());
+		}
 		try {
 			playerRepo.save(player);
 			return true;
@@ -40,6 +50,12 @@ public class Updater {
 	 * Saves or updates the list of the players
 	 */
 	public boolean saveOrUpdatePlayers(List<Player> players) {
+		players.forEach(player -> {
+			Player p = ref.findPlayerByUid(player.getUid());
+			if (p != null) {
+				player.setUid(p.getUid());
+			}
+		});
 		try {
 			playerRepo.save(players);
 			return true;

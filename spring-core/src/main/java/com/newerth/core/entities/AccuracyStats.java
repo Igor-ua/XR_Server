@@ -17,7 +17,7 @@ import java.util.Date;
 public class AccuracyStats implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE)
+	@GeneratedValue
 	@JsonView(View.Summary.class)
 	@Column(name = "id")
 	private Long id;
@@ -122,18 +122,16 @@ public class AccuracyStats implements Serializable {
 		if (hits > shots) {
 			throw new IllegalArgumentException("Shots more than hits: [shots: " + shots + ", hits: " + hits + "]");
 		}
+
 		this.lastShots = shots;
 		this.lastHits = hits;
 		this.lastFrags = frags;
-		this.makeLastAccuracyPercent();
+		this.lastAccuracyPercent = calculateAccuracy(this.lastShots, this.lastHits);
+
 		this.accumulatedShots += shots;
 		this.accumulatedHits += hits;
 		this.accumulatedFrags += frags;
 		this.accumulatedAccuracyPercent = calculateAccuracy(this.accumulatedShots, this.accumulatedHits);
-	}
-
-	private void makeLastAccuracyPercent() {
-		this.lastAccuracyPercent = calculateAccuracy(this.lastShots, this.lastHits);
 	}
 
 	private int calculateAccuracy(int shots, int hits) {
