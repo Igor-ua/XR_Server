@@ -189,17 +189,13 @@ public class AccuracyStats implements Serializable {
 
 	@Override
 	public String toString() {
-		return "AccuracyStats{" +
-				"player_uid: " + player.getUid() +
-				" [lastShots: " + lastShots +
-				", lastHits: " + lastHits +
-				", lastFrags: " + lastFrags +
-				", lastAccuracyPercent: " + lastAccuracyPercent + "], [" +
-				", accumulatedShots: " + accumulatedShots +
-				", accumulatedHits: " + accumulatedHits +
-				", accumulatedFrags: " + accumulatedFrags +
-				", accumulatedAccuracyPercent: " + accumulatedAccuracyPercent + "], [" +
-				", gameTimeStamp=" + sdf.format(gameTimeStamp) + "]" +
-				'}';
+		return "\tAccuracyStats: {\n" +
+				"\t\tplayer_uid: " + player.getUid() + "\n" +
+				"\t\tlast:        [shots: " + lastShots + ", hits: " + lastHits + ", frags: " + lastFrags + ", accuracy: " +
+				lastAccuracyPercent + "]\n" +
+				"\t\taccumulated: [shots: " + accumulatedShots + ", hits: " + accumulatedHits + ", frags: " + accumulatedFrags +
+				", accuracy: " + accumulatedAccuracyPercent + "]\n" +
+				"\t\tgameTimeStamp: " + sdf.format(gameTimeStamp) + "\n" +
+				"\t}";
 	}
 }

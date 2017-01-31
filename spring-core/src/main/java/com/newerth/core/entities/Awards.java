@@ -54,8 +54,8 @@ public class Awards implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Awards{" +
-				"player_uid=" + player.getUid() +
-				'}';
+		return "\tAwards: {\n" +
+				"\t\tplayer_uid: " + player.getUid() + "\n" +
+				"\t}";
 	}
 }

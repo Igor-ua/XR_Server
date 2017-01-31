@@ -2,7 +2,6 @@ package com.newerth.core;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -11,7 +10,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration
-@DataJpaTest(showSql = false)
 @ComponentScan("com.newerth.core")
 public class UtilsTest {
 
@@ -21,6 +19,6 @@ public class UtilsTest {
 	@Test
 	public void getPlayerFromJson() {
 		assertThat(Utils.getPlayerFromJson(json));
-		System.out.println(Utils.getPlayerFromJson(json));
+		System.err.println(Utils.getPlayerFromJson(json));
 	}
 }

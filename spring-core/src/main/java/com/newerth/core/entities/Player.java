@@ -94,9 +94,11 @@ public class Player {
 
 	@Override
 	public String toString() {
-		return "Player{uid=" + uid + ", name='" + lastUsedName + "'"+
-				",\n\t" + accuracyStats +
-				",\n\t" + awards +
-				"\n\t}";
+		return "Player: {\n" +
+				"\tuid: " + uid + ",\n" +
+				"\tname: " + lastUsedName + ",\n" +
+				"" + accuracyStats + "\n" +
+				"" + awards +
+				"\n}";
 	}
 }
