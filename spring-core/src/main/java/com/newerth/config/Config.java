@@ -10,7 +10,7 @@ import javax.servlet.Filter;
 @Configuration
 public class Config {
 
-	@Bean
+//	@Bean
 	public FilterRegistrationBean requestDumperFilter() {
 		Filter requestDumperFilter = new RequestDumperFilter();
 		FilterRegistrationBean registration = new FilterRegistrationBean();

@@ -29,25 +29,10 @@ public class ServerAPI {
 			method = RequestMethod.POST)
 	@ResponseBody
 	public boolean savePlayer(
-			@RequestParam("uid") Long uid,
-			@RequestParam("lastUsedName") String lastName,
-			HttpServletRequest request) {
-		Utils.logRequest(request, this.getClass());
-		Player player = new Player();
-		player.setUid(uid);
-		player.setLastUsedName(lastName);
-		return updater.saveOrUpdatePlayer(player);
-	}
-
-	@RequestMapping(
-			value = "/save-json",
-			method = RequestMethod.POST)
-	@ResponseBody
-	public String saveJsonPlayer(
 			@RequestBody String body,
-			HttpServletRequest request) throws IOException, ServletException {
-		Utils.logRequest(request, this.getClass());
-		return body;
+			HttpServletRequest request) {
+		Utils.logRequest(request, body, this.getClass());
+		return false;
 	}
 
 }

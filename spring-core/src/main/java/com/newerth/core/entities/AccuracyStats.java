@@ -190,7 +190,8 @@ public class AccuracyStats implements Serializable {
 	@Override
 	public String toString() {
 		return "AccuracyStats{" +
-				"[lastShots: " + lastShots +
+				"player_uid: " + player.getUid() +
+				" [lastShots: " + lastShots +
 				", lastHits: " + lastHits +
 				", lastFrags: " + lastFrags +
 				", lastAccuracyPercent: " + lastAccuracyPercent + "], [" +
