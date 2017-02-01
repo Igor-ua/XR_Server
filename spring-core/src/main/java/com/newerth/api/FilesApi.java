@@ -16,16 +16,22 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+
+/**
+ * Public API
+ */
 @RestController
 @RequestMapping("/world")
-public class FilesAPI {
+public class FilesApi {
 
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
+	private static final String SERVICE_NAME = "API for downloading files for XR clients";
+	private static final String WORLD_PATH = "./spring-core/world/";
 
 	@RequestMapping("")
 	public String index(HttpServletResponse response, HttpServletRequest request) {
 		Utils.logRequest(request, this.getClass());
-		return "API for downloading files for XR clients";
+		return SERVICE_NAME;
 	}
 
 
@@ -40,7 +46,7 @@ public class FilesAPI {
 		File f;
 
 		try {
-			String src = "./spring-core/world/" + completeFileName;
+			String src = WORLD_PATH + completeFileName;
 			f = new File(src);
 			is = new FileInputStream(f);
 

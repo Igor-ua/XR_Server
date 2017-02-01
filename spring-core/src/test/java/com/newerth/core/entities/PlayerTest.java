@@ -1,11 +1,17 @@
 package com.newerth.core.entities;
 
-import com.newerth.core.repository.PlayerRepository;
+import com.newerth.core.Reference;
+import com.newerth.core.Updater;
+import com.newerth.core.Utils;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.jdbc.EmbeddedDatabaseConnection;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -14,20 +20,27 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(SpringRunner.class)
 @ContextConfiguration
 @DataJpaTest(showSql = false)
+@ComponentScan("com.newerth.core")
+@AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 public class PlayerTest {
 
 	@Autowired
 	private TestEntityManager entityManager;
 
 	@Autowired
-	private PlayerRepository repo;
+	private Updater updater;
 
-	private Player preparePlayerWithFields() {
-		Player p = new Player();
-		p.setUid(123L);
-		p.setLastUsedName("Mike");
-		p.getAccuracyStats().setStats(10, 5, 5);
-		return p;
+	@Autowired
+	private Reference ref;
+
+	private Player player;
+
+	// Runs before every test
+	@Before
+	public void setup() {
+		this.player = new Player(1L);
+		player.setLastUsedName("Mike");
+		player.setAccuracyStats(10, 5, 5);
 	}
 
 	@Test
@@ -39,61 +52,86 @@ public class PlayerTest {
 	@Test
 	public void saveOne() {
 		Player p = new Player(12345L);
-		assertThat(repo.save(p));
+		assertThat(updater.saveOrUpdatePlayer(p));
 	}
 
 	@Test
 	public void findOne() {
 		Long uid = 123L;
 		this.entityManager.persist(new Player(uid));
-		assertThat(repo.findByUid(uid).getUid()).isEqualTo(uid);
-		assertThat(repo.findByUid(uid).getUid()).isNotEqualTo(12345L);
+		assertThat(ref.findPlayerByUid(uid).getUid()).isEqualTo(uid);
+		assertThat(ref.findPlayerByUid(uid).getUid()).isNotEqualTo(12345L);
 	}
 
 	@Test
 	public void saveWithFields() {
-		Player p = preparePlayerWithFields();
-		assertThat(repo.save(p));
+		assertThat(updater.saveOrUpdatePlayer(player));
 	}
 
 	@Test
 	public void saveWithFieldsAndFind() {
-		Player p1 = preparePlayerWithFields();
-		assertThat(repo.save(p1));
-		Player p2 = repo.findByUid(p1.getUid());
+		Player p1 = player;
+		assertThat(updater.saveOrUpdatePlayer(p1));
+		Player p2 = ref.findPlayerByUid(p1.getUid());
 		System.out.println(p2);
 		assertThat(p2).isEqualTo(p1);
 	}
 
 	@Test
 	public void findAndUpdate() {
-		Player p1 = preparePlayerWithFields();
+		Player p1 = player;
 		this.entityManager.persist(p1);
-		Player p2 = repo.findByUid(p1.getUid());
+		Player p2 = ref.findPlayerByUid(p1.getUid());
 		assertThat(p1.getAccuracyStats()).isEqualTo(p2.getAccuracyStats());
 	}
 
 	@Test
 	public void updateMultipleTimes() {
-		Player p1 = preparePlayerWithFields();
-		this.entityManager.persist(p1);
-		Player p2 = repo.findByUid(p1.getUid());
-		p2.getAccuracyStats().setStats(2, 1, 1);
-		repo.save(p2);
-		p2 = repo.findByUid(p1.getUid());
-		p2.getAccuracyStats().setStats(3, 1, 1);
-		repo.save(p2);
-		p2 = repo.findByUid(p1.getUid());
-		assertThat(p2.getAccuracyStats().getAccumulatedShots()).isEqualTo(15);
-		assertThat(p2.getAccuracyStats().getAccumulatedHits()).isEqualTo(7);
-		assertThat(p2.getAccuracyStats().getAccumulatedFrags()).isEqualTo(7);
-		assertThat(p2.getAccuracyStats().getAccumulatedAccuracyPercent()).isEqualTo(47);
-		assertThat(p2.getAccuracyStats().getAccumulatedAccuracyPercent()).isNotEqualTo(46);
+		this.entityManager.persist(player);
+
+		Player p = ref.findPlayerByUid(player.getUid());
+		p.getAccuracyStats().setStats(4, 1, 1);
+		updater.saveOrUpdatePlayer(p);
+
+		p = ref.findPlayerByUid(player.getUid());
+		p.getAccuracyStats().setStats(4, 2, 2);
+		updater.saveOrUpdatePlayer(p);
+
+		p = ref.findPlayerByUid(player.getUid());
+		assertThat(p.getAccuracyStats().getAccumulatedShots()).isEqualTo(18);
+		assertThat(p.getAccuracyStats().getAccumulatedHits()).isEqualTo(8);
+		assertThat(p.getAccuracyStats().getAccumulatedFrags()).isEqualTo(8);
+		assertThat(p.getAccuracyStats().getAccumulatedAccuracyPercent()).isEqualTo(44);
+		assertThat(p.getAccuracyStats().getAccumulatedAccuracyPercent()).isNotEqualTo(43);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void wrongAccuracyParams() {
-		Player p = preparePlayerWithFields();
+		Player p = player;
 		p.getAccuracyStats().setStats(10, 20, 5);
+	}
+
+	@Test
+	public void saveOneTwice() {
+		Player p = player;
+		System.out.println(p);
+		assertThat(updater.saveOrUpdatePlayer(p));
+		assertThat(updater.saveOrUpdatePlayer(p));
+	}
+
+	@Test
+	public void accuracyGetters() {
+		Player p = player;
+		AccuracyStats as = p.getAccuracyStats();
+		assertThat(as.getLastShots()).isEqualTo(10);
+		assertThat(as.getLastHits()).isEqualTo(5);
+		assertThat(as.getLastFrags()).isEqualTo(5);
+		assertThat(p.getUid()).isEqualTo(1);
+	}
+
+	@Test
+	public void objectToJson() {
+		String json = Utils.getJsonFromObject(player);
+		System.out.println(json);
 	}
 }

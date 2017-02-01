@@ -13,6 +13,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
@@ -20,10 +23,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest(showSql = false)
 @ComponentScan("com.newerth.core")
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
-public class ReferenceTest {
+public class UpdaterTest {
 
 	@Autowired
 	private TestEntityManager entityManager;
+
+	@Autowired
+	private Updater updater;
 
 	@Autowired
 	private Reference ref;
@@ -39,26 +45,33 @@ public class ReferenceTest {
 	}
 
 	@Test
-	public void findPlayerByUid() {
-		Player p = player;
-		this.entityManager.persist(p);
-		assertThat(ref.findPlayerByUid(p.getUid()).getUid()).isEqualTo(p.getUid());
+	public void saveOrUpdatePlayer() {
+		Player player = new Player();
+		player.setUid(1L);
+		player.setAccuracyStats(4, 1, 1);
+		// First save
+		assertThat(updater.saveOrUpdatePlayer(player));
+		player = ref.findPlayerByUid(player.getUid());
+		// 1 * 100 / 4 = 25
+		assertThat(player.getAccuracyStats().getAccumulatedAccuracyPercent()).isEqualTo(25);
+		// 2 * 100 / 4 = 50
+		// 3 * 100 / 8 = 37.5 (Math.round() -> 38)
+		player.setAccuracyStats(4 , 2, 2);
+		assertThat(player.getAccuracyStats().getLastAccuracyPercent()).isEqualTo(50);
+		assertThat(player.getAccuracyStats().getAccumulatedAccuracyPercent()).isEqualTo(38);
+		// Second update
+		assertThat(updater.saveOrUpdatePlayer(player));
+		Player p2 = ref.findPlayerByUid(1L);
+		assertThat(p2).isEqualTo(player);
 	}
 
 	@Test
-	public void findPlayerByName() {
-		Player p = player;
-		this.entityManager.persist(p);
-		assertThat(ref.findPlayerByName(p.getLastUsedName()).getLastUsedName())
-				.isEqualTo(p.getLastUsedName());
-	}
-
-	@Test
-	public void findAllPlayers() {
+	public void saveOrUpdatePlayers() {
 		Player p1 = new Player(1L);
 		Player p2 = new Player(2L);
-		this.entityManager.persist(p1);
-		this.entityManager.persist(p2);
-		assertThat(ref.findAllPlayers().size()).isEqualTo(2);
+		List<Player> players = new ArrayList<>();
+		players.add(p1);
+		players.add(p2);
+		assertThat(updater.saveOrUpdatePlayers(players));
 	}
 }

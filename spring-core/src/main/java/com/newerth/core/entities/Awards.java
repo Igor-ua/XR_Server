@@ -1,5 +1,6 @@
 package com.newerth.core.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.newerth.core.View;
 import org.springframework.stereotype.Component;
@@ -18,14 +19,16 @@ public class Awards implements Serializable {
 	private Long id;
 
 	@OneToOne
-	@JoinColumn(name = "player_uid", referencedColumnName = "uid", nullable = false)
+	@JoinColumn(name = "player_uid", referencedColumnName = "uid", unique = true, nullable = false)
 	@JsonView(View.Summary.class)
+	@JsonBackReference
 	private Player player;
 
 	public Awards() {
 	}
 
 	public Awards(Player player) {
+		this();
 		this.player = player;
 	}
 
@@ -51,9 +54,8 @@ public class Awards implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Awards{" +
-				"id=" + id +
-				", player_uid=" + player.getUid() +
-				'}';
+		return "\tAwards: {\n" +
+				"\t\tplayer_uid: " + player.getUid() + "\n" +
+				"\t}";
 	}
 }

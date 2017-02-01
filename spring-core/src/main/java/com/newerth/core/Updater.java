@@ -1,9 +1,9 @@
 package com.newerth.core;
 
-import com.newerth.core.repository.AccuracyRepository;
 import com.newerth.core.repository.PlayerRepository;
-import com.newerth.core.entities.AccuracyStats;
 import com.newerth.core.entities.Player;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,39 +15,34 @@ import java.util.List;
 @Service
 public class Updater {
 
-	private PlayerRepository playerDAO;
-	private AccuracyRepository accuracyDAO;
-	private Reference reference;
+	private PlayerRepository playerRepo;
+	private Reference ref;
+	private static Logger log = LoggerFactory.getLogger(Updater.class);
 
 	@Autowired
-	private void setPlayerDAO(PlayerRepository jpaPlayerDAO) {
-		this.playerDAO = jpaPlayerDAO;
-	}
-
-	@Autowired
-	private void setAccuracyDAO(AccuracyRepository jpaAccuracyDAO) {
-		this.accuracyDAO = jpaAccuracyDAO;
+	private void setPlayerRepo(PlayerRepository repository) {
+		this.playerRepo = repository;
 	}
 
 	@Autowired
 	private void setReference(Reference reference){
-		this.reference = reference;
+		this.ref = reference;
 	}
 
 	/**
 	 * Saves new player or updates old player if he exists
 	 */
 	public boolean saveOrUpdatePlayer(Player player) {
-		Player p = reference.findPlayerByUid(player.getUid());
-		if (p != null) {
-			player.setUid(p.getUid());
+		Player found = ref.findPlayerByUid(player.getUid());
+		if (found != null) {
+			player.getAccuracyStats().setId(found.getAccuracyStats().getId());
+			player.getAwards().setId(found.getAwards().getId());
 		}
 		try {
-			playerDAO.save(player);
+			playerRepo.save(player);
 			return true;
 		} catch (RuntimeException e) {
-//			e.printStackTrace();
-//			ignored; fix it
+			log.info("Error during saving a player: " + player);
 		}
 		return false;
 	}
@@ -57,35 +52,18 @@ public class Updater {
 	 */
 	public boolean saveOrUpdatePlayers(List<Player> players) {
 		players.forEach(player -> {
-			Player p = reference.findPlayerByUid(player.getUid());
-			if (p != null) {
-				player.setUid(p.getUid());
+			Player found = ref.findPlayerByUid(player.getUid());
+			if (found != null) {
+				player.getAccuracyStats().setId(found.getAccuracyStats().getId());
+				player.getAwards().setId(found.getAwards().getId());
 			}
 		});
 		try {
-			playerDAO.save(players);
+			playerRepo.save(players);
 			return true;
 		} catch (RuntimeException e) {
-			// ignored; fix it
+			log.info("Error during saving a list of the players: " + players);
 		}
-		return false;
-	}
-
-	/**
-	 * Saves or updates accuracy for the player
-	 */
-	public boolean saveOrUpdateAccuracy(AccuracyStats accuracy) {
-//		saveOrUpdatePlayer(accuracy.getPlayer());
-//		AccuracyStats as = reference.findPlayerAccuracy(accuracy.getPlayer().getUid());
-//		if (as != null) {
-//			accuracy.setPlayer(reference.findPlayerByUid(as.getPlayer().getUid()));
-//		}
-//		try {
-//			accuracyDAO.save(accuracy);
-//			return true;
-//		} catch (RuntimeException e) {
-//			// ignored; fix it
-//		}
 		return false;
 	}
 }

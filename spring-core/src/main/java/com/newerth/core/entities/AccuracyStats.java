@@ -1,5 +1,7 @@
 package com.newerth.core.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.newerth.core.View;
 import org.springframework.stereotype.Component;
@@ -17,14 +19,15 @@ import java.util.Date;
 public class AccuracyStats implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE)
+	@GeneratedValue
 	@JsonView(View.Summary.class)
 	@Column(name = "id")
 	private Long id;
 
 	@OneToOne
-	@JoinColumn(name = "player_uid", referencedColumnName = "uid", unique = true)
+	@JoinColumn(name = "player_uid", referencedColumnName = "uid", unique = true, nullable = false)
 	@JsonView(View.Summary.class)
+	@JsonBackReference
 	private Player player;
 	//----Last accuracy stats---------------------------------------------------------------
 	@Column(name = "last_shots")
@@ -64,24 +67,25 @@ public class AccuracyStats implements Serializable {
 	private int accumulatedAccuracyPercent;
 	//--------------------------------------------------------------------------------------
 	@Column(name = "game_ts")
-	@JsonView(View.Summary.class)
+	@JsonIgnore
 	private Date gameTimeStamp;
 
 	@Transient
 	private SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 
-	private class Updater {
-		private int shots;
-		private int hits;
-		private int frags;
-	}
-
+	// Flag that indicates that accumulated logic was called once
 	@Transient
-	private Updater updater;
+	private boolean isAccumulated = false;
+
 	//--------------------------------------------------------------------------------------
 
 	public AccuracyStats() {
-		this.updater = new Updater();
+		this.gameTimeStamp = new Date();
+	}
+
+	public AccuracyStats(Player player) {
+		this();
+		this.player = player;
 	}
 
 	//----Getters---------------------------------------------------------------------------
@@ -127,38 +131,34 @@ public class AccuracyStats implements Serializable {
 
 	//----Setters---------------------------------------------------------------------------
 	void setStats(int shots, int hits, int frags) {
-		setLastShots(shots);
-		setLastHits(hits);
-		setLastFrags(frags);
 		if (hits > shots) {
 			throw new IllegalArgumentException("Shots more than hits: [shots: " + shots + ", hits: " + hits + "]");
 		}
-		makeLastAccuracyPercent();
-	}
 
-	private void setLastShots(int shots) {
 		this.lastShots = shots;
-		updater.shots = shots;
-	}
-
-	private void setLastHits(int hits) {
 		this.lastHits = hits;
-		updater.hits = hits;
-	}
-
-	private void setLastFrags(int frags) {
 		this.lastFrags = frags;
-		updater.frags = frags;
+		this.lastAccuracyPercent = calculateAccuracy(this.lastShots, this.lastHits);
+
+		if (!isAccumulated) {
+			this.accumulatedShots += shots;
+			this.accumulatedHits += hits;
+			this.accumulatedFrags += frags;
+			this.accumulatedAccuracyPercent = calculateAccuracy(this.accumulatedShots, this.accumulatedHits);
+			isAccumulated = true;
+		}
 	}
 
-	private void makeLastAccuracyPercent() {
-		this.lastAccuracyPercent = calculateAccuracy(this.lastShots, this.lastHits);
+	public void setId(Long id) {
+		this.id = id;
 	}
+
+	//--------------------------------------------------------------------------------------
 
 	private int calculateAccuracy(int shots, int hits) {
 		int result = 0;
 		if (hits > 0 && shots > 0) {
-			result = (int) Math.ceil((double) hits * 100 / shots);
+			result = (int) Math.round((double) hits * 100 / shots);
 		}
 		return result;
 	}
@@ -166,11 +166,8 @@ public class AccuracyStats implements Serializable {
 	@PrePersist
 	@PreUpdate
 	private void accumulatedStatsUpdater() {
-		accumulatedShots += updater.shots;
-		accumulatedHits += updater.hits;
-		accumulatedFrags += updater.frags;
-		accumulatedAccuracyPercent = calculateAccuracy(accumulatedShots, accumulatedHits);
 		this.gameTimeStamp = new Date();
+		isAccumulated = false;
 	}
 
 	@Override
@@ -193,16 +190,13 @@ public class AccuracyStats implements Serializable {
 
 	@Override
 	public String toString() {
-		return "AccuracyStats{" +
-				"[lastShots: " + lastShots +
-				", lastHits: " + lastHits +
-				", lastFrags: " + lastFrags +
-				", lastAccuracyPercent: " + lastAccuracyPercent + "], [" +
-				", accumulatedShots: " + accumulatedShots +
-				", accumulatedHits: " + accumulatedHits +
-				", accumulatedFrags" + accumulatedFrags +
-				", accumulatedAccuracyPercent: " + accumulatedAccuracyPercent + "], [" +
-				", gameTimeStamp=" + sdf.format(gameTimeStamp) + "]" +
-				'}';
+		return "\tAccuracyStats: {\n" +
+				"\t\tplayer_uid: " + player.getUid() + "\n" +
+				"\t\tlast:        [shots: " + lastShots + ", hits: " + lastHits + ", frags: " + lastFrags + ", accuracy: " +
+				lastAccuracyPercent + "]\n" +
+				"\t\taccumulated: [shots: " + accumulatedShots + ", hits: " + accumulatedHits + ", frags: " + accumulatedFrags +
+				", accuracy: " + accumulatedAccuracyPercent + "]\n" +
+				"\t\tgameTimeStamp: " + sdf.format(gameTimeStamp) + "\n" +
+				"\t}";
 	}
 }
