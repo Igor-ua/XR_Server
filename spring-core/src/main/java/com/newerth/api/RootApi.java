@@ -7,8 +7,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Private API
+ */
 @RestController
-public class RootAPI implements ErrorController {
+public class RootApi implements ErrorController {
 
 	private static final String SERVICE_NAME = "XR Server instagib API";
 	private static final String ERROR_PATH = "/error";

@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * API for clients to _GET_ any kind of information from the DB
+ * Private API for clients to _GET_ any kind of information from the DB
  */
 @RestController
 @RequestMapping("/stats")
-public class ClientAPI {
+public class ClientApi {
 
 	private static final String SERVICE_NAME = "Internal filtered stats API";
 	private Reference ref;
@@ -32,7 +32,7 @@ public class ClientAPI {
 	}
 
 	@RequestMapping(
-			value = "/{uid}",
+			value = "/get/{uid}",
 			method = RequestMethod.GET)
 	@ResponseBody
 	@JsonView(View.Summary.class)

@@ -16,9 +16,13 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+
+/**
+ * Public API
+ */
 @RestController
 @RequestMapping("/world")
-public class FilesAPI {
+public class FilesApi {
 
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	private static final String SERVICE_NAME = "API for downloading files for XR clients";
