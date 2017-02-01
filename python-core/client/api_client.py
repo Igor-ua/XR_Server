@@ -38,3 +38,11 @@ print r.status_code
 
 # localSize = os.path.getsize('E:\\Code\\Projects\\XR_Server\\spring-core\\world\\xr_test.s2z')
 # print localSize
+
+# List structure:
+# {"Players":
+#         [
+#                 {"uid" : 1, "lastUsedName" : "Mike","accuracyStats" : {"lastShots" : 10,"lastHits" : 5,"lastFrags" : 5}},
+#                 {"uid" : 2, "lastUsedName" : "John","accuracyStats" : {"lastShots" : 4,"lastHits" : 1,"lastFrags" : 1}}
+#         ]
+# }

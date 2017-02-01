@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class Utils {
@@ -89,17 +91,57 @@ public class Utils {
 		Player player = new Player();
 		try {
 			ObjectMapper mapper = new ObjectMapper();
-			JsonNode root = mapper.readTree(json);
-			player.setUid(root.at("/uid").longValue());
-			player.setLastUsedName(root.at("/lastUsedName").asText());
-			player.setAccuracyStats(
-					root.at("/accuracyStats/lastShots").asInt(),
-					root.at("/accuracyStats/lastHits").asInt(),
-					root.at("/accuracyStats/lastFrags").asInt()
-			);
+			JsonNode node = mapper.readTree(json);
+			player = getPlayerFromNode(node);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return player;
+	}
+
+	/**
+	 * Gets a Player from Json Node
+	 */
+	public static Player getPlayerFromNode(JsonNode node) {
+		Player player = new Player();
+		player.setUid(node.at("/uid").longValue());
+		player.setLastUsedName(node.at("/lastUsedName").asText());
+		player.setAccuracyStats(
+				node.at("/accuracyStats/lastShots").asInt(),
+				node.at("/accuracyStats/lastHits").asInt(),
+				node.at("/accuracyStats/lastFrags").asInt()
+		);
+		return player;
+	}
+
+
+	/**
+	 * JSON "List<Player> players" structure:
+	 *
+	 * {
+	 * 		"Players":
+	 * 					[
+	 * 						{"uid": 1, "lastUsedName": "Mike",
+	 * 							"accuracyStats": {"lastShots" : 10, "lastHits": 5, "lastFrags": 5}
+	 * 						},
+	 * 						{"uid": 2, "lastUsedName": "John",
+	 * 							"accuracyStats": {"lastShots": 4, "lastHits": 1, "lastFrags": 1}
+	 * 						}
+	 * 					]
+	 * 	}
+	 */
+	public static List<Player> getListOfPlayersFromJson(String json) {
+		List<Player> players = new ArrayList<>();
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			JsonNode root = mapper.readTree(json);
+			root.at("/Players").forEach(node -> {
+				Player p = getPlayerFromNode(node);
+				players.add(p);
+			});
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return players;
 	}
 }
