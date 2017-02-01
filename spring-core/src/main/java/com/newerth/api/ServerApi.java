@@ -16,18 +16,25 @@ import javax.servlet.http.HttpServletRequest;
 public class ServerApi {
 
 	private Updater updater;
+	private static final String SERVICE_NAME = "Internal Server API";
 
 	@Autowired
 	private void setUpdater(Updater updater) {
 		this.updater = updater;
 	}
 
+	@RequestMapping("")
+	public String index(HttpServletRequest request) {
+		Utils.logRequest(request, this.getClass());
+		return SERVICE_NAME;
+	}
+
 	@RequestMapping(
-			value = "/put/one",
+			value = "/player/put",
 			method = RequestMethod.PUT)
 	@ResponseBody
 	@JsonView(View.Summary.class)
-	public boolean savePlayer(
+	public boolean saveOne(
 			@RequestBody String body,
 			HttpServletRequest request) {
 		Utils.logRequest(request, body, this.getClass());
@@ -35,11 +42,11 @@ public class ServerApi {
 	}
 
 	@RequestMapping(
-			value = "/put/many",
+			value = "/players/put",
 			method = RequestMethod.PUT)
 	@ResponseBody
 	@JsonView(View.Summary.class)
-	public boolean savePlayers(
+	public boolean saveMany(
 			@RequestBody String body,
 			HttpServletRequest request) {
 		Utils.logRequest(request, body, this.getClass());

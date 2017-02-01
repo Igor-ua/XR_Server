@@ -1,6 +1,7 @@
 package com.newerth.core.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.newerth.core.View;
 import org.springframework.stereotype.Component;
@@ -66,7 +67,7 @@ public class AccuracyStats implements Serializable {
 	private int accumulatedAccuracyPercent;
 	//--------------------------------------------------------------------------------------
 	@Column(name = "game_ts")
-	@JsonView(View.Summary.class)
+	@JsonIgnore
 	private Date gameTimeStamp;
 
 	@Transient

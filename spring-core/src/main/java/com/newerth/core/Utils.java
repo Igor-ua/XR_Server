@@ -144,4 +144,15 @@ public class Utils {
 		}
 		return players;
 	}
+
+	public static String objectToJson(Object obj) {
+		String result = "";
+		try {
+			ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+			result = ow.writeValueAsString(obj);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }
