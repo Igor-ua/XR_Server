@@ -5,6 +5,7 @@ import com.newerth.core.View;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 
 @Component
 @Entity
@@ -12,6 +13,7 @@ import javax.persistence.*;
 public class Player {
 
 	@Id
+	@Min(0)
 	@JsonView(View.Summary.class)
 	@Column(name = "uid")
 	private Long uid;
