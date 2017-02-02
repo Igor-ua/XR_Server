@@ -4,5 +4,4 @@ jdk:
 branches:
   only:
   - master
-  - dev-unstable
 before_script: cd spring-core
