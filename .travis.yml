@@ -5,3 +5,6 @@ branches:
   only:
   - dev-unstable
 before_script: cd spring-core
+
+notifications:
+  email: false
