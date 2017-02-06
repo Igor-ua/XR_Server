@@ -112,3 +112,16 @@ def make_list(pair):
     # The last element of tuple is an integer "sv_defs.objectList_Last", so we process it separately
     res.append(my_list[7])
     return res
+
+
+def replace_all(text, dic):
+    for i, j in dic.iteritems():
+        text = text.replace(i, j)
+    return text
+
+
+def obj_repr(obj):
+    if hasattr(obj, 'json_repr'):
+        return obj.json_repr()
+    else:
+        return obj.__dict__

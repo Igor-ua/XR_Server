@@ -70,7 +70,7 @@ def process_private_message(sender_idx, receiver_idx, message):
 def parse_request(message, guid):
     try:
         dictionary = {"!": "", " ": ""}
-        message = replace_all(message, dictionary)
+        message = sv_custom_utils.replace_all(message, dictionary)
         message = message.lower()
         process_request(guid, message)
         # if message == this.MSG_INFO:
@@ -79,13 +79,6 @@ def parse_request(message, guid):
         # pass
     except:
         sv_custom_utils.simple_exception_info()
-
-
-# Utils
-def replace_all(text, dic):
-    for i, j in dic.iteritems():
-        text = text.replace(i, j)
-    return text
 
 
 # todo a list of clients and time control to prevent spam
