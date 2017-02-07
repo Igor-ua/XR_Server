@@ -20,7 +20,7 @@ public class AccuracyStats implements Serializable {
 
 	@Id
 	@GeneratedValue
-	@JsonView(View.Summary.class)
+	@JsonIgnore
 	@Column(name = "id")
 	private Long id;
 
@@ -191,7 +191,7 @@ public class AccuracyStats implements Serializable {
 	@Override
 	public String toString() {
 		return "\tAccuracyStats: {\n" +
-				"\t\tplayer_uid: " + player.getUid() + "\n" +
+				"\t\tplayer_uid: " + (player != null ? player.getUid() : "null") + "\n" +
 				"\t\tlast:        [shots: " + lastShots + ", hits: " + lastHits + ", frags: " + lastFrags + ", accuracy: " +
 				lastAccuracyPercent + "]\n" +
 				"\t\taccumulated: [shots: " + accumulatedShots + ", hits: " + accumulatedHits + ", frags: " + accumulatedFrags +

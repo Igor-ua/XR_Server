@@ -1,6 +1,7 @@
 package com.newerth.core.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.newerth.core.View;
 import org.springframework.stereotype.Component;
@@ -14,7 +15,7 @@ import java.io.Serializable;
 public class Awards implements Serializable {
 	@Id
 	@GeneratedValue
-	@JsonView(View.Summary.class)
+	@JsonIgnore
 	@Column(name = "id")
 	private Long id;
 
@@ -55,7 +56,7 @@ public class Awards implements Serializable {
 	@Override
 	public String toString() {
 		return "\tAwards: {\n" +
-				"\t\tplayer_uid: " + player.getUid() + "\n" +
+				"\t\tplayer_uid: " + (player != null ? player.getUid() : "null") + "\n" +
 				"\t}";
 	}
 }

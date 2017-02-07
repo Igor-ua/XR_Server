@@ -62,7 +62,9 @@ public class Updater {
 			playerRepo.save(players);
 			return true;
 		} catch (RuntimeException e) {
-			log.info("Error during saving a list of the players: " + players);
+			StringBuilder sb = new StringBuilder();
+			players.forEach(p -> sb.append(" ").append(p.getUid()));
+			log.info("Error during saving a list of the players with UIDs:" + sb.toString());
 		}
 		return false;
 	}

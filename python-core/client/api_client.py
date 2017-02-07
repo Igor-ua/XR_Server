@@ -86,7 +86,9 @@ player = Player()
 p1 = Player()
 p2 = Player()
 p3 = Player()
-p3.uid = 4
+p1.uid = 1
+p2.uid = 2
+p3.uid = 3
 
 players = list()
 players.append(p1)

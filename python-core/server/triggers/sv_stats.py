@@ -15,8 +15,11 @@ import __builtin__
 import requests
 import sv_custom_utils
 import time
+import json
 
 run_once_flag = False
+save_once_flag = False
+ROOT_URL = 'http://127.0.0.1:8080'
 
 
 # Is called during every server frame
@@ -24,6 +27,9 @@ def check():
     try:
         # Run-once
         run_once()
+        # If game state == 4 ('Game Ended') -> save stats.
+        if server.GetGameInfo(GAME_STATE) == 4:
+            save_stats()
         return 0
     except:
         sv_custom_utils.simple_exception_info()
@@ -40,18 +46,10 @@ def run_once():
     if not run_once_flag:
         run_once_flag = True
         print("________SV_STATS_______")
-        test_requests()
-
-
-def test_requests():
-    # core.ConsolePrint('[!]   db_stats\n')
-    # url = 'http://localhost:8080/stats/all'
-    # r = requests.get(url)
-    # print r.text
-    pass
 
 
 # Get Client's stats by UID
+# todo Not implemented yet
 def get_client_stats(index):
     try:
         pass
@@ -60,8 +58,30 @@ def get_client_stats(index):
 
 
 # Get Top stats by the info
+# todo Not implemented yet
 def get_top_stats(info):
     pass
+
+
+# Saves the stats of the players
+def execute_save_stats():
+    players = get_players_with_accuracy()
+    data = get_json_from_players(players)
+    url = ROOT_URL + '/stats/server/players/put'
+    headers = {'content-type': 'application/json'}
+    r = requests.put(url, data, headers=headers)
+    print("[!]   SAVE STATS: [%s, %s]" % (r.status_code, r.text))
+
+
+# Saves the stats of the players in the new thread
+def save_stats():
+    try:
+        if not save_once_flag:
+            global save_once_flag
+            createThread('import sv_stats; sv_stats.execute_save_stats()')
+            save_once_flag = True
+    except:
+        sv_custom_utils.simple_exception_info()
 
 
 # Gets the accuracy for the selected player by GUID
@@ -89,15 +109,14 @@ def get_accuracy(guid):
 
 # Gets accuracy for all active players
 def get_players_with_accuracy():
-    players = []
+    players = list()
     try:
         for index in xrange(0, sv_defs.objectList_Last):
             if sv_defs.objectList_Active[index]:
                 player = Player()
-                player.uid = 0  # todo
-                player.last_used_name = ""  # todo
-                player.accuracy_stats = get_accuracy(int(index))
-                # Avoid UID=0 from unauthorized clients
+                player.uid = int(server.GetClientInfo(index, INFO_UID))
+                player.last_used_name = server.GetClientInfo(index, INFO_NAME)
+                player.accuracy_stats = get_accuracy(index)
                 if (player.accuracy_stats.uid > 0) and (player.accuracy_stats.last_shots > 0):
                     players.append(player)
     except:
@@ -105,6 +124,13 @@ def get_players_with_accuracy():
     return players
 
 
+# Returns a JSON String of the list of players
+# This string could be saved on the server
+def get_json_from_players(players):
+    return '{"Players": %s}' % json.dumps(players, default=sv_custom_utils.obj_repr)
+
+
+# Don't save players with UID = 0 (0 is for unauthorized clients)
 class Player:
     def __init__(self):
         self.uid = 0
