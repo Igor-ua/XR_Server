@@ -145,6 +145,19 @@ class Player:
         return "Player: [UID: %s], [NAME: %s]" % (self.uid, self.last_used_name)
 
 
+# Calculates awards for active players
+# todo Not implemented yet
+def get_awards():
+    awards = Awards()
+    try:
+        for index in xrange(0, sv_defs.objectList_Last):
+            if sv_defs.objectList_Active[index]:
+
+    except:
+        sv_custom_utils.simple_exception_info()
+    pass
+
+
 class AccuracyStats:
     def __init__(self):
         self.uid = 0
@@ -162,6 +175,17 @@ class AccuracyStats:
     def __str__(self):
         return "Coil Rifle: [UID: %s], [ACCURACY: %s], [SHOTS: %s], [FRAGS: %s], [HITS: %s]" % (
             self.uid, self.accuracy_percent, self.last_shots, self.last_frags, self.last_hits)
+
+
+class Awards:
+    def __init__(self):
+        self.sadist = list('', 0)
+        self.survivor = list('', 0)
+        self.ripper = list('', 0)
+        self.bunny = list('', 0)
+        self.phoe = list('', 0)
+        self.aimbot = list('', 0)
+        self.mvp = list('', 0)
 
 
 __builtin__.DB_INFO_SHOTS = 1
