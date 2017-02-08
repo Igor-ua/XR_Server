@@ -87,13 +87,12 @@ def process_request(guid, message):
     try:
         current_millis = get_current_millis()
         uid = int(server.GetClientInfo(guid, INFO_UID))
-        result = []
         if get_client_timeout(guid) < current_millis:
             update_client_timeout(guid)
             # todo and notify client to wait and retry
         else:
             if message == this.MSG_INFO:
-                result = sv_stats.get_client_stats(uid)
+                player = sv_stats.get_client_stats(uid)
             elif message == this.MSG_LAST:
                 pass
             elif message == this.MSG_AIM_BOTS:
@@ -109,9 +108,16 @@ def process_request(guid, message):
 
 
 # CLIENT API:
-__builtin__.MSG_INFO     = "info"
-__builtin__.MSG_LAST     = "last"
+#
+# General info
+__builtin__.MSG_INFO = "info"
+# Stats from the last match
+__builtin__.MSG_LAST = "last"
+# Top N aimbots
 __builtin__.MSG_AIM_BOTS = "aimbots"
-__builtin__.MSG_SADISTS  = "sadists"
-__builtin__.MSG_NOOBS    = "noobs"
-__builtin__.MSG_RANDOM   = "random"
+# Top N sadists
+__builtin__.MSG_SADISTS = "sadists"
+# Top N worst kills - deaths
+__builtin__.MSG_NOOBS = "noobs"
+# Top N random people
+__builtin__.MSG_RANDOM = "random"

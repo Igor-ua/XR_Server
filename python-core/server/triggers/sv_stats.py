@@ -53,10 +53,33 @@ def run_once():
 
 
 # Get Client's stats by UID
-# todo Not implemented yet
 def get_client_stats(uid):
     try:
-        pass
+        url = ROOT_URL + '/stats/get/' + uid
+        r = requests.get(url)
+        r = json.loads(r.text)
+
+        p = Player(r['uid'])
+        p.last_used_name = r['lastUsedName']
+
+        p.accuracy_stats.last_shots = r['accuracyStats']['lastShots']
+        p.accuracy_stats.last_hits = r['accuracyStats']['lastHits']
+        p.accuracy_stats.last_frags = r['accuracyStats']['lastFrags']
+        p.accuracy_stats.accuracy_percent = r['accuracyStats']['lastAccuracyPercent']
+
+        p.accuracy_stats.accumulated_shots = r['accuracyStats']['accumulatedShots']
+        p.accuracy_stats.accumulated_hits = r['accuracyStats']['accumulatedHits']
+        p.accuracy_stats.accumulated_frags = r['accuracyStats']['accumulatedFrags']
+        p.accuracy_stats.accumulated_percent = r['accuracyStats']['accumulatedAccuracyPercent']
+
+        p.awards.accumulated_mvp = r['awards']['accumulatedMvp']
+        p.awards.accumulated_sadist = r['awards']['accumulatedSadist']
+        p.awards.accumulated_survivor = r['awards']['accumulatedSurvivor']
+        p.awards.accumulated_ripper = r['awards']['accumulatedRipper']
+        p.awards.accumulated_phoe = r['awards']['accumulatedPhoe']
+        p.awards.accumulated_aimbot = r['awards']['accumulatedAimbot']
+
+        return p
     except:
         sv_custom_utils.simple_exception_info()
 
@@ -240,10 +263,17 @@ class AccuracyStats(object):
     def __init__(self, uid):
         self.uid = uid
         self.desc = 'Coil Rifle'
+
         self.last_shots = 0
         self.last_hits = 0
         self.last_frags = 0
         self.accuracy_percent = 0
+
+        self.accumulated_shots = 0
+        self.accumulated_hits = 0
+        self.accumulated_frags = 0
+        self.accumulated_percent = 0
+
         self.timestamp = 0
 
     def json_repr(self):
@@ -280,6 +310,13 @@ class Awards(object):
         self.ripper = 0
         self.phoe = 0
         self.aimbot = 0
+
+        self.accumulated_mvp = 0
+        self.accumulated_sadist = 0
+        self.accumulated_survivor = 0
+        self.accumulated_ripper = 0
+        self.accumulated_phoe = 0
+        self.accumulated_aimbot = 0
 
     def json_repr(self):
         return dict(uid=self.uid, mvp=self.mvp, sadist=self.sadist, survivor=self.survivor,

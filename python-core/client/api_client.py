@@ -47,48 +47,86 @@ import requests
 # }
 
 
-class Player:
-        def __init__(self):
-                self.uid = 3
-                self.name = "Mike"
-                self.ac = AccuracyStats()
+# Don't save players with UID = 0 (0 is for unauthorized clients)
+class Player(object):
+        def __init__(self, uid):
+                self.uid = uid
+                self.last_used_name = ""
+                self.accuracy_stats = AccuracyStats(self.uid)
+                self.awards = Awards(self.uid)
+                # These attributes should not be sent through the json
+                self.kills = 0
+                self.deaths = 0
+                self.killstreak = 0
+                self.npc_killed = 0
+                self.mvp = 0
                 pass
 
         def json_repr(self):
-                return dict(uid=self.uid, lastUsedName=self.name, accuracyStats=self.ac)
+                return dict(uid=self.uid, lastUsedName=self.last_used_name, accuracyStats=self.accuracy_stats,
+                            awards=self.awards)
 
         def __str__(self):
-                return "Player: [UID: %s], [NAME: %s]" % (self.uid, self.name)
+                return "Player: [UID: %s], [NAME: %s]" % (self.uid, self.last_used_name)
 
 
-class AccuracyStats:
-        def __init__(self):
-                self.uid = 0
+class AccuracyStats(object):
+        def __init__(self, uid):
+                self.uid = uid
                 self.desc = 'Coil Rifle'
-                self.shots = 0
-                self.hits = 0
-                self.frags = 0
+                self.last_shots = 0
+                self.last_hits = 0
+                self.last_frags = 0
                 self.accuracy_percent = 0
                 self.timestamp = 0
 
         def json_repr(self):
-                return dict(uid=self.uid, desc=self.desc, lastShots=self.shots, lastFrags=self.frags,
-                            lastHits=self.hits)
+                return dict(uid=self.uid, desc=self.desc, lastShots=self.last_shots, lastFrags=self.last_frags,
+                            lastHits=self.last_hits)
 
         def __str__(self):
                 return "Coil Rifle: [UID: %s], [ACCURACY: %s], [SHOTS: %s], [FRAGS: %s], [HITS: %s]" % (
-                        self.uid, self.accuracy_percent, self.shots, self.frags, self.hits)
+                        self.uid, self.accuracy_percent, self.last_shots, self.last_frags, self.last_hits)
 
 
-player = Player()
+class MapAwards:
+        def __init__(self):
+                # most kills - deaths
+                self.mvp = {"uid": 0, "name": "", "value": 0}
+                # most kills
+                self.sadist = {"uid": 0, "name": "", "value": 0}
+                # most kills in a row
+                self.survivor = {"uid": 0, "name": "", "value": 0}
+                # most deaths
+                self.ripper = {"uid": 0, "name": "", "value": 0}
+                # most npcs killed
+                self.phoe = {"uid": 0, "name": "", "value": 0}
+                # most accurate
+                self.aimbot = {"uid": 0, "name": "", "value": 0}
 
 
-p1 = Player()
-p2 = Player()
-p3 = Player()
-p1.uid = 1
-p2.uid = 2
-p3.uid = 3
+class Awards(object):
+        def __init__(self, uid):
+                self.uid = uid
+                self.mvp = 0
+                self.sadist = 0
+                self.survivor = 0
+                self.ripper = 0
+                self.phoe = 0
+                self.aimbot = 0
+
+        def json_repr(self):
+                return dict(uid=self.uid, mvp=self.mvp, sadist=self.sadist, survivor=self.survivor,
+                            ripper=self.ripper, phoe=self.phoe, aimbot=self.aimbot)
+
+        def __str__(self):
+                return "Awards : [UID: %s], [AIMBOT: %s], [MVP: %s], [SADIST: %s], [SURVIVOR: %s], [RIPPER: %s], [PHOE: %s]" \
+                       % (self.uid, self.aimbot, self.mvp, self.sadist, self.survivor, self.ripper, self.phoe)
+
+
+p1 = Player(2)
+p2 = Player(3)
+p3 = Player(4)
 
 players = list()
 players.append(p1)
@@ -105,12 +143,20 @@ def obj_repr(obj):
 json_players = json.dumps(players, default=obj_repr)
 
 
-data = '{"Players": %s}' % json.dumps(players, default=obj_repr)
+# data = '{"Players": %s}' % json.dumps(players, default=obj_repr)
+# print data
+#
+#
+# url = 'http://localhost:8080/stats/server/players/put'
+# headers = {'content-type': 'application/json'}
+# r = requests.put(url, data, headers=headers)
+# print r.text
+# print r.status_code
+
+
+url = 'http://localhost:8080/stats/get/2'
+r = requests.get(url)
+data = json.loads(r.text)
 print data
-
-
-url = 'http://localhost:8080/stats/server/players/put'
-headers = {'content-type': 'application/json'}
-r = requests.put(url, data, headers=headers)
-print r.text
-print r.status_code
+print data['awards']['accumulatedSadist']
+print data['uid']
