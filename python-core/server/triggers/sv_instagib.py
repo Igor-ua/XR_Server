@@ -99,7 +99,7 @@ def get_team_stats():
     return team_frags
 
 
-# Global variables (gs_transmit1-9) that are being transferred to the clients:
+# Global variables (gs_transmit1-3) that are being transferred to the clients:
 def update_clients_vars():
     # gs_transmit1 = TEAM_1 Frags (RED)
     core.CommandExec("set gs_transmit1 %s" % team_frags[0])
