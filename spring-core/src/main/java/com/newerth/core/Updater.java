@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,8 +36,19 @@ public class Updater {
 	public boolean saveOrUpdatePlayer(Player player) {
 		Player found = ref.findPlayerByUid(player.getUid());
 		if (found != null) {
-			player.getAccuracyStats().setId(found.getAccuracyStats().getId());
-			player.getAwards().setId(found.getAwards().getId());
+			found.setAccuracyStats(
+					player.getAccuracyStats().getLastShots(),
+					player.getAccuracyStats().getLastHits(),
+					player.getAccuracyStats().getLastFrags());
+			found.setAwards(
+					player.getAwards().getLastMvp(),
+					player.getAwards().getLastSadist(),
+					player.getAwards().getLastSurvivor(),
+					player.getAwards().getLastRipper(),
+					player.getAwards().getLastPhoe(),
+					player.getAwards().getLastAimbot()
+					);
+			player = found;
 		}
 		try {
 			playerRepo.save(player);
@@ -51,15 +63,28 @@ public class Updater {
 	 * Saves or updates the list of the players
 	 */
 	public boolean saveOrUpdatePlayers(List<Player> players) {
+		List<Player> playersToSave = new ArrayList<>();
 		players.forEach(player -> {
 			Player found = ref.findPlayerByUid(player.getUid());
 			if (found != null) {
-				player.getAccuracyStats().setId(found.getAccuracyStats().getId());
-				player.getAwards().setId(found.getAwards().getId());
+				found.setAccuracyStats(
+						player.getAccuracyStats().getLastShots(),
+						player.getAccuracyStats().getLastHits(),
+						player.getAccuracyStats().getLastFrags());
+				found.setAwards(
+						player.getAwards().getLastMvp(),
+						player.getAwards().getLastSadist(),
+						player.getAwards().getLastSurvivor(),
+						player.getAwards().getLastRipper(),
+						player.getAwards().getLastPhoe(),
+						player.getAwards().getLastAimbot()
+				);
+				player = found;
 			}
+			playersToSave.add(player);
 		});
 		try {
-			playerRepo.save(players);
+			playerRepo.save(playersToSave);
 			return true;
 		} catch (RuntimeException e) {
 			StringBuilder sb = new StringBuilder();

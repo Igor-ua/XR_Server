@@ -88,20 +88,21 @@ public class PlayerTest {
 
 	@Test
 	public void updateMultipleTimes() {
-		this.entityManager.persist(player);
+		Player p = player;
+		System.out.println(p);
+		updater.saveOrUpdatePlayer(p);
 
-		Player p = ref.findPlayerByUid(player.getUid());
 		p.setAccuracyStats(4, 1, 1);
 		p.setAwards(1,1,1,1,1,1);
+		System.out.println(p);
 		updater.saveOrUpdatePlayer(p);
 
-		p = ref.findPlayerByUid(player.getUid());
 		p.setAccuracyStats(4, 2, 2);
 		p.setAwards(1,1,1,1,1,1);
+		System.out.println(p);
 		updater.saveOrUpdatePlayer(p);
 
 		p = ref.findPlayerByUid(player.getUid());
-		System.out.println(p);
 		assertThat(p.getAccuracyStats().getAccumulatedShots()).isEqualTo(18);
 		assertThat(p.getAccuracyStats().getAccumulatedHits()).isEqualTo(8);
 		assertThat(p.getAccuracyStats().getAccumulatedFrags()).isEqualTo(8);

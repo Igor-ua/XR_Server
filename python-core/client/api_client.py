@@ -128,11 +128,14 @@ p1 = Player(1)
 p2 = Player(2)
 
 p1.awards.aimbot = 1
+p1.accuracy_stats.last_shots = 1
+p1.accuracy_stats.last_hits = 0
+
 p2.awards.aimbot = 0
 
 players = list()
 players.append(p1)
-players.append(p2)
+# players.append(p2)
 
 
 def obj_repr(obj):
