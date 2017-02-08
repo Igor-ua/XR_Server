@@ -51,10 +51,6 @@ public class Player {
 		this.uid = uid;
 	}
 
-	public void updateAwards(Awards awards) {
-		this.awards.updateAwards(awards);
-	}
-
 	public Long getUid() {
 		return uid;
 	}
@@ -65,6 +61,10 @@ public class Player {
 
 	public void setAccuracyStats(int shots, int hits, int frags) {
 		accuracyStats.setStats(shots, hits, frags);
+	}
+
+	public void setAwards(int mvp, int sadist, int survivor, int ripper, int phoe, int aimbot) {
+		awards.setAwards(mvp, sadist, survivor, ripper, phoe, aimbot);
 	}
 
 	public Awards getAwards() {

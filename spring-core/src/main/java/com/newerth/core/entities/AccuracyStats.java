@@ -152,9 +152,7 @@ public class AccuracyStats implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 	//--------------------------------------------------------------------------------------
-
 	private int calculateAccuracy(int shots, int hits) {
 		int result = 0;
 		if (hits > 0 && shots > 0) {
@@ -169,7 +167,7 @@ public class AccuracyStats implements Serializable {
 		this.gameTimeStamp = new Date();
 		isAccumulated = false;
 	}
-
+	//--------------------------------------------------------------------------------------
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -187,7 +185,7 @@ public class AccuracyStats implements Serializable {
 		result = 31 * result + (player != null ? player.hashCode() : 0);
 		return result;
 	}
-
+	//--------------------------------------------------------------------------------------
 	@Override
 	public String toString() {
 		return "\tAccuracyStats: {\n" +
