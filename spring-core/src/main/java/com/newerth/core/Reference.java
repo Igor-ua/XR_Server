@@ -1,5 +1,7 @@
 package com.newerth.core;
 
+import com.newerth.core.entities.Awards;
+import com.newerth.core.repository.AwardsRepository;
 import com.newerth.core.repository.PlayerRepository;
 import com.newerth.core.entities.Player;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +16,16 @@ import java.util.List;
 public class Reference {
 
 	private PlayerRepository playerRepo;
+	private AwardsRepository awardsRepo;
 
 	@Autowired
 	private void setPlayerRepo(PlayerRepository repository) {
 		this.playerRepo = repository;
+	}
+
+	@Autowired
+	private void setAwardsRepo(AwardsRepository repository) {
+		this.awardsRepo = repository;
 	}
 
 	/**
@@ -39,5 +47,12 @@ public class Reference {
 	 */
 	public List<Player> findAllPlayers() {
 		return playerRepo.findAll();
+	}
+
+	/**
+	 * Finds top ten Aimbots
+	 */
+	public List<Awards> findTopAimbots() {
+		return awardsRepo.findTop10Aimbots();
 	}
 }

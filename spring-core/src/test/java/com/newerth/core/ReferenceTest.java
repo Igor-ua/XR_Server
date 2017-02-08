@@ -1,5 +1,6 @@
 package com.newerth.core;
 
+import com.newerth.core.entities.Awards;
 import com.newerth.core.entities.Player;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +13,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -60,5 +63,20 @@ public class ReferenceTest {
 		this.entityManager.persist(p1);
 		this.entityManager.persist(p2);
 		assertThat(ref.findAllPlayers().size()).isEqualTo(2);
+	}
+
+	@Test
+	public void findTopAimbots() {
+		Player p1 = new Player(1L);
+		Player p2 = new Player(2L);
+		p1.setAwards(1,1,1,1,1,1);
+		this.entityManager.persist(p1);
+		p1.setAwards(1,1,1,1,1,1);
+		p2.setAwards(1,1,1,1,1,1);
+		this.entityManager.persist(p1);
+		this.entityManager.persist(p2);
+		List<Awards> awards = ref.findTopAimbots();
+		assertThat(awards);
+		awards.forEach(a -> System.out.println(a.getPlayer()));
 	}
 }

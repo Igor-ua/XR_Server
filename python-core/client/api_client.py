@@ -143,20 +143,20 @@ def obj_repr(obj):
 json_players = json.dumps(players, default=obj_repr)
 
 
-# data = '{"Players": %s}' % json.dumps(players, default=obj_repr)
-# print data
-#
-#
-# url = 'http://localhost:8080/stats/server/players/put'
-# headers = {'content-type': 'application/json'}
-# r = requests.put(url, data, headers=headers)
-# print r.text
-# print r.status_code
-
-
-url = 'http://localhost:8080/stats/get/2'
-r = requests.get(url)
-data = json.loads(r.text)
+data = '{"Players": %s}' % json.dumps(players, default=obj_repr)
 print data
-print data['awards']['accumulatedSadist']
-print data['uid']
+
+
+url = 'http://localhost:8080/stats/server/players/put'
+headers = {'content-type': 'application/json'}
+r = requests.put(url, data, headers=headers)
+print r.text
+print r.status_code
+
+
+# url = 'http://localhost:8080/stats/get/2'
+# r = requests.get(url)
+# data = json.loads(r.text)
+# print data
+# print data['awards']['accumulatedSadist']
+# print data['uid']
