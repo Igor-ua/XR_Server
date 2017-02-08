@@ -7,6 +7,7 @@ import com.newerth.core.entities.Player;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -52,7 +53,10 @@ public class Reference {
 	/**
 	 * Finds top ten Aimbots
 	 */
-	public List<Awards> findTopAimbots() {
-		return awardsRepo.findTop10Aimbots();
+	public List<Player> findTopAimbots() {
+		List<Awards> awards = awardsRepo.findTop10Aimbots();
+		List<Player> players = new ArrayList<>();
+		awards.forEach(award -> players.add(award.getPlayer()));
+		return players;
 	}
 }

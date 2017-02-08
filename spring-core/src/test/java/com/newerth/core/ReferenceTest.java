@@ -75,8 +75,8 @@ public class ReferenceTest {
 		p2.setAwards(1,1,1,1,1,1);
 		this.entityManager.persist(p1);
 		this.entityManager.persist(p2);
-		List<Awards> awards = ref.findTopAimbots();
-		assertThat(awards);
-		awards.forEach(a -> System.out.println(a.getPlayer()));
+		List<Player> players = ref.findTopAimbots();
+		assertThat(players);
+		players.forEach(System.out::println);
 	}
 }
