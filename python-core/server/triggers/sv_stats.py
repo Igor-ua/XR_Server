@@ -16,6 +16,8 @@ import requests
 import sv_custom_utils
 import time
 import json
+from sv_entities import *
+
 
 run_at_start = False
 game_end_flag = False
@@ -34,8 +36,8 @@ def check():
         # Run-once
         run_once()
         # If game state == 4 ('Game Ended') -> save stats.
+        global game_end_flag
         if server.GetGameInfo(GAME_STATE) == 4 and not game_end_flag:
-            global game_end_flag
             calculate_players_and_awards()
             save_stats()
             game_end_flag = True
@@ -229,7 +231,7 @@ def save_stats():
 def get_accuracy(guid):
     guid = int(guid)
     # new object that will be returned
-    acs = AccuracyStats()
+    acs = AccuracyStats(guid)
     try:
         [accuracyList_weapon, accuracyList_shots, accuracyList_kills, accuracyList_deaths,
          accuracyList_hits, accuracyList_siegehits, accuracyList_damage, accuracyList_last] = server.GetAccuracyList(
@@ -238,13 +240,14 @@ def get_accuracy(guid):
         for weapon in range(0, accuracyList_last):
             if str(accuracyList_weapon[weapon]) == 'Coil Rifle':
                 acs.uid = int(server.GetClientInfo(guid, INFO_UID))
-                acs.shots = int(accuracyList_shots[weapon])
-                acs.frags = int(accuracyList_kills[weapon])
-                acs.hits = int(accuracyList_hits[weapon])
-                acs.accuracy_percent = acs.hits * 100 / acs.shots
+                acs.last_shots = int(accuracyList_shots[weapon])
+                acs.last_frags = int(accuracyList_kills[weapon])
+                acs.last_hits = int(accuracyList_hits[weapon])
+                acs.accuracy_percent = acs.last_hits * 100 / acs.last_shots
                 acs.timestamp = int(round(time.time() * 1000))
     except:
         sv_custom_utils.simple_exception_info()
+    print acs
     return acs
 
 
@@ -252,19 +255,19 @@ def get_accuracy(guid):
 def calculate_players_with_accuracy():
     global players
     try:
-        for index in xrange(0, sv_defs.objectList_Last):
-            if sv_defs.objectList_Active[index]:
-                uid = int(server.GetClientInfo(index, INFO_UID))
+        for guid in xrange(0, sv_defs.objectList_Last):
+            if sv_defs.objectList_Active[guid]:
+                uid = int(server.GetClientInfo(guid, INFO_UID))
                 if uid > 0:
                     player = Player(uid)
-                    player.last_used_name = server.GetClientInfo(index, INFO_NAME)
-                    player.kills = int(server.GetClientInfo(index, STAT_KILLS))
-                    player.deaths = int(server.GetClientInfo(index, STAT_DEATHS))
-                    player.killstreak = int(server.GetClientInfo(index, STAT_KILLSTREAK))
-                    player.jumps = int(server.GetClientInfo(index, STAT_JUMPS))
-                    player.npc_killed = int(server.GetClientInfo(index, STAT_NPCKILL))
+                    player.last_used_name = server.GetClientInfo(guid, INFO_NAME)
+                    player.kills = int(server.GetClientInfo(guid, STAT_KILLS))
+                    player.deaths = int(server.GetClientInfo(guid, STAT_DEATHS))
+                    player.killstreak = int(server.GetClientInfo(guid, STAT_KILLSTREAK))
+                    player.jumps = int(server.GetClientInfo(guid, STAT_JUMPS))
+                    player.npc_killed = int(server.GetClientInfo(guid, STAT_NPCKILL))
                     player.mvp = player.kills - player.deaths
-                    player.accuracy_stats = get_accuracy(index)
+                    player.accuracy_stats = get_accuracy(guid)
                     players.append(player)
     except:
         sv_custom_utils.simple_exception_info()
@@ -332,108 +335,17 @@ def bind_awards_to_players(map_awards):
 # Global variables (gs_transmit4-9) that are being transferred to the clients:
 def update_clients_vars(map_awards):
     # gs_transmit4 = map_awards.mvp
-    core.CommandExec("set gs_transmit4 %s" % (map_awards.mvp["name"] + " - " + map_awards.mvp["value"]))
+    core.CommandExec("set gs_transmit4 %s" % (map_awards.mvp["name"] + " - " + str(map_awards.mvp["value"])))
     # gs_transmit5 = map_awards.sadist
-    core.CommandExec("set gs_transmit5 %s" % (map_awards.sadist["name"] + " - " + map_awards.sadist["value"]))
+    core.CommandExec("set gs_transmit5 %s" % (map_awards.sadist["name"] + " - " + str(map_awards.sadist["value"])))
     # gs_transmit6 = map_awards.survivor
-    core.CommandExec("set gs_transmit6 %s" % (map_awards.survivor["name"] + " - " + map_awards.survivor["value"]))
+    core.CommandExec("set gs_transmit6 %s" % (map_awards.survivor["name"] + " - " + str(map_awards.survivor["value"])))
     # gs_transmit7 = map_awards.ripper
-    core.CommandExec("set gs_transmit7 %s" % (map_awards.ripper["name"] + " - " + map_awards.ripper["value"]))
+    core.CommandExec("set gs_transmit7 %s" % (map_awards.ripper["name"] + " - " + str(map_awards.ripper["value"])))
     # gs_transmit8 = map_awards.phoe
-    core.CommandExec("set gs_transmit8 %s" % (map_awards.phoe["name"] + " - " + map_awards.phoe["value"]))
+    core.CommandExec("set gs_transmit8 %s" % (map_awards.phoe["name"] + " - " + str(map_awards.phoe["value"])))
     # gs_transmit9 = map_awards.aimbot
-    core.CommandExec("set gs_transmit9 %s" % (map_awards.aimbot["name"] + " - " + map_awards.aimbot["value"]))
-
-
-# Don't save players with UID = 0 (0 is for unauthorized clients)
-class Player(object):
-    def __init__(self, uid):
-        self.uid = uid
-        self.last_used_name = ""
-        self.accuracy_stats = AccuracyStats(self.uid)
-        self.awards = Awards(self.uid)
-        # These attributes should not be sent through the json
-        self.kills = 0
-        self.deaths = 0
-        self.killstreak = 0
-        self.npc_killed = 0
-        self.mvp = 0
-        pass
-
-    def json_repr(self):
-        return dict(uid=self.uid, lastUsedName=self.last_used_name, accuracyStats=self.accuracy_stats,
-                    awards=self.awards)
-
-    def __str__(self):
-        return "Player: [UID: %s], [NAME: %s]" % (self.uid, self.last_used_name)
-
-
-class AccuracyStats(object):
-    def __init__(self, uid):
-        self.uid = uid
-        self.desc = 'Coil Rifle'
-
-        self.last_shots = 0
-        self.last_hits = 0
-        self.last_frags = 0
-        self.accuracy_percent = 0
-
-        self.accumulated_shots = 0
-        self.accumulated_hits = 0
-        self.accumulated_frags = 0
-        self.accumulated_percent = 0
-
-        self.timestamp = 0
-
-    def json_repr(self):
-        return dict(uid=self.uid, desc=self.desc, lastShots=self.last_shots, lastFrags=self.last_frags,
-                    lastHits=self.last_hits)
-
-    def __str__(self):
-        return "Coil Rifle: [UID: %s], [ACCURACY: %s], [SHOTS: %s], [FRAGS: %s], [HITS: %s]" % (
-            self.uid, self.accuracy_percent, self.last_shots, self.last_frags, self.last_hits)
-
-
-class MapAwards:
-    def __init__(self):
-        # most kills - deaths
-        self.mvp = {"uid": 0, "name": "", "value": 0}
-        # most kills
-        self.sadist = {"uid": 0, "name": "", "value": 0}
-        # most kills in a row
-        self.survivor = {"uid": 0, "name": "", "value": 0}
-        # most deaths
-        self.ripper = {"uid": 0, "name": "", "value": 0}
-        # most npcs killed
-        self.phoe = {"uid": 0, "name": "", "value": 0}
-        # most accurate
-        self.aimbot = {"uid": 0, "name": "", "value": 0}
-
-
-class Awards(object):
-    def __init__(self, uid):
-        self.uid = uid
-        self.mvp = 0
-        self.sadist = 0
-        self.survivor = 0
-        self.ripper = 0
-        self.phoe = 0
-        self.aimbot = 0
-
-        self.accumulated_mvp = 0
-        self.accumulated_sadist = 0
-        self.accumulated_survivor = 0
-        self.accumulated_ripper = 0
-        self.accumulated_phoe = 0
-        self.accumulated_aimbot = 0
-
-    def json_repr(self):
-        return dict(uid=self.uid, mvp=self.mvp, sadist=self.sadist, survivor=self.survivor,
-                    ripper=self.ripper, phoe=self.phoe, aimbot=self.aimbot)
-
-    def __str__(self):
-        return "Awards : [UID: %s], [AIMBOT: %s], [MVP: %s], [SADIST: %s], [SURVIVOR: %s], [RIPPER: %s], [PHOE: %s]" \
-               % (self.uid, self.aimbot, self.mvp, self.sadist, self.survivor, self.ripper, self.phoe)
+    core.CommandExec("set gs_transmit9 %s" % (map_awards.aimbot["name"] + " - " + str(map_awards.aimbot["value"])))
 
 
 __builtin__.DB_INFO_SHOTS = 1

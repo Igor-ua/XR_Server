@@ -12,7 +12,7 @@ import server
 import sv_defs
 import sys
 import traceback
-import sv_stats
+from sv_entities import *
 
 
 def custom_exception_info():
@@ -129,7 +129,7 @@ def obj_repr(obj):
 
 
 def get_player_from_json(resp):
-    p = sv_stats.Player(resp['uid'])
+    p = Player(resp['uid'])
     p.last_used_name = resp['lastUsedName']
 
     p.accuracy_stats.last_shots = resp['accuracyStats']['lastShots']
@@ -150,6 +150,7 @@ def get_player_from_json(resp):
     p.awards.accumulated_aimbot = resp['awards']['accumulatedAimbot']
 
     return p
+    pass
 
 
 def get_list_of_players_from_json(resp):
