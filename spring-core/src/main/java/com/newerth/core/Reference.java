@@ -51,10 +51,48 @@ public class Reference {
 	}
 
 	/**
-	 * Finds top ten Aimbots
+	 * Finds top Aimbots
 	 */
 	public List<Player> findTopAimbots() {
-		List<Awards> awards = awardsRepo.findTop10Aimbots();
+		return getPlayersFromAwards(awardsRepo.findTopAimbots());
+	}
+
+	/**
+	 * Finds top Sadists
+	 */
+	public List<Player> findTopSadists() {
+		return getPlayersFromAwards(awardsRepo.findTopSadists());
+	}
+
+	/**
+	 * Finds top MVPs
+	 */
+	public List<Player> findTopMvps() {
+		return getPlayersFromAwards(awardsRepo.findTopMvps());
+	}
+
+	/**
+	 * Finds top Survivors
+	 */
+	public List<Player> findTopSurvivors() {
+		return getPlayersFromAwards(awardsRepo.findTopSurvivors());
+	}
+
+	/**
+	 * Finds top Rippers
+	 */
+	public List<Player> findTopRippers() {
+		return getPlayersFromAwards(awardsRepo.findTopRippers());
+	}
+
+	/**
+	 * Finds top Phoes
+	 */
+	public List<Player> findTopPhoes() {
+		return getPlayersFromAwards(awardsRepo.findTopPhoes());
+	}
+
+	private List<Player> getPlayersFromAwards(List<Awards> awards) {
 		List<Player> players = new ArrayList<>();
 		awards.forEach(award -> players.add(award.getPlayer()));
 		return players;

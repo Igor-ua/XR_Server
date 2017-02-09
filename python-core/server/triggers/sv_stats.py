@@ -21,6 +21,11 @@ run_at_start = False
 game_end_flag = False
 ROOT_URL = 'http://127.0.0.1:8080'
 players = list()
+# Cache for stats for one player during one round
+single_stats_cache = {}
+# Cache for top-stats during one round
+top_stats_cache = {}
+MAX_CACHE_SIZE = 30
 
 
 # Is called during every server frame
@@ -50,44 +55,148 @@ def run_once():
     if not run_at_start:
         run_at_start = True
         print("________SV_STATS_______")
+        global single_stats_cache
+        single_stats_cache.clear()
+        top_stats_cache.clear()
 
 
 # Get Client's stats by UID
 def get_client_stats(uid):
     try:
-        url = ROOT_URL + '/stats/get/' + uid
-        r = requests.get(url)
-        r = json.loads(r.text)
-
-        p = Player(r['uid'])
-        p.last_used_name = r['lastUsedName']
-
-        p.accuracy_stats.last_shots = r['accuracyStats']['lastShots']
-        p.accuracy_stats.last_hits = r['accuracyStats']['lastHits']
-        p.accuracy_stats.last_frags = r['accuracyStats']['lastFrags']
-        p.accuracy_stats.accuracy_percent = r['accuracyStats']['lastAccuracyPercent']
-
-        p.accuracy_stats.accumulated_shots = r['accuracyStats']['accumulatedShots']
-        p.accuracy_stats.accumulated_hits = r['accuracyStats']['accumulatedHits']
-        p.accuracy_stats.accumulated_frags = r['accuracyStats']['accumulatedFrags']
-        p.accuracy_stats.accumulated_percent = r['accuracyStats']['accumulatedAccuracyPercent']
-
-        p.awards.accumulated_mvp = r['awards']['accumulatedMvp']
-        p.awards.accumulated_sadist = r['awards']['accumulatedSadist']
-        p.awards.accumulated_survivor = r['awards']['accumulatedSurvivor']
-        p.awards.accumulated_ripper = r['awards']['accumulatedRipper']
-        p.awards.accumulated_phoe = r['awards']['accumulatedPhoe']
-        p.awards.accumulated_aimbot = r['awards']['accumulatedAimbot']
-
-        return p
+        global single_stats_cache
+        if uid in single_stats_cache:
+            return single_stats_cache[uid]
+        else:
+            url = ROOT_URL + '/stats/get/' + uid
+            resp = requests.get(url)
+            resp = json.loads(resp.text)
+            player = sv_custom_utils.get_player_from_json(resp)
+            if len(single_stats_cache) > MAX_CACHE_SIZE:
+                single_stats_cache.clear()
+            single_stats_cache[uid] = player
+            return player
     except:
         sv_custom_utils.simple_exception_info()
 
 
-# Get Top stats by the info
-# todo Not implemented yet
-def get_top_stats(info):
-    pass
+# Get Top Aimbots
+def get_top_aimbots():
+    try:
+        cache_id = "aimbots"
+        global top_stats_cache
+        if cache_id in top_stats_cache:
+            return top_stats_cache[cache_id]
+        else:
+            url = ROOT_URL + '/stats/get/top/aimbots'
+            resp = requests.get(url)
+            resp = json.loads(resp.text)
+            aimbots = sv_custom_utils.get_list_of_players_from_json(resp)
+            if len(top_stats_cache) > MAX_CACHE_SIZE:
+                top_stats_cache.clear()
+            top_stats_cache[cache_id] = aimbots
+            return aimbots
+    except:
+        sv_custom_utils.simple_exception_info()
+
+
+# Get Top Sadists
+def get_top_sadists():
+    try:
+        cache_id = "sadists"
+        global top_stats_cache
+        if cache_id in top_stats_cache:
+            return top_stats_cache[cache_id]
+        else:
+            url = ROOT_URL + '/stats/get/top/sadists'
+            resp = requests.get(url)
+            resp = json.loads(resp.text)
+            sadists = sv_custom_utils.get_list_of_players_from_json(resp)
+            if len(top_stats_cache) > MAX_CACHE_SIZE:
+                top_stats_cache.clear()
+            top_stats_cache[cache_id] = sadists
+            return sadists
+    except:
+        sv_custom_utils.simple_exception_info()
+
+
+# Get Top Survivors
+def get_top_survivors():
+    try:
+        cache_id = "survivors"
+        global top_stats_cache
+        if cache_id in top_stats_cache:
+            return top_stats_cache[cache_id]
+        else:
+            url = ROOT_URL + '/stats/get/top/survivors'
+            resp = requests.get(url)
+            resp = json.loads(resp.text)
+            survivors = sv_custom_utils.get_list_of_players_from_json(resp)
+            if len(top_stats_cache) > MAX_CACHE_SIZE:
+                top_stats_cache.clear()
+            top_stats_cache[cache_id] = survivors
+            return survivors
+    except:
+        sv_custom_utils.simple_exception_info()
+
+
+# Get Top Rippers
+def get_top_rippers():
+    try:
+        cache_id = "rippers"
+        global top_stats_cache
+        if cache_id in top_stats_cache:
+            return top_stats_cache[cache_id]
+        else:
+            url = ROOT_URL + '/stats/get/top/rippers'
+            resp = requests.get(url)
+            resp = json.loads(resp.text)
+            rippers = sv_custom_utils.get_list_of_players_from_json(resp)
+            if len(top_stats_cache) > MAX_CACHE_SIZE:
+                top_stats_cache.clear()
+            top_stats_cache[cache_id] = rippers
+            return rippers
+    except:
+        sv_custom_utils.simple_exception_info()
+
+
+# Get Top Phoes
+def get_top_phoes():
+    try:
+        cache_id = "phoes"
+        global top_stats_cache
+        if cache_id in top_stats_cache:
+            return top_stats_cache[cache_id]
+        else:
+            url = ROOT_URL + '/stats/get/top/phoes'
+            resp = requests.get(url)
+            resp = json.loads(resp.text)
+            phoes = sv_custom_utils.get_list_of_players_from_json(resp)
+            if len(top_stats_cache) > MAX_CACHE_SIZE:
+                top_stats_cache.clear()
+            top_stats_cache[cache_id] = phoes
+            return phoes
+    except:
+        sv_custom_utils.simple_exception_info()
+
+
+# Get Top MVPs
+def get_top_mvps():
+    try:
+        cache_id = "mvps"
+        global top_stats_cache
+        if cache_id in top_stats_cache:
+            return top_stats_cache[cache_id]
+        else:
+            url = ROOT_URL + '/stats/get/top/mvps'
+            resp = requests.get(url)
+            resp = json.loads(resp.text)
+            mvps = sv_custom_utils.get_list_of_players_from_json(resp)
+            if len(top_stats_cache) > MAX_CACHE_SIZE:
+                top_stats_cache.clear()
+            top_stats_cache[cache_id] = mvps
+            return mvps
+    except:
+        sv_custom_utils.simple_exception_info()
 
 
 def calculate_players_and_awards():
@@ -104,8 +213,8 @@ def execute_save_stats():
     data = get_json_from_players()
     url = ROOT_URL + '/stats/server/players/put'
     headers = {'content-type': 'application/json'}
-    r = requests.put(url, data, headers=headers)
-    print("[!]   Save stats result  ->  [%s, %s]" % (r.status_code, r.text))
+    resp = requests.put(url, data, headers=headers)
+    print("[!]   Save stats result  ->  [%s, %s]" % (resp.status_code, resp.text))
 
 
 # Saves the stats of the players in the new thread

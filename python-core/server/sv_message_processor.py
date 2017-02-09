@@ -22,7 +22,7 @@ this = sys.modules[__name__]
 clients_list = []
 
 # Default timeout interval for requests (in millis)
-default_timeout_interval = long(1 * 1000)
+default_timeout_interval = long(1 * 2000)
 
 
 def init():
@@ -72,11 +72,7 @@ def parse_request(message, guid):
         dictionary = {"!": "", " ": ""}
         message = sv_custom_utils.replace_all(message, dictionary)
         message = message.lower()
-        process_request(guid, message)
-        # if message == this.MSG_INFO:
-        # ac = sv_stats.get_accuracy(0)
-        # print ac
-        # pass
+        createThread('import sv_message_processor; sv_message_processor.process_request(%s, %s)' % (guid, message))
     except:
         sv_custom_utils.simple_exception_info()
 
@@ -84,6 +80,7 @@ def parse_request(message, guid):
 # todo a list of clients and time control to prevent spam
 #
 def process_request(guid, message):
+    guid = int(guid)
     try:
         current_millis = get_current_millis()
         uid = int(server.GetClientInfo(guid, INFO_UID))
@@ -94,15 +91,19 @@ def process_request(guid, message):
             if message == this.MSG_INFO:
                 player = sv_stats.get_client_stats(uid)
             elif message == this.MSG_LAST:
-                pass
+                player = sv_stats.get_client_stats(uid)
             elif message == this.MSG_AIM_BOTS:
-                pass
+                players = sv_stats.get_top_aimbots()
             elif message == this.MSG_SADISTS:
-                pass
-            elif message == this.MSG_NOOBS:
-                pass
-            elif message == this.MSG_RANDOM:
-                pass
+                players = sv_stats.get_top_sadists()
+            elif message == this.MSG_SURVIVORS:
+                players = sv_stats.get_top_survivors()
+            elif message == this.MSG_MVPS:
+                players = sv_stats.get_top_mvps()
+            elif message == this.MSG_PHOES:
+                players = sv_stats.get_top_phoes()
+            elif message == this.MSG_RIPPERS:
+                players = sv_stats.get_top_rippers()
     except:
         sv_custom_utils.simple_exception_info()
 
@@ -117,7 +118,11 @@ __builtin__.MSG_LAST = "last"
 __builtin__.MSG_AIM_BOTS = "aimbots"
 # Top N sadists
 __builtin__.MSG_SADISTS = "sadists"
-# Top N worst kills - deaths
-__builtin__.MSG_NOOBS = "noobs"
-# Top N random people
-__builtin__.MSG_RANDOM = "random"
+# Top N mvps
+__builtin__.MSG_MVPS = "mvps"
+# Top N phoes
+__builtin__.MSG_PHOES = "phoes"
+# Top N survivors
+__builtin__.MSG_SURVIVORS = "survivors"
+# Top N rippers
+__builtin__.MSG_RIPPERS = "rippers"

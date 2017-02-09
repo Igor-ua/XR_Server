@@ -135,7 +135,7 @@ p2.awards.aimbot = 0
 
 players = list()
 players.append(p1)
-# players.append(p2)
+players.append(p2)
 
 
 def obj_repr(obj):
