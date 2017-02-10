@@ -66,22 +66,13 @@ public class AccuracyStats implements Serializable {
 	@Max(100)
 	private int accumulatedAccuracyPercent;
 	//--------------------------------------------------------------------------------------
-	@Column(name = "game_ts")
-	@JsonIgnore
-	private Date gameTimeStamp;
-
-	@Transient
-	private SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-
 	// Flag that indicates that accumulated logic was called once
 	@Transient
 	private boolean isAccumulated = false;
 
 	//--------------------------------------------------------------------------------------
 
-	public AccuracyStats() {
-		this.gameTimeStamp = new Date();
-	}
+	public AccuracyStats() {}
 
 	public AccuracyStats(Player player) {
 		this();
@@ -164,7 +155,6 @@ public class AccuracyStats implements Serializable {
 	@PrePersist
 	@PreUpdate
 	private void accumulatedStatsUpdater() {
-		this.gameTimeStamp = new Date();
 		isAccumulated = false;
 	}
 	//--------------------------------------------------------------------------------------
@@ -194,7 +184,6 @@ public class AccuracyStats implements Serializable {
 				lastAccuracyPercent + "]\n" +
 				"\t\taccumulated: [shots: " + accumulatedShots + ", hits: " + accumulatedHits + ", frags: " + accumulatedFrags +
 				", accuracy: " + accumulatedAccuracyPercent + "]\n" +
-				"\t\tgameTimeStamp: " + sdf.format(gameTimeStamp) + "\n" +
 				"\t}";
 	}
 }
