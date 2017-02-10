@@ -129,31 +129,36 @@ def obj_repr(obj):
 
 
 def get_player_from_json(resp):
-    p = Player(resp['uid'])
-    p.last_used_name = resp['lastUsedName']
+    p = Player(0)
+    if resp:
+        p = Player(resp['uid'])
+        p.last_used_name = resp['lastUsedName']
 
-    p.accuracy_stats.last_shots = resp['accuracyStats']['lastShots']
-    p.accuracy_stats.last_hits = resp['accuracyStats']['lastHits']
-    p.accuracy_stats.last_frags = resp['accuracyStats']['lastFrags']
-    p.accuracy_stats.accuracy_percent = resp['accuracyStats']['lastAccuracyPercent']
+        p.accuracy_stats.last_shots = resp['accuracyStats']['lastShots']
+        p.accuracy_stats.last_hits = resp['accuracyStats']['lastHits']
+        p.accuracy_stats.last_frags = resp['accuracyStats']['lastFrags']
+        p.accuracy_stats.accuracy_percent = resp['accuracyStats']['lastAccuracyPercent']
 
-    p.accuracy_stats.accumulated_shots = resp['accuracyStats']['accumulatedShots']
-    p.accuracy_stats.accumulated_hits = resp['accuracyStats']['accumulatedHits']
-    p.accuracy_stats.accumulated_frags = resp['accuracyStats']['accumulatedFrags']
-    p.accuracy_stats.accumulated_percent = resp['accuracyStats']['accumulatedAccuracyPercent']
+        p.accuracy_stats.accumulated_shots = resp['accuracyStats']['accumulatedShots']
+        p.accuracy_stats.accumulated_hits = resp['accuracyStats']['accumulatedHits']
+        p.accuracy_stats.accumulated_frags = resp['accuracyStats']['accumulatedFrags']
+        p.accuracy_stats.accumulated_percent = resp['accuracyStats']['accumulatedAccuracyPercent']
 
-    p.awards.accumulated_mvp = resp['awards']['accumulatedMvp']
-    p.awards.accumulated_sadist = resp['awards']['accumulatedSadist']
-    p.awards.accumulated_survivor = resp['awards']['accumulatedSurvivor']
-    p.awards.accumulated_ripper = resp['awards']['accumulatedRipper']
-    p.awards.accumulated_phoe = resp['awards']['accumulatedPhoe']
-    p.awards.accumulated_aimbot = resp['awards']['accumulatedAimbot']
+        p.awards.accumulated_mvp = resp['awards']['accumulatedMvp']
+        p.awards.accumulated_sadist = resp['awards']['accumulatedSadist']
+        p.awards.accumulated_survivor = resp['awards']['accumulatedSurvivor']
+        p.awards.accumulated_ripper = resp['awards']['accumulatedRipper']
+        p.awards.accumulated_phoe = resp['awards']['accumulatedPhoe']
+        p.awards.accumulated_aimbot = resp['awards']['accumulatedAimbot']
 
     return p
 
 
 def get_list_of_players_from_json(resp):
     players = []
-    for r in resp:
-        players.append(get_player_from_json(r))
+    if resp:
+        for r in resp:
+            player = get_player_from_json(r)
+            if player.uid != 0:
+                players.append(get_player_from_json(r))
     return players

@@ -72,7 +72,7 @@ def get_client_stats(uid):
         if uid in single_stats_cache:
             return single_stats_cache[uid]
         else:
-            url = ROOT_URL + '/stats/get/' + uid
+            url = ROOT_URL + '/stats/get/' + str(uid)
             resp = requests.get(url)
             resp = json.loads(resp.text)
             player = sv_custom_utils.get_player_from_json(resp)
