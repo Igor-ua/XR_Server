@@ -1,11 +1,14 @@
 package com.newerth.core.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.newerth.core.View;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Component
 @Entity
@@ -30,7 +33,15 @@ public class Player {
 	@JsonView(View.Summary.class)
 	private Awards awards;
 
+	@Column(name = "game_ts")
+	@JsonIgnore
+	private Date gameTimeStamp;
+
+	@Transient
+	private SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+
 	public Player() {
+		this.gameTimeStamp = new Date();
 		this.uid = 0L;
 		this.lastUsedName = "";
 		this.accuracyStats = new AccuracyStats(this);
@@ -51,10 +62,6 @@ public class Player {
 		this.uid = uid;
 	}
 
-	public void updateAwards(Awards awards) {
-		this.awards.updateAwards(awards);
-	}
-
 	public Long getUid() {
 		return uid;
 	}
@@ -67,6 +74,10 @@ public class Player {
 		accuracyStats.setStats(shots, hits, frags);
 	}
 
+	public void setAwards(int mvp, int sadist, int survivor, int ripper, int phoe, int aimbot) {
+		awards.setAwards(mvp, sadist, survivor, ripper, phoe, aimbot);
+	}
+
 	public Awards getAwards() {
 		return awards;
 	}
@@ -77,6 +88,12 @@ public class Player {
 
 	public void setLastUsedName(String lastUsedName) {
 		this.lastUsedName = lastUsedName;
+	}
+
+	@PrePersist
+	@PreUpdate
+	private void prePersistUpdate() {
+		this.gameTimeStamp = new Date();
 	}
 
 	@Override
@@ -99,6 +116,7 @@ public class Player {
 		return "Player: {\n" +
 				"\tuid: " + uid + ",\n" +
 				"\tname: " + lastUsedName + ",\n" +
+				"\ttime: " + sdf.format(gameTimeStamp) + "\n" +
 				"" + accuracyStats + "\n" +
 				"" + awards +
 				"\n}";

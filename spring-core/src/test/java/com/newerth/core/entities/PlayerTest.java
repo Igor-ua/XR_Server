@@ -41,6 +41,7 @@ public class PlayerTest {
 		this.player = new Player(1L);
 		player.setLastUsedName("Mike");
 		player.setAccuracyStats(10, 5, 5);
+		player.setAwards(1, 1, 1, 1,1,1);
 	}
 
 	@Test
@@ -87,14 +88,18 @@ public class PlayerTest {
 
 	@Test
 	public void updateMultipleTimes() {
-		this.entityManager.persist(player);
-
-		Player p = ref.findPlayerByUid(player.getUid());
-		p.getAccuracyStats().setStats(4, 1, 1);
+		Player p = player;
+		System.out.println(p);
 		updater.saveOrUpdatePlayer(p);
 
-		p = ref.findPlayerByUid(player.getUid());
-		p.getAccuracyStats().setStats(4, 2, 2);
+		p.setAccuracyStats(4, 1, 1);
+		p.setAwards(1,1,1,1,1,1);
+		System.out.println(p);
+		updater.saveOrUpdatePlayer(p);
+
+		p.setAccuracyStats(4, 2, 2);
+		p.setAwards(1,1,1,1,1,1);
+		System.out.println(p);
 		updater.saveOrUpdatePlayer(p);
 
 		p = ref.findPlayerByUid(player.getUid());
@@ -103,6 +108,12 @@ public class PlayerTest {
 		assertThat(p.getAccuracyStats().getAccumulatedFrags()).isEqualTo(8);
 		assertThat(p.getAccuracyStats().getAccumulatedAccuracyPercent()).isEqualTo(44);
 		assertThat(p.getAccuracyStats().getAccumulatedAccuracyPercent()).isNotEqualTo(43);
+		assertThat(p.getAwards().getAccumulatedAimbot()).isEqualTo(3);
+		assertThat(p.getAwards().getAccumulatedMvp()).isEqualTo(3);
+		assertThat(p.getAwards().getAccumulatedPhoe()).isEqualTo(3);
+		assertThat(p.getAwards().getAccumulatedRipper()).isEqualTo(3);
+		assertThat(p.getAwards().getAccumulatedSadist()).isEqualTo(3);
+		assertThat(p.getAwards().getAccumulatedSurvivor()).isEqualTo(3);
 	}
 
 	@Test(expected = IllegalArgumentException.class)

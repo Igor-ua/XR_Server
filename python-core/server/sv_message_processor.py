@@ -11,18 +11,20 @@ import server
 import sv_defs
 import sv_utils
 import sv_stats
-import __builtin__
 import sys
 import time
 import sv_custom_utils
+import re
+# Will replace all symbols from the input string that are not: 'A-Za-z-_() '
+REGEXP_FOR_INPUT = '[^!^A-Z^a-z^\-^_^(^) ]'
 
-this = sys.modules[__name__]
+messages = {'info', 'last', 'top'}
 
 # Generated list of GUIDs. Contains values from 0 to 128
 clients_list = []
 
 # Default timeout interval for requests (in millis)
-default_timeout_interval = long(1 * 1000)
+default_timeout_interval = long(1 * 2000)
 
 
 def init():
@@ -69,56 +71,126 @@ def process_private_message(sender_idx, receiver_idx, message):
 
 def parse_request(message, guid):
     try:
-        dictionary = {"!": "", " ": ""}
-        message = replace_all(message, dictionary)
-        message = message.lower()
-        process_request(guid, message)
-        # if message == this.MSG_INFO:
-        # ac = sv_stats.get_accuracy(0)
-        # print ac
-        # pass
+        replaced_message = re.sub(REGEXP_FOR_INPUT, '', message)
+        msg_parts = replaced_message.split(' ')
+        command = msg_parts[1].replace('!', '').lower()
+        param = msg_parts[2].lower()
+        if message in messages:
+            createThread('import sv_message_processor; sv_message_processor.process_request(%s, %s, %s)'
+                         % (guid, command, param))
     except:
         sv_custom_utils.simple_exception_info()
 
 
-# Utils
-def replace_all(text, dic):
-    for i, j in dic.iteritems():
-        text = text.replace(i, j)
-    return text
-
-
-# todo a list of clients and time control to prevent spam
-#
-def process_request(guid, message):
+def process_request(guid, message, param):
+    guid = int(guid)
     try:
         current_millis = get_current_millis()
         uid = int(server.GetClientInfo(guid, INFO_UID))
-        result = []
         if get_client_timeout(guid) < current_millis:
             update_client_timeout(guid)
-            # todo and notify client to wait and retry
+            notify_to_wait(guid)
         else:
-            if message == this.MSG_INFO:
-                result = sv_stats.get_client_stats(uid)
-            elif message == this.MSG_LAST:
-                pass
-            elif message == this.MSG_AIM_BOTS:
-                pass
-            elif message == this.MSG_SADISTS:
-                pass
-            elif message == this.MSG_NOOBS:
-                pass
-            elif message == this.MSG_RANDOM:
-                pass
+            if message is 'info':
+                if not param:
+                    notify_info(guid, sv_stats.get_client_stats_by_name(param))
+                else:
+                    notify_info(guid, sv_stats.get_client_stats(uid))
+            elif message is 'last':
+                if not param:
+                    notify_last(guid, sv_stats.get_client_stats_by_name(param))
+                else:
+                    notify_last(guid, sv_stats.get_client_stats(uid))
+            elif message is 'top':
+                notify_top(guid, sv_stats.get_top_stats())
     except:
         sv_custom_utils.simple_exception_info()
 
 
-# CLIENT API:
-__builtin__.MSG_INFO     = "info"
-__builtin__.MSG_LAST     = "last"
-__builtin__.MSG_AIM_BOTS = "aimbots"
-__builtin__.MSG_SADISTS  = "sadists"
-__builtin__.MSG_NOOBS    = "noobs"
-__builtin__.MSG_RANDOM   = "random"
+# Notify client to wait and retry
+def notify_to_wait(guid):
+    guid = int(guid)
+    server.Notify(guid, '^ySpam ^yprotection. ^yWait ^ya ^ybit')
+
+
+def notify_info(guid, player):
+    server.Notify(guid, '^y===================================================================')
+    server.Notify(guid, '^y[General ^ystatistic ^yfor: ^g%s]' % player.last_used_name)
+    server.Notify(guid, '')
+    server.Notify(guid, '^y[^900Accuracy^y]')
+    server.Notify(guid, '^yShots: ^g%s' % player.accuracy_stats.accumulated_shots)
+    server.Notify(guid, '^yHits: ^g%s' % player.accuracy_stats.accumulated_hits)
+    server.Notify(guid, '^yFrags: ^g%s' % player.accuracy_stats.accumulated_frags)
+    server.Notify(guid, '^yAccuracy: ^g%s' % player.accuracy_stats.accumulated_percent)
+    if player.awards.has_awards():
+        server.Notify(guid, '')
+        server.Notify(guid, '^y[^900Awards^y]')
+        server.Notify(guid, '^yAimbot: ^g%s' % player.awards.mvp) if bool(player.awards.accumulated_aimbot) else None
+        server.Notify(guid, '^yMvp: ^g%s' % player.awards.mvp) if bool(player.awards.accumulated_mvp) else None
+        server.Notify(guid, '^ySadist: ^g%s' % player.awards.mvp) if bool(player.awards.accumulated_sadist) else None
+        server.Notify(guid, '^ySurvivor: ^g%s' % player.awards.mvp) if bool(player.awards.accumulated_survivor) else None
+        server.Notify(guid, '^yRipper: ^g%s' % player.awards.mvp) if bool(player.awards.accumulated_ripper) else None
+        server.Notify(guid, '^yPhoe: ^g%s' % player.awards.mvp) if bool(player.awards.accumulated_phoe) else None
+    server.Notify(guid, '^y===================================================================')
+
+
+def notify_last(guid, player):
+    server.Notify(guid, '^y===================================================================')
+    server.Notify(guid, '^y[Latest ^ystatistic ^yfor: ^g%s]' % player.last_used_name)
+    server.Notify(guid, '')
+    server.Notify(guid, '^y[^900Accuracy^y]')
+    server.Notify(guid, '^yShots: ^g%s' % player.accuracy_stats.last_shots)
+    server.Notify(guid, '^yHits: ^g%s' % player.accuracy_stats.last_hits)
+    server.Notify(guid, '^yFrags: ^g%s' % player.accuracy_stats.last_frags)
+    server.Notify(guid, '^yAccuracy: ^g%s' % player.accuracy_stats.accuracy_percent)
+    server.Notify(guid, '^y===================================================================')
+
+
+def notify_top(guid, cache):
+    server.Notify(guid, '^y===================================================================')
+    server.Notify(guid, '^y[Top ^ystatistics]')
+    server.Notify(guid, '')
+    # ------------------------------------------------------------------------------------------
+    aimbots = '^900AIMBOTS:'
+    for idx in xrange(0, len(cache['aimbots'])):
+        aimbots += ' ^y[%s. ^y%s ^y- ^y%s%%]' % (idx, cache['aimbots'][idx].last_used_name,
+                                         cache['aimbots'][idx].awards.accumulated_aimbot)
+        aimbots += '^y,' if idx < len(cache['aimbots']) - 1 else None
+    server.Notify(guid, aimbots)
+    # ------------------------------------------------------------------------------------------
+    sadists = '^900SADISTS:'
+    for idx in xrange(0, len(cache['sadists'])):
+        sadists += ' ^y[%s. ^y%s ^y- ^y%s]' % (idx, cache['sadists'][idx].last_used_name,
+                                       cache['sadists'][idx].awards.accumulated_sadist)
+        sadists += '^y,' if idx < len(cache['sadists']) - 1 else None
+    server.Notify(guid, sadists)
+    # ------------------------------------------------------------------------------------------
+    survivors = '^900SURVIVORS:'
+    for idx in xrange(0, len(cache['survivors'])):
+        survivors += ' ^y[%s. ^y%s ^y- ^y%s]' % (idx, cache['survivors'][idx].last_used_name,
+                                         cache['survivors'][idx].awards.accumulated_survivor)
+        survivors += '^y,' if idx < len(cache['survivors']) - 1 else None
+    server.Notify(guid, survivors)
+    # ------------------------------------------------------------------------------------------
+    rippers = '^900RIPPERS:'
+    for idx in xrange(0, len(cache['rippers'])):
+        rippers += ' ^y[%s. ^y%s ^y- ^y%s]' % (idx, cache['rippers'][idx].last_used_name,
+                                       cache['rippers'][idx].awards.accumulated_ripper)
+        rippers += '^y,' if idx < len(cache['rippers']) - 1 else None
+    server.Notify(guid, rippers)
+    # ------------------------------------------------------------------------------------------
+    phoes = '^900PHOES:'
+    for idx in xrange(0, len(cache['phoes'])):
+        phoes += ' ^y[%s. ^y%s ^y- ^y%s]' % (idx, cache['phoes'][idx].last_used_name,
+                                     cache['phoes'][idx].awards.accumulated_phoe)
+        phoes += '^y,' if idx < len(cache['phoes']) - 1 else None
+    server.Notify(guid, phoes)
+    # ------------------------------------------------------------------------------------------
+    mvps = '^900MVPS:'
+    for idx in xrange(0, len(cache['mvps'])):
+        mvps += ' ^y[%s. ^y%s ^y- ^y%s]' % (idx, cache['mvps'][idx].last_used_name,
+                                    cache['mvps'][idx].awards.accumulated_mvp)
+        mvps += '^y,' if idx < len(cache['mvps']) - 1 else None
+    server.Notify(guid, mvps)
+    # ------------------------------------------------------------------------------------------
+    server.Notify(guid, '^y===================================================================')

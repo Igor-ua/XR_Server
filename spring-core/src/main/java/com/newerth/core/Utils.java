@@ -111,6 +111,14 @@ public class Utils {
 				node.at("/accuracyStats/lastHits").asInt(),
 				node.at("/accuracyStats/lastFrags").asInt()
 		);
+		player.setAwards(
+				node.at("/awards/mvp").asInt(),
+				node.at("/awards/sadist").asInt(),
+				node.at("/awards/survivor").asInt(),
+				node.at("/awards/ripper").asInt(),
+				node.at("/awards/phoe").asInt(),
+				node.at("/awards/aimbot").asInt()
+		);
 		return player;
 	}
 

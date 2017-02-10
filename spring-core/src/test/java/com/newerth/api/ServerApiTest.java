@@ -38,11 +38,22 @@ public class ServerApiTest {
 	private static final String json = "{\"accuracyStats\": {\"lastShots\": 10, \"lastFrags\": 5, \"lastHits\": 5}, " +
 			"\"uid\": 1, \"lastUsedName\": \"Mike\"}";
 
-	// {"Players": [{"uid" : 1, "lastUsedName" : "Mike","accuracyStats" : {"lastShots" : 10,"lastHits" : 5,"lastFrags" : 5}},
-	// 			    {"uid" : 2, "lastUsedName" : "John","accuracyStats" : {"lastShots" : 4,"lastHits" : 1,"lastFrags" : 1}}]}
-	private static final String jsonArray = "{\"Players\": [{\"uid\" : 1, \"lastUsedName\" : \"Mike\",\"accuracyStats\":" +
-			" {\"lastShots\" : 10,\"lastHits\" : 5,\"lastFrags\" : 5}}, {\"uid\" : 2, \"lastUsedName\" : \"John\"," +
-			"\"accuracyStats\" : {\"lastShots\" : 4,\"lastHits\" : 1,\"lastFrags\" : 1}}]}";
+	// {"Players": [
+	// 					{"uid" : 1, "lastUsedName" : "Mike",
+	// 						"accuracyStats" : {"lastShots" : 10,"lastHits" : 5,"lastFrags" : 5},
+	//						"awards": {"mvp" : 1, "sadist" : 1, "survivor" : 1, "ripper" : 1, "phoe" : 1, "aimbot" : 1}
+	// 					},
+	// 					{"uid" : 2, "lastUsedName" : "John",
+	// 						"accuracyStats" : {"lastShots" : 4,"lastHits" : 1,"lastFrags" : 1},
+	//						"awards": {"mvp" : 1, "sadist" : 1, "survivor" : 1, "ripper" : 1, "phoe" : 1, "aimbot" : 1}
+	// 					}
+	// 				]
+	// }
+	private static final String jsonArray = "{\"Players\": [{\"uid\" : 1, \"lastUsedName\" : \"Mike\",\"accuracyStats" +
+			"\" : {\"lastShots\" : 10,\"lastHits\" : 5,\"lastFrags\" : 5},\"awards\": {\"mvp\" : 1, \"sadist\" : 1" +
+			", \"survivor\" : 1, \"ripper\" : 1, \"phoe\" : 1, \"aimbot\" : 1}},{\"uid\" : 2, \"lastUsedName\" " +
+			": \"John\",\"accuracyStats\" : {\"lastShots\" : 4,\"lastHits\" : 1,\"lastFrags\" : 1},\"awards\": " +
+			"{\"mvp\" : 1, \"sadist\" : 1, \"survivor\" : 1, \"ripper\" : 1, \"phoe\" : 1, \"aimbot\" : 1}}]}";
 
 	@Test
 	public void serverApiMessage() {

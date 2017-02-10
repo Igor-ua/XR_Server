@@ -20,7 +20,7 @@ public class AccuracyStats implements Serializable {
 
 	@Id
 	@GeneratedValue
-	@JsonView(View.Summary.class)
+	@JsonIgnore
 	@Column(name = "id")
 	private Long id;
 
@@ -66,22 +66,13 @@ public class AccuracyStats implements Serializable {
 	@Max(100)
 	private int accumulatedAccuracyPercent;
 	//--------------------------------------------------------------------------------------
-	@Column(name = "game_ts")
-	@JsonIgnore
-	private Date gameTimeStamp;
-
-	@Transient
-	private SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-
 	// Flag that indicates that accumulated logic was called once
 	@Transient
 	private boolean isAccumulated = false;
 
 	//--------------------------------------------------------------------------------------
 
-	public AccuracyStats() {
-		this.gameTimeStamp = new Date();
-	}
+	public AccuracyStats() {}
 
 	public AccuracyStats(Player player) {
 		this();
@@ -152,9 +143,7 @@ public class AccuracyStats implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 	//--------------------------------------------------------------------------------------
-
 	private int calculateAccuracy(int shots, int hits) {
 		int result = 0;
 		if (hits > 0 && shots > 0) {
@@ -166,10 +155,9 @@ public class AccuracyStats implements Serializable {
 	@PrePersist
 	@PreUpdate
 	private void accumulatedStatsUpdater() {
-		this.gameTimeStamp = new Date();
 		isAccumulated = false;
 	}
-
+	//--------------------------------------------------------------------------------------
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -187,16 +175,15 @@ public class AccuracyStats implements Serializable {
 		result = 31 * result + (player != null ? player.hashCode() : 0);
 		return result;
 	}
-
+	//--------------------------------------------------------------------------------------
 	@Override
 	public String toString() {
 		return "\tAccuracyStats: {\n" +
-				"\t\tplayer_uid: " + player.getUid() + "\n" +
+				"\t\tplayer_uid: " + (player != null ? player.getUid() : "null") + "\n" +
 				"\t\tlast:        [shots: " + lastShots + ", hits: " + lastHits + ", frags: " + lastFrags + ", accuracy: " +
 				lastAccuracyPercent + "]\n" +
 				"\t\taccumulated: [shots: " + accumulatedShots + ", hits: " + accumulatedHits + ", frags: " + accumulatedFrags +
 				", accuracy: " + accumulatedAccuracyPercent + "]\n" +
-				"\t\tgameTimeStamp: " + sdf.format(gameTimeStamp) + "\n" +
 				"\t}";
 	}
 }
