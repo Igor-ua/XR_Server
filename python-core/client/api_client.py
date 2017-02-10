@@ -7,24 +7,6 @@
 import json
 import requests
 
-# data = {"uid": 4, "lastUsedName": "Mike"}
-
-# data = {"uid": 2,
-#         "lastUsedName": "Mike",
-#         "accuracyStats": {"lastShots": 10, "lastHits": 5, "lastFrags": 5}
-#         }
-
-# headers = {'Content-Type': 'application/json'}
-# url = 'http://localhost:8080/stats/server/save'
-
-# headers = {'content-type': 'application/json'}
-# r = requests.post(url, json=data, headers=headers)
-# print r.text
-
-# r = requests.post(url, data=json.dumps(data))
-# print r.text
-# print r.status_code
-
 # import urllib
 # import os
 #
@@ -38,16 +20,7 @@ import requests
 # localSize = os.path.getsize('E:\\Code\\Projects\\XR_Server\\spring-core\\world\\xr_test.s2z')
 # print localSize
 
-# List structure:
-# {"Players":
-#         [
-#                 {"uid" : 1, "lastUsedName" : "Mike","accuracyStats" : {"lastShots" : 10,"lastHits" : 5,"lastFrags" : 5}},
-#                 {"uid" : 2, "lastUsedName" : "John","accuracyStats" : {"lastShots" : 4,"lastHits" : 1,"lastFrags" : 1}}
-#         ]
-# }
 
-
-# Don't save players with UID = 0 (0 is for unauthorized clients)
 class Player(object):
         def __init__(self, uid):
                 self.uid = uid
@@ -120,16 +93,19 @@ class Awards(object):
                             ripper=self.ripper, phoe=self.phoe, aimbot=self.aimbot)
 
         def __str__(self):
-                return "Awards : [UID: %s], [AIMBOT: %s], [MVP: %s], [SADIST: %s], [SURVIVOR: %s], [RIPPER: %s], [PHOE: %s]" \
-                       % (self.uid, self.aimbot, self.mvp, self.sadist, self.survivor, self.ripper, self.phoe)
+                return "Awards : [UID: %s], [AIMBOT: %s], [MVP: %s], [SADIST: %s], [SURVIVOR: %s], [RIPPER: %s], " \
+                       "[PHOE: %s]" % (self.uid, self.aimbot, self.mvp, self.sadist, self.survivor, self.ripper,
+                                       self.phoe)
 
 
 p1 = Player(1)
 p2 = Player(2)
 
 p1.awards.aimbot = 1
+p1.last_used_name = "Mikeaz"
 p1.accuracy_stats.last_shots = 1
 p1.accuracy_stats.last_hits = 0
+p2.last_used_name = "Mikebz"
 
 p2.awards.aimbot = 0
 
@@ -146,21 +122,9 @@ def obj_repr(obj):
 
 json_players = json.dumps(players, default=obj_repr)
 
-
 data = '{"Players": %s}' % json.dumps(players, default=obj_repr)
-print data
-
-
 url = 'http://localhost:8080/stats/server/players/put'
 headers = {'content-type': 'application/json'}
 r = requests.put(url, data, headers=headers)
-print r.text
-print r.status_code
-
-
-# url = 'http://localhost:8080/stats/get/2'
-# r = requests.get(url)
-# data = json.loads(r.text)
-# print data
-# print data['awards']['accumulatedSadist']
-# print data['uid']
+# print r.text
+# print r.status_code

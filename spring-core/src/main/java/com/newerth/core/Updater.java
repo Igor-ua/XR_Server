@@ -36,6 +36,7 @@ public class Updater {
 	public boolean saveOrUpdatePlayer(Player player) {
 		Player found = ref.findPlayerByUid(player.getUid());
 		if (found != null) {
+			found.setLastUsedName(player.getLastUsedName());
 			found.setAccuracyStats(
 					player.getAccuracyStats().getLastShots(),
 					player.getAccuracyStats().getLastHits(),
@@ -67,6 +68,7 @@ public class Updater {
 		players.forEach(player -> {
 			Player found = ref.findPlayerByUid(player.getUid());
 			if (found != null) {
+				found.setLastUsedName(player.getLastUsedName());
 				found.setAccuracyStats(
 						player.getAccuracyStats().getLastShots(),
 						player.getAccuracyStats().getLastHits(),

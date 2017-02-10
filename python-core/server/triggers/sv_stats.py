@@ -17,6 +17,7 @@ import sv_custom_utils
 import time
 import json
 from sv_entities import *
+import re
 
 
 run_at_start = False
@@ -28,6 +29,8 @@ single_stats_cache = {}
 # Cache for top-stats during one round
 top_stats_cache = {}
 MAX_CACHE_SIZE = 30
+# Will replace all symbols from the name that are not: 'A-Za-z-_() '
+REGEXP_FOR_NAME = '[^A-Z^a-z^\-^_^(^) ]'
 
 
 # Is called during every server frame
@@ -77,6 +80,18 @@ def get_client_stats(uid):
                 single_stats_cache.clear()
             single_stats_cache[uid] = player
             return player
+    except:
+        sv_custom_utils.simple_exception_info()
+
+
+# Get Client's stats by last_used_name
+def get_client_stats_by_name(name):
+    try:
+        url = ROOT_URL + '/stats/get/name/' + name
+        resp = requests.get(url)
+        resp = json.loads(resp.text)
+        player = sv_custom_utils.get_player_from_json(resp)
+        return player
     except:
         sv_custom_utils.simple_exception_info()
 
@@ -201,6 +216,17 @@ def get_top_mvps():
         sv_custom_utils.simple_exception_info()
 
 
+# Get Top MVPs
+def get_top_stats():
+    aimbots = get_top_aimbots()
+    sadists = get_top_sadists()
+    survivors = get_top_survivors()
+    rippers = get_top_rippers()
+    phoes = get_top_phoes()
+    mvps = get_top_mvps()
+    return top_stats_cache
+
+
 def calculate_players_and_awards():
     global players
     calculate_players_with_accuracy()
@@ -260,7 +286,7 @@ def calculate_players_with_accuracy():
                 uid = int(server.GetClientInfo(guid, INFO_UID))
                 if uid > 0:
                     player = Player(uid)
-                    player.last_used_name = server.GetClientInfo(guid, INFO_NAME)
+                    player.last_used_name = re.sub(REGEXP_FOR_NAME, '', server.GetClientInfo(guid, INFO_NAME))
                     player.kills = int(server.GetClientInfo(guid, STAT_KILLS))
                     player.deaths = int(server.GetClientInfo(guid, STAT_DEATHS))
                     player.killstreak = int(server.GetClientInfo(guid, STAT_KILLSTREAK))

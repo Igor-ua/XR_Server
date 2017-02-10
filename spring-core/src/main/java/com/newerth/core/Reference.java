@@ -40,7 +40,7 @@ public class Reference {
 	 * Gets player by his Name
 	 */
 	public Player findPlayerByName(String name) {
-		return playerRepo.findByLastUsedName(name);
+		return playerRepo.findByLastUsedName(name.toLowerCase());
 	}
 
 	/**

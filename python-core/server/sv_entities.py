@@ -84,6 +84,10 @@ class Awards(object):
         return dict(uid=self.uid, mvp=self.mvp, sadist=self.sadist, survivor=self.survivor,
                     ripper=self.ripper, phoe=self.phoe, aimbot=self.aimbot)
 
+    def has_awards(self):
+        return bool(self.mvp) or bool(self.sadist) or bool(self.survivor) or bool(self.ripper) or bool(self.phoe)\
+               or bool(self.aimbot)
+
     def __str__(self):
         return "Awards : [UID: %s], [AIMBOT: %s], [MVP: %s], [SADIST: %s], [SURVIVOR: %s], [RIPPER: %s], [PHOE: %s]" \
                % (self.uid, self.aimbot, self.mvp, self.sadist, self.survivor, self.ripper, self.phoe)

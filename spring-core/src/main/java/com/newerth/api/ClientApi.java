@@ -43,6 +43,16 @@ public class ClientApi {
 	}
 
 	@RequestMapping(
+			value = "/get/name/{name}",
+			method = RequestMethod.GET)
+	@ResponseBody
+	@JsonView(View.Summary.class)
+	public Player findOneByName(@PathVariable("name") String name, HttpServletRequest request) {
+		Utils.logRequest(request, this.getClass());
+		return ref.findPlayerByName(name);
+	}
+
+	@RequestMapping(
 			value = "/get/top/aimbots",
 			method = RequestMethod.GET)
 	@ResponseBody
@@ -100,17 +110,5 @@ public class ClientApi {
 	public List<Player> findTopMvps(HttpServletRequest request) {
 		Utils.logRequest(request, this.getClass());
 		return ref.findTopMvps();
-	}
-
-	@RequestMapping(
-			value = "/get/top/noobs",
-			method = RequestMethod.GET)
-	@ResponseBody
-	@JsonView(View.Summary.class)
-	public List<Player> findTopNoobs(HttpServletRequest request) {
-		Utils.logRequest(request, this.getClass());
-
-		// todo IMPLEMENT THIS
-		return ref.findTopAimbots();
 	}
 }

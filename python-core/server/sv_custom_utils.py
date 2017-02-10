@@ -150,7 +150,6 @@ def get_player_from_json(resp):
     p.awards.accumulated_aimbot = resp['awards']['accumulatedAimbot']
 
     return p
-    pass
 
 
 def get_list_of_players_from_json(resp):
