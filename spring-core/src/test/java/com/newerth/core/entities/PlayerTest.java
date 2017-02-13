@@ -39,6 +39,7 @@ public class PlayerTest {
 	@Before
 	public void setup() {
 		this.player = new Player(1L);
+		this.player.setClanId(333L);
 		player.setLastUsedName("Mike");
 		player.setAccuracyStats(10, 5, 5);
 		player.setAwards(1, 1, 1, 1,1,1);
@@ -58,9 +59,10 @@ public class PlayerTest {
 
 	@Test
 	public void findOne() {
-		Long uid = 123L;
-		this.entityManager.persist(new Player(uid));
+		Long uid = 1L;
+		this.entityManager.persist(player);
 		assertThat(ref.findPlayerByUid(uid).getUid()).isEqualTo(uid);
+		assertThat(ref.findPlayerByUid(uid).getClanId()).isEqualTo(333L);
 		assertThat(ref.findPlayerByUid(uid).getUid()).isNotEqualTo(12345L);
 	}
 

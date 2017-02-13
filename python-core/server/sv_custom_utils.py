@@ -45,7 +45,7 @@ def full_exception_info():
 
 
 def simple_exception_info():
-    logging.basicConfig(filename='logs/exceptions.log', filemode='a', level=logging.ERROR)
+    logging.basicConfig(filename='python/logs/exceptions.log', filemode='a', level=logging.ERROR)
     try:
         exc_type, exc_value, exc_traceback = sys.exc_info()
         exception_data = traceback.format_exc().splitlines()
@@ -134,6 +134,7 @@ def get_player_from_json(resp):
     p = Player(0)
     if resp:
         p = Player(resp['uid'])
+        p.clan_id = resp['clanId']
         p.last_used_name = resp['lastUsedName']
 
         p.accuracy_stats.last_shots = resp['accuracyStats']['lastShots']

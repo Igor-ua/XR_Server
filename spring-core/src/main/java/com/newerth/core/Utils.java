@@ -105,6 +105,7 @@ public class Utils {
 	public static Player getPlayerFromNode(JsonNode node) {
 		Player player = new Player();
 		player.setUid(node.at("/uid").longValue());
+		player.setClanId(node.at("/clanId").longValue());
 		player.setLastUsedName(node.at("/lastUsedName").asText());
 		player.setAccuracyStats(
 				node.at("/accuracyStats/lastShots").asInt(),

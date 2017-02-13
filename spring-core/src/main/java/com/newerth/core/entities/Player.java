@@ -23,6 +23,10 @@ public class Player {
 	private Long uid;
 
 	@JsonView(View.Summary.class)
+	@Column(name = "clan_id")
+	private Long clanId;
+
+	@JsonView(View.Summary.class)
 	@Column(name = "last_used_name", nullable = false, length = 50)
 	@Pattern(regexp = "[A-Za-z-_()0-9 ]{0,50}")
 	private String lastUsedName;
@@ -48,6 +52,7 @@ public class Player {
 	public Player() {
 		this.gameTimeStamp = new Date();
 		this.uid = 0L;
+		this.clanId = 0L;
 		this.lastUsedName = "";
 		this.accuracyStats = new AccuracyStats(this);
 		this.awards = new Awards(this);
@@ -69,6 +74,14 @@ public class Player {
 
 	public Long getUid() {
 		return uid;
+	}
+
+	public Long getClanId() {
+		return clanId;
+	}
+
+	public void setClanId(Long clanId) {
+		this.clanId = clanId;
 	}
 
 	public AccuracyStats getAccuracyStats() {
@@ -120,6 +133,7 @@ public class Player {
 	public String toString() {
 		return "Player: {\n" +
 				"\tuid: " + uid + ",\n" +
+				"\tclan_id: " + clanId + ",\n" +
 				"\tname: " + lastUsedName + ",\n" +
 				"\ttime: " + sdf.format(gameTimeStamp) + "\n" +
 				"" + accuracyStats + "\n" +

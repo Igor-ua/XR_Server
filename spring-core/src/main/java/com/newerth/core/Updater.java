@@ -36,20 +36,7 @@ public class Updater {
 	public boolean saveOrUpdatePlayer(Player player) {
 		Player found = ref.findPlayerByUid(player.getUid());
 		if (found != null) {
-			found.setLastUsedName(player.getLastUsedName());
-			found.setAccuracyStats(
-					player.getAccuracyStats().getLastShots(),
-					player.getAccuracyStats().getLastHits(),
-					player.getAccuracyStats().getLastFrags());
-			found.setAwards(
-					player.getAwards().getLastMvp(),
-					player.getAwards().getLastSadist(),
-					player.getAwards().getLastSurvivor(),
-					player.getAwards().getLastRipper(),
-					player.getAwards().getLastPhoe(),
-					player.getAwards().getLastAimbot()
-					);
-			player = found;
+			player = saveOrUpdateHelper(found, player);
 		}
 		try {
 			playerRepo.save(player);
@@ -68,20 +55,7 @@ public class Updater {
 		players.forEach(player -> {
 			Player found = ref.findPlayerByUid(player.getUid());
 			if (found != null) {
-				found.setLastUsedName(player.getLastUsedName());
-				found.setAccuracyStats(
-						player.getAccuracyStats().getLastShots(),
-						player.getAccuracyStats().getLastHits(),
-						player.getAccuracyStats().getLastFrags());
-				found.setAwards(
-						player.getAwards().getLastMvp(),
-						player.getAwards().getLastSadist(),
-						player.getAwards().getLastSurvivor(),
-						player.getAwards().getLastRipper(),
-						player.getAwards().getLastPhoe(),
-						player.getAwards().getLastAimbot()
-				);
-				player = found;
+				player = saveOrUpdateHelper(found, player);
 			}
 			playersToSave.add(player);
 		});
@@ -94,5 +68,23 @@ public class Updater {
 			log.info("Error during saving a list of the players with UIDs:" + sb.toString());
 		}
 		return false;
+	}
+
+	private Player saveOrUpdateHelper(Player found, Player player) {
+		found.setLastUsedName(player.getLastUsedName());
+		found.setClanId(player.getClanId());
+		found.setAccuracyStats(
+				player.getAccuracyStats().getLastShots(),
+				player.getAccuracyStats().getLastHits(),
+				player.getAccuracyStats().getLastFrags());
+		found.setAwards(
+				player.getAwards().getLastMvp(),
+				player.getAwards().getLastSadist(),
+				player.getAwards().getLastSurvivor(),
+				player.getAwards().getLastRipper(),
+				player.getAwards().getLastPhoe(),
+				player.getAwards().getLastAimbot()
+		);
+		return found;
 	}
 }

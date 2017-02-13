@@ -142,7 +142,7 @@ def nothing_was_found(guid):
 
 def notify_info(guid, player):
     server.Notify(guid, '')
-    server.Notify(guid, '^y[General ^ystatistic ^yfor: ^clan %s^ ^g%s^y]' % player.uid, player.last_used_name)
+    server.Notify(guid, '^y[General ^ystatistic ^yfor: ^clan ^w%s^ ^g%s^y]' % (player.clan_id, player.last_used_name))
     server.Notify(guid, '^y[^900Accuracy^y]')
     server.Notify(guid, '^yShots: ^g%s' % player.accuracy_stats.accumulated_shots)
     server.Notify(guid, '^yHits: ^g%s' % player.accuracy_stats.accumulated_hits)
@@ -150,17 +150,23 @@ def notify_info(guid, player):
     server.Notify(guid, '^yAccuracy: ^g%s' % player.accuracy_stats.accumulated_percent)
     if player.awards.has_awards():
         server.Notify(guid, '^y[^900Awards^y]')
-        server.Notify(guid, '^yAimbot: ^g%s' % player.awards.mvp) if bool(player.awards.accumulated_aimbot) else None
-        server.Notify(guid, '^yMvp: ^g%s' % player.awards.mvp) if bool(player.awards.accumulated_mvp) else None
-        server.Notify(guid, '^ySadist: ^g%s' % player.awards.mvp) if bool(player.awards.accumulated_sadist) else None
-        server.Notify(guid, '^ySurvivor: ^g%s' % player.awards.mvp) if bool(player.awards.accumulated_survivor) else None
-        server.Notify(guid, '^yRipper: ^g%s' % player.awards.mvp) if bool(player.awards.accumulated_ripper) else None
-        server.Notify(guid, '^yPhoe: ^g%s' % player.awards.mvp) if bool(player.awards.accumulated_phoe) else None
+        server.Notify(guid, '^yAimbot: ^g%s' % player.awards.accumulated_aimbot)\
+            if bool(player.awards.accumulated_aimbot) else None
+        server.Notify(guid, '^yMvp: ^g%s' % player.awards.accumulated_mvp)\
+            if bool(player.awards.accumulated_mvp) else None
+        server.Notify(guid, '^ySadist: ^g%s' % player.awards.accumulated_sadist)\
+            if bool(player.awards.accumulated_sadist) else None
+        server.Notify(guid, '^ySurvivor: ^g%s' % player.awards.accumulated_survivor)\
+            if bool(player.awards.accumulated_survivor) else None
+        server.Notify(guid, '^yRipper: ^g%s' % player.awards.accumulated_ripper)\
+            if bool(player.awards.accumulated_ripper) else None
+        server.Notify(guid, '^yPhoe: ^g%s' % player.awards.accumulated_phoe)\
+            if bool(player.awards.accumulated_phoe) else None
 
 
 def notify_last(guid, player):
     server.Notify(guid, '')
-    server.Notify(guid, '^y[Latest ^ystatistic ^yfor: ^clan %s^ ^g%s^y]' % player.uid, player.last_used_name)
+    server.Notify(guid, '^y[Latest ^ystatistic ^yfor: ^clan ^w%s^ ^g%s^y]' % (player.clan_id, player.last_used_name))
     server.Notify(guid, '^y[^900Accuracy^y]')
     server.Notify(guid, '^yShots: ^g%s' % player.accuracy_stats.last_shots)
     server.Notify(guid, '^yHits: ^g%s' % player.accuracy_stats.last_hits)
@@ -174,11 +180,11 @@ def notify_top(guid, cache):
     # ------------------------------------------------------------------------------------------
     # cache structure: cache = {'aimbots', 'sadists', 'survivors', 'rippers', 'phoes', 'mvps'}
     # ------------------------------------------------------------------------------------------
-    template = ' ^y[^900%s^y] ^clan %s^ ^g%s^y,'
+    template = ' ^y[^900%s^y] ^clan ^w%s^ ^g%s^y,'
     aimbots = '^900AIMBOTS:'
     for idx in xrange(0, len(cache['aimbots'])):
         aimbots += template % (cache['aimbots'][idx].awards.accumulated_aimbot,
-                                            cache['aimbots'][idx].uid, cache['aimbots'][idx].last_used_name)
+                               cache['aimbots'][idx].clan_id, cache['aimbots'][idx].last_used_name)
     # Should remove last ',' from the string
     aimbots = aimbots[:-1] if len(cache['aimbots']) > 0 else None
     server.Notify(guid, aimbots)
@@ -186,7 +192,7 @@ def notify_top(guid, cache):
     sadists = '^900SADISTS:'
     for idx in xrange(0, len(cache['sadists'])):
         sadists += template % (cache['sadists'][idx].awards.accumulated_sadist,
-                               cache['sadists'][idx].uid, cache['sadists'][idx].last_used_name)
+                               cache['sadists'][idx].clan_id, cache['sadists'][idx].last_used_name)
     # Should remove last ',' from the string
     sadists = sadists[:-1] if len(cache['sadists']) > 0 else None
     server.Notify(guid, sadists)
@@ -194,7 +200,7 @@ def notify_top(guid, cache):
     survivors = '^900SURVIVORS:'
     for idx in xrange(0, len(cache['survivors'])):
         survivors += template % (cache['survivors'][idx].awards.accumulated_survivor,
-                               cache['survivors'][idx].uid, cache['survivors'][idx].last_used_name)
+                               cache['survivors'][idx].clan_id, cache['survivors'][idx].last_used_name)
     # Should remove last ',' from the string
     survivors = survivors[:-1] if len(cache['survivors']) > 0 else None
     server.Notify(guid, survivors)
@@ -202,7 +208,7 @@ def notify_top(guid, cache):
     rippers = '^900RIPPERS:'
     for idx in xrange(0, len(cache['rippers'])):
         rippers += template % (cache['rippers'][idx].awards.accumulated_ripper,
-                               cache['rippers'][idx].uid, cache['rippers'][idx].last_used_name)
+                               cache['rippers'][idx].clan_id, cache['rippers'][idx].last_used_name)
     # Should remove last ',' from the string
     rippers = rippers[:-1] if len(cache['rippers']) > 0 else None
     server.Notify(guid, rippers)
@@ -210,7 +216,7 @@ def notify_top(guid, cache):
     phoes = '^900PHOES:'
     for idx in xrange(0, len(cache['phoes'])):
         phoes += template % (cache['phoes'][idx].awards.accumulated_phoe,
-                               cache['phoes'][idx].uid, cache['phoes'][idx].last_used_name)
+                               cache['phoes'][idx].clan_id, cache['phoes'][idx].last_used_name)
     # Should remove last ',' from the string
     phoes = phoes[:-1] if len(cache['phoes']) > 0 else None
     server.Notify(guid, phoes)
@@ -218,7 +224,7 @@ def notify_top(guid, cache):
     mvps = '^900MVPS:'
     for idx in xrange(0, len(cache['mvps'])):
         mvps += template % (cache['mvps'][idx].awards.accumulated_mvp,
-                             cache['mvps'][idx].uid, cache['mvps'][idx].last_used_name)
+                             cache['mvps'][idx].clan_id, cache['mvps'][idx].last_used_name)
     # Should remove last ',' from the string
     mvps = mvps[:-1] if len(cache['mvps']) > 0 else None
     server.Notify(guid, mvps)

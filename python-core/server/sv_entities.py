@@ -2,6 +2,7 @@
 class Player(object):
     def __init__(self, uid):
         self.uid = uid
+        self.clan_id = 0
         self.last_used_name = ""
         self.accuracy_stats = AccuracyStats(self.uid)
         self.awards = Awards(self.uid)
@@ -14,11 +15,11 @@ class Player(object):
         pass
 
     def json_repr(self):
-        return dict(uid=self.uid, lastUsedName=self.last_used_name, accuracyStats=self.accuracy_stats,
+        return dict(uid=self.uid, clanId=self.clan_id, lastUsedName=self.last_used_name, accuracyStats=self.accuracy_stats,
                     awards=self.awards)
 
     def __str__(self):
-        return "Player: [UID: %s], [NAME: %s]" % (self.uid, self.last_used_name)
+        return "Player: [UID: %s], [CLAN_ID: %s], [NAME: %s]" % (self.uid, self.clan_id, self.last_used_name)
 
 
 class AccuracyStats(object):
@@ -65,12 +66,12 @@ class MapAwards:
     # Hardcoded structure
     def get_transmit_value(self):
         return \
-            self.mvp["uid"] + ";" + self.mvp["name"] + ";" + self.mvp["value"] + ";" + \
-            self.sadist["uid"] + ";" + self.sadist["name"] + ";" + self.sadist["value"] + ";" + \
-            self.survivor["uid"] + ";" + self.survivor["name"] + ";" + self.survivor["value"] + ";" + \
-            self.ripper["uid"] + ";" + self.ripper["name"] + ";" + self.ripper["value"] + ";" + \
-            self.phoe["uid"] + ";" + self.phoe["name"] + ";" + self.phoe["value"] + ";" + \
-            self.aimbot["uid"] + ";" + self.aimbot["name"] + ";" + self.aimbot["value"] + ";"
+            str(self.mvp["uid"]) + ";" + self.mvp["name"] + ";" + str(self.mvp["value"]) + ";" + \
+            str(self.sadist["uid"]) + ";" + self.sadist["name"] + ";" + str(self.sadist["value"]) + ";" + \
+            str(self.survivor["uid"]) + ";" + self.survivor["name"] + ";" + str(self.survivor["value"]) + ";" + \
+            str(self.ripper["uid"]) + ";" + self.ripper["name"] + ";" + str(self.ripper["value"]) + ";" + \
+            str(self.phoe["uid"]) + ";" + self.phoe["name"] + ";" + str(self.phoe["value"]) + ";" + \
+            str(self.aimbot["uid"]) + ";" + self.aimbot["name"] + ";" + str(self.aimbot["value"]) + ";"
 
 
 class Awards(object):
@@ -95,9 +96,10 @@ class Awards(object):
                     ripper=self.ripper, phoe=self.phoe, aimbot=self.aimbot)
 
     def has_awards(self):
-        return bool(self.mvp) or bool(self.sadist) or bool(self.survivor) or bool(self.ripper) or bool(self.phoe)\
-               or bool(self.aimbot)
+        return bool(self.accumulated_mvp) or bool(self.accumulated_sadist) or bool(self.accumulated_survivor) \
+               or bool(self.accumulated_ripper) or bool(self.accumulated_phoe) or bool(self.accumulated_aimbot)
 
     def __str__(self):
         return "Awards : [UID: %s], [AIMBOT: %s], [MVP: %s], [SADIST: %s], [SURVIVOR: %s], [RIPPER: %s], [PHOE: %s]" \
-               % (self.uid, self.aimbot, self.mvp, self.sadist, self.survivor, self.ripper, self.phoe)
+               % (self.uid, self.accumulated_aimbot, self.accumulated_mvp, self.accumulated_sadist,
+                  self.accumulated_survivor, self.accumulated_ripper, self.accumulated_phoe)

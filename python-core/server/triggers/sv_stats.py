@@ -285,6 +285,7 @@ def calculate_players_with_accuracy():
                 uid = int(server.GetClientInfo(guid, INFO_UID))
                 if uid > 0:
                     player = Player(uid)
+                    player.clan_id = int(server.GetClientInfo(guid, INFO_CLANID))
                     player.last_used_name = re.sub(REGEXP_FOR_NAME, '', server.GetClientInfo(guid, INFO_NAME))
                     player.kills = int(server.GetClientInfo(guid, STAT_KILLS))
                     player.deaths = int(server.GetClientInfo(guid, STAT_DEATHS))
