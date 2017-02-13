@@ -75,9 +75,9 @@ def parse_request(message, guid):
         msg_parts = replaced_message.split(' ')
         command = msg_parts[0].replace('!', '').lower()
         param = ''
-        options = [int(guid), command, param]
         if len(msg_parts) > 0:
             param = msg_parts[1].lower()
+        options = [int(guid), command, param]
         if command in messages:
             # process_request(guid, command, param)
             createThread('import sv_message_processor; sv_message_processor.process_request(%s)'
@@ -142,7 +142,7 @@ def nothing_was_found(guid):
 
 def notify_info(guid, player):
     server.Notify(guid, '')
-    server.Notify(guid, '^y[General ^ystatistic ^yfor: ^clan ^w%s^ ^g%s^y]' % (player.clan_id, player.last_used_name))
+    server.Notify(guid, '^y[General ^ystatistic ^yfor: ^w^clan %s^ ^g%s^y]' % (player.clan_id, player.last_used_name))
     server.Notify(guid, '^y[^900Accuracy^y]')
     server.Notify(guid, '^yShots: ^g%s' % player.accuracy_stats.accumulated_shots)
     server.Notify(guid, '^yHits: ^g%s' % player.accuracy_stats.accumulated_hits)
@@ -166,7 +166,7 @@ def notify_info(guid, player):
 
 def notify_last(guid, player):
     server.Notify(guid, '')
-    server.Notify(guid, '^y[Latest ^ystatistic ^yfor: ^clan ^w%s^ ^g%s^y]' % (player.clan_id, player.last_used_name))
+    server.Notify(guid, '^y[Latest ^ystatistic ^yfor: ^w^clan %s^ ^g%s^y]' % (player.clan_id, player.last_used_name))
     server.Notify(guid, '^y[^900Accuracy^y]')
     server.Notify(guid, '^yShots: ^g%s' % player.accuracy_stats.last_shots)
     server.Notify(guid, '^yHits: ^g%s' % player.accuracy_stats.last_hits)
@@ -180,52 +180,40 @@ def notify_top(guid, cache):
     # ------------------------------------------------------------------------------------------
     # cache structure: cache = {'aimbots', 'sadists', 'survivors', 'rippers', 'phoes', 'mvps'}
     # ------------------------------------------------------------------------------------------
-    template = ' ^y[^900%s^y] ^clan ^w%s^ ^g%s^y,'
-    aimbots = '^900AIMBOTS:'
+    template = ' ^w[ ^900%s ^w]  ^w^clan %s^  ^g%s^y\n'
+    aimbots = '^cAimbots:\n'
     for idx in xrange(0, len(cache['aimbots'])):
         aimbots += template % (cache['aimbots'][idx].awards.accumulated_aimbot,
                                cache['aimbots'][idx].clan_id, cache['aimbots'][idx].last_used_name)
-    # Should remove last ',' from the string
-    aimbots = aimbots[:-1] if len(cache['aimbots']) > 0 else None
     server.Notify(guid, aimbots)
     # ------------------------------------------------------------------------------------------
-    sadists = '^900SADISTS:'
+    sadists = '^cSadists:\n'
     for idx in xrange(0, len(cache['sadists'])):
         sadists += template % (cache['sadists'][idx].awards.accumulated_sadist,
                                cache['sadists'][idx].clan_id, cache['sadists'][idx].last_used_name)
-    # Should remove last ',' from the string
-    sadists = sadists[:-1] if len(cache['sadists']) > 0 else None
     server.Notify(guid, sadists)
     # ------------------------------------------------------------------------------------------
-    survivors = '^900SURVIVORS:'
+    survivors = '^cSurvivors:\n'
     for idx in xrange(0, len(cache['survivors'])):
         survivors += template % (cache['survivors'][idx].awards.accumulated_survivor,
                                cache['survivors'][idx].clan_id, cache['survivors'][idx].last_used_name)
-    # Should remove last ',' from the string
-    survivors = survivors[:-1] if len(cache['survivors']) > 0 else None
     server.Notify(guid, survivors)
     # ------------------------------------------------------------------------------------------
-    rippers = '^900RIPPERS:'
+    rippers = '^cRIPPERS:\n'
     for idx in xrange(0, len(cache['rippers'])):
         rippers += template % (cache['rippers'][idx].awards.accumulated_ripper,
                                cache['rippers'][idx].clan_id, cache['rippers'][idx].last_used_name)
-    # Should remove last ',' from the string
-    rippers = rippers[:-1] if len(cache['rippers']) > 0 else None
     server.Notify(guid, rippers)
     # ------------------------------------------------------------------------------------------
-    phoes = '^900PHOES:'
+    phoes = '^cPHOES:\n'
     for idx in xrange(0, len(cache['phoes'])):
         phoes += template % (cache['phoes'][idx].awards.accumulated_phoe,
                                cache['phoes'][idx].clan_id, cache['phoes'][idx].last_used_name)
-    # Should remove last ',' from the string
-    phoes = phoes[:-1] if len(cache['phoes']) > 0 else None
     server.Notify(guid, phoes)
     # ------------------------------------------------------------------------------------------
-    mvps = '^900MVPS:'
+    mvps = '^cMVPS:\n'
     for idx in xrange(0, len(cache['mvps'])):
         mvps += template % (cache['mvps'][idx].awards.accumulated_mvp,
                              cache['mvps'][idx].clan_id, cache['mvps'][idx].last_used_name)
-    # Should remove last ',' from the string
-    mvps = mvps[:-1] if len(cache['mvps']) > 0 else None
     server.Notify(guid, mvps)
     # ------------------------------------------------------------------------------------------

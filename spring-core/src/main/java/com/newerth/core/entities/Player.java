@@ -52,7 +52,7 @@ public class Player {
 	public Player() {
 		this.gameTimeStamp = new Date();
 		this.uid = 0L;
-		this.clanId = 0L;
+		this.clanId = 86846L;
 		this.lastUsedName = "";
 		this.accuracyStats = new AccuracyStats(this);
 		this.awards = new Awards(this);
@@ -81,7 +81,11 @@ public class Player {
 	}
 
 	public void setClanId(Long clanId) {
-		this.clanId = clanId;
+		if (clanId == 0) {
+			this.clanId = 86846L;
+		} else {
+			this.clanId = clanId;
+		}
 	}
 
 	public AccuracyStats getAccuracyStats() {

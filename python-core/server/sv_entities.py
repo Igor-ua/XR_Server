@@ -2,7 +2,7 @@
 class Player(object):
     def __init__(self, uid):
         self.uid = uid
-        self.clan_id = 0
+        self.clan_id = 86846
         self.last_used_name = ""
         self.accuracy_stats = AccuracyStats(self.uid)
         self.awards = Awards(self.uid)
