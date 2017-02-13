@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -23,6 +24,7 @@ public class Player {
 
 	@JsonView(View.Summary.class)
 	@Column(name = "last_used_name", nullable = false, length = 50)
+	@Pattern(regexp = "[A-Za-z-_()0-9 ]")
 	private String lastUsedName;
 
 	@OneToOne(mappedBy = "player", cascade = CascadeType.ALL)

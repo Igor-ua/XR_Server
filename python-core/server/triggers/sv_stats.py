@@ -11,7 +11,6 @@ import server
 # External modules
 import sv_defs
 import sv_utils
-import __builtin__
 import requests
 import sv_custom_utils
 import time
@@ -360,21 +359,7 @@ def bind_awards_to_players(map_awards):
 
 # Global variables (gs_transmit4-9) that are being transferred to the clients:
 def update_clients_vars(map_awards):
-    # gs_transmit4 = map_awards.mvp
-    core.CommandExec("set gs_transmit4 %s" % (map_awards.mvp["name"] + " - " + str(map_awards.mvp["value"])))
-    # gs_transmit5 = map_awards.sadist
-    core.CommandExec("set gs_transmit5 %s" % (map_awards.sadist["name"] + " - " + str(map_awards.sadist["value"])))
-    # gs_transmit6 = map_awards.survivor
-    core.CommandExec("set gs_transmit6 %s" % (map_awards.survivor["name"] + " - " + str(map_awards.survivor["value"])))
-    # gs_transmit7 = map_awards.ripper
-    core.CommandExec("set gs_transmit7 %s" % (map_awards.ripper["name"] + " - " + str(map_awards.ripper["value"])))
-    # gs_transmit8 = map_awards.phoe
-    core.CommandExec("set gs_transmit8 %s" % (map_awards.phoe["name"] + " - " + str(map_awards.phoe["value"])))
-    # gs_transmit9 = map_awards.aimbot
-    core.CommandExec("set gs_transmit9 %s" % (map_awards.aimbot["name"] + " - " + str(map_awards.aimbot["value"])))
+    # gs_transmit4 = all awards in one variable with a ';' as a delimiter. Supposed to be parsed on the client side
+    # like: python "import core; core.CvarSetString('val', core.CvarGetString('gs_transmit4').split(';')[0..etc])"
+    core.CommandExec("set gs_transmit4 %s" % map_awards.get_transmit_value())
 
-
-__builtin__.DB_INFO_SHOTS = 1
-__builtin__.DB_INFO_FRAGS = 2
-__builtin__.DB_INFO_HITS = 3
-__builtin__.DB_INFO_ACCURACY = 4

@@ -8,7 +8,9 @@ import org.springframework.stereotype.Component;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
+
+// Unused entity
+// Not implemented yet
 
 @Component
 @Entity

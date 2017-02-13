@@ -62,6 +62,16 @@ class MapAwards:
         # most accurate
         self.aimbot = {"uid": 0, "name": "", "value": 0}
 
+    # Hardcoded structure
+    def get_transmit_value(self):
+        return \
+            self.mvp["uid"] + ";" + self.mvp["name"] + ";" + self.mvp["value"] + ";" + \
+            self.sadist["uid"] + ";" + self.sadist["name"] + ";" + self.sadist["value"] + ";" + \
+            self.survivor["uid"] + ";" + self.survivor["name"] + ";" + self.survivor["value"] + ";" + \
+            self.ripper["uid"] + ";" + self.ripper["name"] + ";" + self.ripper["value"] + ";" + \
+            self.phoe["uid"] + ";" + self.phoe["name"] + ";" + self.phoe["value"] + ";" + \
+            self.aimbot["uid"] + ";" + self.aimbot["name"] + ";" + self.aimbot["value"] + ";"
+
 
 class Awards(object):
     def __init__(self, uid):
