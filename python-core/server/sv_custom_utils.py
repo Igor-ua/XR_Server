@@ -13,6 +13,7 @@ import sv_defs
 import sys
 import traceback
 from sv_entities import *
+import logging
 
 
 def custom_exception_info():
@@ -44,6 +45,7 @@ def full_exception_info():
 
 
 def simple_exception_info():
+    logging.basicConfig(filename='logs/exceptions.log', filemode='a', level=logging.ERROR)
     try:
         exc_type, exc_value, exc_traceback = sys.exc_info()
         exception_data = traceback.format_exc().splitlines()
@@ -59,17 +61,17 @@ def simple_exception_info():
         top_method_name = str(exc_traceback.tb_frame.f_code.co_name)
         del (exc_type, exc_value, exc_traceback)
 
-        print
-        print "Traceback:"
-        print "  Top:  file: [%s], method: %s()" % (top_file_name, top_method_name)
-        print "  Root: file: [%s], %s, cause: %s [%s]" % (root_info[0], root_info[1], root_info[2], root_info[3])
-        print "  " + exception_data[-1]
-        print
+        traceback_msg = "\nTraceback:\n"
+        traceback_msg += "  Top:  file: [%s], method: %s()\n" % (top_file_name, top_method_name)
+        traceback_msg += "  Root: file: [%s], %s, cause: %s [%s]\n" % \
+                         (root_info[0], root_info[1], root_info[2], root_info[3])
+        traceback_msg += "  " + exception_data[-1] + "\n"
+        print traceback_msg
+        logging.error(traceback_msg)
     except:
-        print
-        print "Error in simple_exception_info()"
-        print traceback.format_exc()
-        print
+        traceback_msg = "\nError in simple_exception_info()\n" + traceback.format_exc() + "\n"
+        print(traceback_msg)
+        logging.error(traceback_msg)
 
 
 def show_object(index):
