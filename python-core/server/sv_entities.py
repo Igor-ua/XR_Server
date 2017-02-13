@@ -66,12 +66,12 @@ class MapAwards:
     # Hardcoded structure
     def get_transmit_value(self):
         return \
-            str(self.mvp["uid"]) + ";" + self.mvp["name"] + ";" + str(self.mvp["value"]) + ";" + \
-            str(self.sadist["uid"]) + ";" + self.sadist["name"] + ";" + str(self.sadist["value"]) + ";" + \
-            str(self.survivor["uid"]) + ";" + self.survivor["name"] + ";" + str(self.survivor["value"]) + ";" + \
-            str(self.ripper["uid"]) + ";" + self.ripper["name"] + ";" + str(self.ripper["value"]) + ";" + \
-            str(self.phoe["uid"]) + ";" + self.phoe["name"] + ";" + str(self.phoe["value"]) + ";" + \
-            str(self.aimbot["uid"]) + ";" + self.aimbot["name"] + ";" + str(self.aimbot["value"]) + ";"
+            str(self.mvp["uid"]) + '.' + self.mvp["name"] + '.' + str(self.mvp["value"]) + '.' + \
+            str(self.sadist["uid"]) + '.' + self.sadist["name"] + '.' + str(self.sadist["value"]) + '.' + \
+            str(self.survivor["uid"]) + '.' + self.survivor["name"] + '.' + str(self.survivor["value"]) + '.' + \
+            str(self.ripper["uid"]) + '.' + self.ripper["name"] + '.' + str(self.ripper["value"]) + '.' + \
+            str(self.phoe["uid"]) + '.' + self.phoe["name"] + '.' + str(self.phoe["value"]) + '.' + \
+            str(self.aimbot["uid"]) + '.' + self.aimbot["name"] + '.' + str(self.aimbot["value"]) + '.'
 
 
 class Awards(object):

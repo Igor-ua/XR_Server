@@ -268,7 +268,10 @@ def get_accuracy(guid):
                 acs.last_shots = int(accuracyList_shots[weapon])
                 acs.last_frags = int(accuracyList_kills[weapon])
                 acs.last_hits = int(accuracyList_hits[weapon])
-                acs.accuracy_percent = acs.last_hits * 100 / acs.last_shots
+                if acs.last_shots == 0:
+                    acs.accuracy_percent = 0
+                else:
+                    acs.accuracy_percent = acs.last_hits * 100 / acs.last_shots
                 acs.timestamp = int(round(time.time() * 1000))
     except:
         sv_custom_utils.simple_exception_info()

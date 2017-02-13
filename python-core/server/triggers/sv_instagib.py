@@ -19,7 +19,7 @@ import sv_custom_utils
 global game_mod
 
 are_flags_found = False
-run_once_flag = False
+run_once_flag = True
 end_run_once = True
 type_list = ["CLIENT", "WORKER", "NPC", "MINE", "BASE", "OUTPOST", "BUILDING", "OTHER"]
 teleport_locations = []
@@ -31,6 +31,8 @@ dead_queue = set()
 FRAG_LIMIT = 3
 INSTAGIB_MOD = "INSTAGIB"
 available_game_states = (1, 2, 3)
+reset_states = (1, 2)
+need_reset = True
 
 # human_stronghold was excluded from the teleport locations
 possible_teleport_locations = ("spawnflag")
@@ -41,6 +43,12 @@ def check():
     try:
         # Run-once
         run_once()
+
+        # Reset vars
+        global need_reset
+        if server.GetGameInfo(GAME_STATE) in reset_states and need_reset:
+            reset_clients_vars()
+            need_reset = False
 
         # Runs only for INSTAGIB_MOD
         if game_mod != INSTAGIB_MOD:
@@ -65,12 +73,11 @@ def check():
 
 def run_once():
     global run_once_flag
-    if not run_once_flag:
-        run_once_flag = True
-        print("________SV_INSTAGIB_______")
+    if run_once_flag:
+        run_once_flag = False
+        print("________SV_INSTAGIB RUN-ONCE_______")
         check_mod()
         find_teleport_locations()
-        reset_clients_vars()
 
 
 # Checks the current mod of the game
