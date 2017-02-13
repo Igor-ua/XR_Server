@@ -20,6 +20,7 @@ global game_mod
 
 are_flags_found = False
 run_once_flag = False
+end_run_once = True
 type_list = ["CLIENT", "WORKER", "NPC", "MINE", "BASE", "OUTPOST", "BUILDING", "OTHER"]
 teleport_locations = []
 lock = threading.Lock()
@@ -45,19 +46,18 @@ def check():
         if game_mod != INSTAGIB_MOD:
             return 0
 
-        # If not game setup, warmup or normal
-        if server.GetGameInfo(GAME_STATE) not in available_game_states:
-            return 0
-
-        for index in xrange(0, sv_defs.objectList_Last):
-            if sv_defs.objectList_Active[index]:
-                object_type = str(type_list[sv_defs.objectList_Type[index]])
-                object_health = int(sv_defs.objectList_Health[index])
-                if object_type == "CLIENT" and object_health == 0:
-                    teleport_and_revive(str(index))
-        get_team_stats()
-        update_clients_vars()
-        is_time_to_finish()
+        # If game setup, warmup or normal
+        if server.GetGameInfo(GAME_STATE) in available_game_states:
+            scan_for_teleport_and_revive()
+            get_team_stats()
+            update_clients_vars()
+            is_time_to_finish()
+        # Update latest stats for end-game status
+        global end_run_once
+        if server.GetGameInfo(GAME_STATE) == 4 and end_run_once:
+            get_team_stats()
+            update_clients_vars()
+            end_run_once = False
     except:
         sv_custom_utils.simple_exception_info()
     return 0
@@ -112,6 +112,15 @@ def update_clients_vars():
 def reset_clients_vars():
     for idx in range(1, 10):
         core.CommandExec("set gs_transmit%s 0" % idx)
+
+
+def scan_for_teleport_and_revive():
+    for index in xrange(0, sv_defs.objectList_Last):
+        if sv_defs.objectList_Active[index]:
+            object_type = str(type_list[sv_defs.objectList_Type[index]])
+            object_health = int(sv_defs.objectList_Health[index])
+            if object_type == "CLIENT" and object_health == 0:
+                teleport_and_revive(str(index))
 
 
 def teleport_and_revive(guid):
