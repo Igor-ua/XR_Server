@@ -217,12 +217,12 @@ def get_top_mvps():
 
 # Get Top MVPs
 def get_top_stats():
-    aimbots = get_top_aimbots()
-    sadists = get_top_sadists()
-    survivors = get_top_survivors()
-    rippers = get_top_rippers()
-    phoes = get_top_phoes()
-    mvps = get_top_mvps()
+    get_top_aimbots()
+    get_top_sadists()
+    get_top_survivors()
+    get_top_rippers()
+    get_top_phoes()
+    get_top_mvps()
     return top_stats_cache
 
 

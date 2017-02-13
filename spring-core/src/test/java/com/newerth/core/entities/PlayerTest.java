@@ -15,8 +15,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.validation.ConstraintViolationException;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
@@ -148,12 +146,12 @@ public class PlayerTest {
 		System.out.println(json);
 	}
 
-	@Test(expected = ConstraintViolationException.class)
+	@Test
 	public void saveNameValidation() {
 		Player p = player;
 		p.setLastUsedName("asdASD123890_- ()");
 		assertThat(updater.saveOrUpdatePlayer(p));
-		p.setLastUsedName("asd;");
+		p.setLastUsedName("asdASD-_{}()23423  sdf;#$%");
 		assertThat(updater.saveOrUpdatePlayer(p));
 	}
 }

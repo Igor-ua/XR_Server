@@ -24,7 +24,7 @@ public class Player {
 
 	@JsonView(View.Summary.class)
 	@Column(name = "last_used_name", nullable = false, length = 50)
-	@Pattern(regexp = "[A-Za-z-_()0-9 ]")
+	@Pattern(regexp = "[A-Za-z-_()0-9 ]{0,50}")
 	private String lastUsedName;
 
 	@OneToOne(mappedBy = "player", cascade = CascadeType.ALL)
@@ -41,6 +41,9 @@ public class Player {
 
 	@Transient
 	private SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+
+	@Transient
+	private static final String NAME_FILTER = "[^-\\w\\s^(^)]";
 
 	public Player() {
 		this.gameTimeStamp = new Date();
@@ -89,7 +92,7 @@ public class Player {
 	}
 
 	public void setLastUsedName(String lastUsedName) {
-		this.lastUsedName = lastUsedName;
+		this.lastUsedName = lastUsedName.replaceAll(NAME_FILTER, "");
 	}
 
 	@PrePersist

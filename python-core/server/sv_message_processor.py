@@ -142,7 +142,7 @@ def nothing_was_found(guid):
 
 def notify_info(guid, player):
     server.Notify(guid, '')
-    server.Notify(guid, '^y[General ^ystatistic ^yfor: ^g%s^y]' % player.last_used_name)
+    server.Notify(guid, '^y[General ^ystatistic ^yfor: ^clan %s^ ^g%s^y]' % player.uid, player.last_used_name)
     server.Notify(guid, '^y[^900Accuracy^y]')
     server.Notify(guid, '^yShots: ^g%s' % player.accuracy_stats.accumulated_shots)
     server.Notify(guid, '^yHits: ^g%s' % player.accuracy_stats.accumulated_hits)
@@ -160,7 +160,7 @@ def notify_info(guid, player):
 
 def notify_last(guid, player):
     server.Notify(guid, '')
-    server.Notify(guid, '^y[Latest ^ystatistic ^yfor: ^g%s^y]' % player.last_used_name)
+    server.Notify(guid, '^y[Latest ^ystatistic ^yfor: ^clan %s^ ^g%s^y]' % player.uid, player.last_used_name)
     server.Notify(guid, '^y[^900Accuracy^y]')
     server.Notify(guid, '^yShots: ^g%s' % player.accuracy_stats.last_shots)
     server.Notify(guid, '^yHits: ^g%s' % player.accuracy_stats.last_hits)
