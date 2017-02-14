@@ -37,6 +37,9 @@ need_reset = True
 # human_stronghold was excluded from the teleport locations
 possible_teleport_locations = ("spawnflag")
 
+# Player's inventory structure
+inventory = {}
+
 
 # Is called during every server frame
 def check():
@@ -122,12 +125,43 @@ def reset_clients_vars():
 
 
 def scan_for_teleport_and_revive():
-    for index in xrange(0, sv_defs.objectList_Last):
-        if sv_defs.objectList_Active[index]:
-            object_type = str(type_list[sv_defs.objectList_Type[index]])
-            object_health = int(sv_defs.objectList_Health[index])
+    for guid in xrange(0, sv_defs.objectList_Last):
+        if sv_defs.objectList_Active[guid]:
+            object_type = str(type_list[sv_defs.objectList_Type[guid]])
+            object_health = int(sv_defs.objectList_Health[guid])
             if object_type == "CLIENT" and object_health == 0:
-                teleport_and_revive(str(index))
+                teleport_and_revive(guid)
+            if object_type == "CLIENT":
+                check_for_frags_and_items(guid)
+
+
+# Goes through the all players and gives them different items if the have enough amount of the frags
+def check_for_frags_and_items(guid):
+    try:
+        guid = int(guid)
+        global inventory
+        kills_for_mist = 5
+        kills_for_sensor = 7
+        kills_for_reloc = 10
+        slot2 = int(server.GameScript(guid, '!inventory target 2'))
+        slot3 = int(server.GameScript(guid, '!inventory target 3'))
+        slot4 = int(server.GameScript(guid, '!inventory target 4'))
+        kills = int(server.GetClientInfo(guid, STAT_KILLS))
+        # killstreak = int(server.GetClientInfo(guid, STAT_KILLSTREAK))
+        if guid in inventory:
+            if not bool(kills % kills_for_mist) and inventory[guid][0] != kills and not bool(slot2):
+                server.GameScript(guid, '!give target beast_camouflage 1 2')
+                inventory[guid][0] = kills
+            if not bool(kills % kills_for_sensor) and inventory[guid][1] != kills and not bool(slot3):
+                server.GameScript(guid, '!give target human_motion_sensor 1 3')
+                inventory[guid][1] = kills
+            if not bool(kills % kills_for_reloc) and inventory[guid][2] != kills and not bool(slot4):
+                server.GameScript(guid, '!give target human_relocater 1 4')
+                inventory[guid][2] = kills
+        else:
+            inventory[guid] = [0, 0, 0]
+    except:
+        sv_custom_utils.simple_exception_info()
 
 
 def teleport_and_revive(guid):
