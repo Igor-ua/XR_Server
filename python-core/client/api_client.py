@@ -114,17 +114,18 @@ players.append(p1)
 players.append(p2)
 
 
-def obj_repr(obj):
-        if hasattr(obj, 'json_repr'):
-                return obj.json_repr()
-        else:
-                return obj.__dict__
-
-json_players = json.dumps(players, default=obj_repr)
-
-data = '{"Players": %s}' % json.dumps(players, default=obj_repr)
-url = 'http://localhost:8080/stats/server/players/put'
-headers = {'content-type': 'application/json'}
-r = requests.put(url, data, headers=headers)
+# def obj_repr(obj):
+#         if hasattr(obj, 'json_repr'):
+#                 return obj.json_repr()
+#         else:
+#                 return obj.__dict__
+#
+# json_players = json.dumps(players, default=obj_repr)
+#
+# data = '{"Players": %s}' % json.dumps(players, default=obj_repr)
+# url = 'http://localhost:8080/stats/server/players/put'
+# headers = {'content-type': 'application/json'}
+# r = requests.put(url, data, headers=headers)
 # print r.text
 # print r.status_code
+

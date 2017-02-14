@@ -1,8 +1,11 @@
 # Don't save players with UID = 0 (0 is for unauthorized clients)
 class Player(object):
+
+    default_clan_id = 86846
+
     def __init__(self, uid):
         self.uid = uid
-        self.clan_id = 86846
+        self.clan_id = self.default_clan_id
         self.last_used_name = ""
         self.accuracy_stats = AccuracyStats(self.uid)
         self.awards = Awards(self.uid)
@@ -51,27 +54,33 @@ class AccuracyStats(object):
 class MapAwards:
     def __init__(self):
         # most kills - deaths
-        self.mvp = {"uid": 0, "name": "", "value": 0}
+        self.mvp = {"uid": 0, "clan_id": Player.default_clan_id, "name": "", "value": 0}
         # most kills
-        self.sadist = {"uid": 0, "name": "", "value": 0}
+        self.sadist = {"uid": 0, "clan_id": Player.default_clan_id, "name": "", "value": 0}
         # most kills in a row
-        self.survivor = {"uid": 0, "name": "", "value": 0}
+        self.survivor = {"uid": 0, "clan_id": Player.default_clan_id, "name": "", "value": 0}
         # most deaths
-        self.ripper = {"uid": 0, "name": "", "value": 0}
+        self.ripper = {"uid": 0, "clan_id": Player.default_clan_id, "name": "", "value": 0}
         # most npcs killed
-        self.phoe = {"uid": 0, "name": "", "value": 0}
+        self.phoe = {"uid": 0, "clan_id": Player.default_clan_id, "name": "", "value": 0}
         # most accurate
-        self.aimbot = {"uid": 0, "name": "", "value": 0}
+        self.aimbot = {"uid": 0, "clan_id": Player.default_clan_id, "name": "", "value": 0}
 
     # Hardcoded structure
     def get_transmit_value(self):
         return \
-            str(self.mvp["uid"]) + '.' + self.mvp["name"] + '.' + str(self.mvp["value"]) + '.' + \
-            str(self.sadist["uid"]) + '.' + self.sadist["name"] + '.' + str(self.sadist["value"]) + '.' + \
-            str(self.survivor["uid"]) + '.' + self.survivor["name"] + '.' + str(self.survivor["value"]) + '.' + \
-            str(self.ripper["uid"]) + '.' + self.ripper["name"] + '.' + str(self.ripper["value"]) + '.' + \
-            str(self.phoe["uid"]) + '.' + self.phoe["name"] + '.' + str(self.phoe["value"]) + '.' + \
-            str(self.aimbot["uid"]) + '.' + self.aimbot["name"] + '.' + str(self.aimbot["value"]) + '.'
+            str(self.mvp["uid"]) + '.' + str(self.mvp["clan_id"]) + '.' + self.mvp["name"] + '.' + \
+            str(self.mvp["value"]) + '.' + \
+            str(self.sadist["uid"]) + '.' + str(self.sadist["clan_id"]) + '.' + self.sadist["name"] + '.' + \
+            str(self.sadist["value"]) + '.' + \
+            str(self.survivor["uid"]) + '.' + str(self.survivor["clan_id"]) + '.' + self.survivor["name"] + '.' + \
+            str(self.survivor["value"]) + '.' + \
+            str(self.ripper["uid"]) + '.' + str(self.ripper["clan_id"]) + '.' + self.ripper["name"] + '.' + \
+            str(self.ripper["value"]) + '.' + \
+            str(self.phoe["uid"]) + '.' + str(self.phoe["clan_id"]) + '.' + self.phoe["name"] + '.' + \
+            str(self.phoe["value"]) + '.' + \
+            str(self.aimbot["uid"]) + '.' + str(self.aimbot["uid"]) + '.' + self.aimbot["name"] + '.' + \
+            str(self.aimbot["value"]) + '.'
 
 
 class Awards(object):

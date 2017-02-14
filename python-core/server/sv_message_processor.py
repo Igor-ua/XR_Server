@@ -150,15 +150,15 @@ def notify_info(guid, player):
     server.Notify(guid, '^yAccuracy: ^g%s' % player.accuracy_stats.accumulated_percent)
     if player.awards.has_awards():
         server.Notify(guid, '^y[^900Awards^y]')
+        server.Notify(guid, '^yMost valuable player: ^g%s' % player.awards.accumulated_mvp)\
+            if bool(player.awards.accumulated_mvp) else None
         server.Notify(guid, '^yAimbot: ^g%s' % player.awards.accumulated_aimbot)\
             if bool(player.awards.accumulated_aimbot) else None
-        server.Notify(guid, '^yMvp: ^g%s' % player.awards.accumulated_mvp)\
-            if bool(player.awards.accumulated_mvp) else None
         server.Notify(guid, '^ySadist: ^g%s' % player.awards.accumulated_sadist)\
             if bool(player.awards.accumulated_sadist) else None
         server.Notify(guid, '^ySurvivor: ^g%s' % player.awards.accumulated_survivor)\
             if bool(player.awards.accumulated_survivor) else None
-        server.Notify(guid, '^yRipper: ^g%s' % player.awards.accumulated_ripper)\
+        server.Notify(guid, '^yReaper\'s best friend: ^g%s' % player.awards.accumulated_ripper)\
             if bool(player.awards.accumulated_ripper) else None
         server.Notify(guid, '^yPhoe: ^g%s' % player.awards.accumulated_phoe)\
             if bool(player.awards.accumulated_phoe) else None

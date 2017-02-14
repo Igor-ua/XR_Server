@@ -14,6 +14,9 @@ import sys
 import traceback
 from sv_entities import *
 import logging
+import os
+
+last_error = [0, 0]
 
 
 def custom_exception_info():
@@ -45,6 +48,8 @@ def full_exception_info():
 
 
 def simple_exception_info():
+    if not os.path.exists('python/logs'):
+        os.makedirs('python/logs')
     logging.basicConfig(filename='python/logs/exceptions.log', filemode='a', level=logging.ERROR)
     try:
         exc_type, exc_value, exc_traceback = sys.exc_info()
@@ -66,8 +71,14 @@ def simple_exception_info():
         traceback_msg += "  Root: file: [%s], %s, cause: %s [%s]\n" % \
                          (root_info[0], root_info[1], root_info[2], root_info[3])
         traceback_msg += "  " + exception_data[-1] + "\n"
-        print traceback_msg
-        logging.error(traceback_msg)
+
+        global last_error
+        if not (last_error[0] == root_info[0] and last_error[1] == root_info[1]):
+            print traceback_msg
+            logging.error(traceback_msg)
+            last_error[0] = root_info[0]
+            last_error[1] = root_info[1]
+
     except:
         traceback_msg = "\nError in simple_exception_info()\n" + traceback.format_exc() + "\n"
         print(traceback_msg)

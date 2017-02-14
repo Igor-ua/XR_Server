@@ -289,7 +289,7 @@ def calculate_players_with_accuracy():
                 if uid > 0:
                     player = Player(uid)
                     clan_id = int(server.GetClientInfo(guid, INFO_CLANID))
-                    player.clan_id = 86846 if clan_id == 0 else clan_id
+                    player.clan_id = player.default_clan_id if clan_id == 0 else clan_id
                     player.last_used_name = re.sub(REGEXP_FOR_NAME, '', server.GetClientInfo(guid, INFO_NAME))
                     player.kills = int(server.GetClientInfo(guid, STAT_KILLS))
                     player.deaths = int(server.GetClientInfo(guid, STAT_DEATHS))
@@ -318,31 +318,37 @@ def calculate_map_awards():
             # sadist
             if p.kills > awards.sadist["value"]:
                 awards.sadist["uid"] = p.uid
+                awards.sadist["clan_id"] = p.clan_id
                 awards.sadist["name"] = p.last_used_name
                 awards.sadist["value"] = p.kills
             # ripper
             if p.deaths > awards.ripper["value"]:
                 awards.ripper["uid"] = p.uid
+                awards.ripper["clan_id"] = p.clan_id
                 awards.ripper["name"] = p.last_used_name
                 awards.ripper["value"] = p.deaths
             # mvp
             if p.kills - p.deaths > awards.mvp["value"]:
                 awards.mvp["uid"] = p.uid
+                awards.mvp["clan_id"] = p.clan_id
                 awards.mvp["name"] = p.last_used_name
                 awards.mvp["value"] = p.kills - p.deaths
             # survivor
             if p.killstreak > awards.survivor["value"]:
                 awards.survivor["uid"] = p.uid
+                awards.survivor["clan_id"] = p.clan_id
                 awards.survivor["name"] = p.last_used_name
                 awards.survivor["value"] = p.killstreak
             # aimbot
             if p.accuracy_stats.accuracy_percent > awards.aimbot["value"]:
                 awards.aimbot["uid"] = p.uid
+                awards.aimbot["clan_id"] = p.clan_id
                 awards.aimbot["name"] = p.last_used_name
                 awards.aimbot["value"] = p.accuracy_stats.accuracy_percent
             # phoe
             if p.npc_killed > awards.phoe["value"]:
                 awards.phoe["uid"] = p.uid
+                awards.phoe["clan_id"] = p.clan_id
                 awards.phoe["name"] = p.last_used_name
                 awards.phoe["value"] = p.npc_killed
     except:
