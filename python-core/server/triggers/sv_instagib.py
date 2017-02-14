@@ -148,16 +148,20 @@ def check_for_frags_and_items(guid):
         slot4 = int(server.GameScript(guid, '!inventory target 4'))
         kills = int(server.GetClientInfo(guid, STAT_KILLS))
         # killstreak = int(server.GetClientInfo(guid, STAT_KILLSTREAK))
+        template = '^gReceived new item: ^y%s'
         if guid in inventory:
             if not bool(kills % kills_for_mist) and inventory[guid][0] != kills and not bool(slot2):
                 server.GameScript(guid, '!give target beast_camouflage 1 2')
                 inventory[guid][0] = kills
+                server.Notify(guid, template % 'Mist Shroud')
             if not bool(kills % kills_for_sensor) and inventory[guid][1] != kills and not bool(slot3):
                 server.GameScript(guid, '!give target human_motion_sensor 1 3')
                 inventory[guid][1] = kills
+                server.Notify(guid, template % 'Sensor')
             if not bool(kills % kills_for_reloc) and inventory[guid][2] != kills and not bool(slot4):
                 server.GameScript(guid, '!give target human_relocater 1 4')
                 inventory[guid][2] = kills
+                server.Notify(guid, template % 'Relocater')
         else:
             inventory[guid] = [0, 0, 0]
     except:
