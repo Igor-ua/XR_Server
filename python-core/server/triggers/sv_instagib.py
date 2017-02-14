@@ -141,7 +141,6 @@ def scan_for_teleport_and_revive():
                 check_for_frags_and_items(guid)
 
 
-# Goes through the all players and gives them different items if the have enough amount of the frags
 def check_for_frags_and_items(guid):
     try:
         guid = int(guid)

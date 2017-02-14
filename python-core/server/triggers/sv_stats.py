@@ -236,20 +236,20 @@ def calculate_players_and_awards():
 
 # Saves the stats of the players
 def execute_save_stats():
-    global players
-    data = get_json_from_players()
-    url = ROOT_URL + '/stats/server/players/put'
-    headers = {'content-type': 'application/json'}
-    resp = requests.put(url, data, headers=headers)
-    print("[!]   Save stats result  ->  [%s, %s]" % (resp.status_code, resp.text))
+    try:
+        global players
+        data = get_json_from_players()
+        url = ROOT_URL + '/stats/server/players/put'
+        headers = {'content-type': 'application/json'}
+        resp = requests.put(url, data, headers=headers)
+        print("[!]   Save stats result  ->  [%s, %s]" % (resp.status_code, resp.text))
+    except:
+        sv_custom_utils.simple_exception_info()
 
 
 # Saves the stats of the players in the new thread
 def save_stats():
-    try:
-        createThread('import sv_stats; sv_stats.execute_save_stats()')
-    except:
-        sv_custom_utils.simple_exception_info()
+    createThread('import sv_stats; sv_stats.execute_save_stats()')
 
 
 # Gets the accuracy for the selected player by GUID
