@@ -17,6 +17,7 @@ import sv_custom_utils
 
 # Global vars
 global game_mod
+frag_limit = 0
 
 are_flags_found = False
 run_once_flag = True
@@ -28,7 +29,6 @@ lock = threading.Lock()
 # A queue of dead players that should be revived
 dead_queue = set()
 
-FRAG_LIMIT = 3
 INSTAGIB_MOD = "INSTAGIB"
 available_game_states = (1, 2, 3)
 reset_states = (1, 2)
@@ -81,6 +81,7 @@ def run_once():
         print("________SV_INSTAGIB RUN-ONCE_______")
         check_mod()
         find_teleport_locations()
+        get_vars_from_config()
 
 
 # Checks the current mod of the game
@@ -88,6 +89,11 @@ def check_mod():
     global game_mod
     game_mod = core.CvarGetString('sv_map_gametype')
     print("[!]   MOD: %s" % game_mod)
+
+
+def get_vars_from_config():
+    global frag_limit
+    frag_limit = int(core.CvarGetValue('sv_instagib_fraglimit'))
 
 
 # Gets an array of the team frags ([T1_FRAGS, T2_FRAGS]).
@@ -115,8 +121,8 @@ def update_clients_vars():
     core.CommandExec("set gs_transmit1 %s" % team_frags[0])
     # gs_transmit2 = TEAM_2 Frags (BLUE)
     core.CommandExec("set gs_transmit2 %s" % team_frags[1])
-    # gs_transmit3 = FRAG_LIMIT
-    core.CommandExec("set gs_transmit3 %s" % FRAG_LIMIT)
+    # gs_transmit3 = frag_limit
+    core.CommandExec("set gs_transmit3 %s" % frag_limit)
 
 
 def reset_clients_vars():
@@ -143,9 +149,20 @@ def check_for_frags_and_items(guid):
         kills_for_mist = 5
         kills_for_sensor = 7
         kills_for_reloc = 10
-        slot2 = int(server.GameScript(guid, '!inventory target 2'))
-        slot3 = int(server.GameScript(guid, '!inventory target 3'))
-        slot4 = int(server.GameScript(guid, '!inventory target 4'))
+
+        # Checking is there is enough ammo in the Coil
+        server.GameScript(guid, '!inventory target 1')
+        slot1 = int(core.CvarGetString('gs_inventory_count'))
+        if not bool(slot1):
+            # !give target human_coilrifle ammo slot (slots: 0,1,2,3,4)
+            server.GameScript(guid, '!give target human_coilrifle 100 1')
+
+        server.GameScript(guid, '!inventory target 2')
+        slot2 = bool(core.CvarGetString('gs_inventory_name'))
+        server.GameScript(guid, '!inventory target 3')
+        slot3 = bool(core.CvarGetString('gs_inventory_name'))
+        server.GameScript(guid, '!inventory target 4')
+        slot4 = bool(core.CvarGetString('gs_inventory_name'))
         kills = int(server.GetClientInfo(guid, STAT_KILLS))
         # killstreak = int(server.GetClientInfo(guid, STAT_KILLSTREAK))
         template = '^gReceived new item: ^y%s'
@@ -154,14 +171,20 @@ def check_for_frags_and_items(guid):
                 server.GameScript(guid, '!give target beast_camouflage 1 2')
                 inventory[guid][0] = kills
                 server.Notify(guid, template % 'Mist Shroud')
+            elif not bool(kills % kills_for_mist) and bool(slot2):
+                inventory[guid][0] = kills
             if not bool(kills % kills_for_sensor) and inventory[guid][1] != kills and not bool(slot3):
                 server.GameScript(guid, '!give target human_motion_sensor 1 3')
                 inventory[guid][1] = kills
                 server.Notify(guid, template % 'Sensor')
+            elif not bool(kills % kills_for_sensor) and bool(slot3):
+                inventory[guid][1] = kills
             if not bool(kills % kills_for_reloc) and inventory[guid][2] != kills and not bool(slot4):
                 server.GameScript(guid, '!give target human_relocater 1 4')
                 inventory[guid][2] = kills
                 server.Notify(guid, template % 'Relocater')
+            elif not bool(kills % kills_for_reloc) and bool(slot4):
+                inventory[guid][2] = kills
         else:
             inventory[guid] = [0, 0, 0]
     except:
@@ -191,10 +214,6 @@ def execute_waiting_and_reviving(guid):
                 print("Teleporting id: %s [%s, %s]" % (guid, Point3[0], Point3[1]))
                 server.GameScript(guid, '!teleport target coords %s %s' % (Point3[0], Point3[1]))
                 server.GameScript(guid, '!heal target 500')
-                # !remove target slot (slots: 0,1,2,3,4)
-                server.GameScript(guid, '!remove target 1')
-                # !give target human_coilrifle ammo slot (slots: 0,1,2,3,4)
-                server.GameScript(guid, '!give target human_coilrifle 1000 1')
                 if guid in dead_queue:
                     dead_queue.remove(guid)
                 time.sleep(0.5)
@@ -234,13 +253,13 @@ def is_time_to_finish():
         if current_time >= max_time:
             core.CommandExec('endgame %s' % get_team_winner(team_frags))
             return
-        if team_frags[0] == FRAG_LIMIT and team_frags[1] == FRAG_LIMIT:
+        if team_frags[0] == frag_limit and team_frags[1] == frag_limit:
             core.CommandExec('endgame 0')
             return
-        if team_frags[0] == FRAG_LIMIT:
+        if team_frags[0] == frag_limit:
             core.CommandExec('endgame 1')
             return
-        if team_frags[1] == FRAG_LIMIT:
+        if team_frags[1] == frag_limit:
             core.CommandExec('endgame 2')
 
 
