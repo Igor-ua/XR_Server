@@ -12,6 +12,7 @@ import sv_custom_utils
 def init():
     print("[!]   Initializing Custom Module...")
     try:
-        cmd_converter.init()
+        pass
+        # cmd_converter.init()
     except:
         sv_custom_utils.simple_exception_info()
