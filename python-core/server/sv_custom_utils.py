@@ -7,6 +7,7 @@
 # Savage API
 import core
 import server
+import datetime
 
 # External modules
 import sv_defs
@@ -66,7 +67,9 @@ def simple_exception_info():
         top_method_name = str(exc_traceback.tb_frame.f_code.co_name)
         del (exc_type, exc_value, exc_traceback)
 
-        traceback_msg = "\nTraceback:\n"
+        event_timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+
+        traceback_msg = '\n%s:\n' % event_timestamp
         traceback_msg += "  Top:  file: [%s], method: %s()\n" % (top_file_name, top_method_name)
         traceback_msg += "  Root: file: [%s], %s, cause: %s [%s]\n" % \
                          (root_info[0], root_info[1], root_info[2], root_info[3])
