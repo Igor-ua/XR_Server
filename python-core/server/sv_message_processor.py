@@ -158,7 +158,7 @@ def notify_info(guid, player):
             if bool(player.awards.accumulated_sadist) else None
         server.Notify(guid, '^ySurvivor: ^g%s' % player.awards.accumulated_survivor)\
             if bool(player.awards.accumulated_survivor) else None
-        server.Notify(guid, '^yReaper\'s best friend: ^g%s' % player.awards.accumulated_ripper)\
+        server.Notify(guid, '^yTrigardon\'s best buddy: ^g%s' % player.awards.accumulated_ripper)\
             if bool(player.awards.accumulated_ripper) else None
         server.Notify(guid, '^yPhoe: ^g%s' % player.awards.accumulated_phoe)\
             if bool(player.awards.accumulated_phoe) else None
