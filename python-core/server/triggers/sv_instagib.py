@@ -40,6 +40,11 @@ possible_teleport_locations = ("spawnflag")
 # Player's inventory structure
 inventory = {}
 
+# First-Last frags structure:
+global first_last_frags
+first_and_last_frag = {}
+players_frags = {}
+
 
 # Is called during every server frame
 def check():
@@ -109,10 +114,26 @@ def get_team_stats():
         if sv_defs.clientList_Team[index] == 2:
             objects_team_2.append(str(index))
     for idx_1 in objects_team_1:
-        team_frags[0] += int(server.GetClientInfo(int(idx_1), STAT_KILLS))
+        frags = int(server.GetClientInfo(int(idx_1), STAT_KILLS))
+        team_frags[0] += frags
+        trace_first_and_last_frag(idx_1, frags)
     for idx_2 in objects_team_2:
-        team_frags[1] += int(server.GetClientInfo(int(idx_2), STAT_KILLS))
+        frags = int(server.GetClientInfo(int(idx_2), STAT_KILLS))
+        team_frags[1] += frags
+        trace_first_and_last_frag(idx_2, frags)
     return team_frags
+
+
+def trace_first_and_last_frag(guid, frags):
+    global first_and_last_frag
+    global players_frags
+    if frags == 1 and 'first' not in first_and_last_frag:
+        first_and_last_frag['first'] = guid
+    if guid not in players_frags:
+        players_frags[guid] = frags
+    elif frags > players_frags[guid]:
+        players_frags[guid] = frags
+        first_and_last_frag['last'] = guid
 
 
 # Global variables (gs_transmit1-3) that are being transferred to the clients:
@@ -149,7 +170,7 @@ def check_for_frags_and_items(guid):
         kills_for_sensor = 7
         kills_for_reloc = 10
 
-        # Checking is there is enough ammo in the Coil
+        # Checking is there enough ammo in the Coil
         server.GameScript(guid, '!inventory target 1')
         slot1 = int(core.CvarGetString('gs_inventory_count'))
         if not bool(slot1):
