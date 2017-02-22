@@ -4,6 +4,8 @@ import com.newerth.core.Utils;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,7 +28,10 @@ public class FilesApi {
 
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	private static final String SERVICE_NAME = "API for downloading files for XR clients";
-	private static final String WORLD_PATH = "./spring-core/world/";
+	private static final String DEFAULT_WORLD_PATH = "./spring-core/world/";
+
+	@Autowired
+	private Environment env;
 
 	@RequestMapping("")
 	public String index(HttpServletResponse response, HttpServletRequest request) {
@@ -46,7 +51,12 @@ public class FilesApi {
 		File f;
 
 		try {
-			String src = WORLD_PATH + completeFileName;
+			String worldPath = env.getProperty("world.path");
+			if (worldPath == null || worldPath.isEmpty()) {
+				worldPath = DEFAULT_WORLD_PATH;
+			}
+
+			String src = worldPath + completeFileName;
 			f = new File(src);
 			is = new FileInputStream(f);
 
