@@ -1,6 +1,10 @@
+import copy
+
+
 # Don't save players with UID = 0 (0 is for unauthorized clients)
 class Player(object):
 
+    # Robot icon
     default_clan_id = 86846
 
     def __init__(self, uid):
@@ -15,6 +19,12 @@ class Player(object):
         self.killstreak = 0
         self.npc_killed = 0
         self.mvp = 0
+        # frags per minute
+        self.fpm = 0
+        # 0 means no award; 1 - got award
+        self.fist_frag = 0
+        # 0 means no award; 1 - got award
+        self.last_frag = 0
         pass
 
     def json_repr(self):
@@ -53,34 +63,56 @@ class AccuracyStats(object):
 
 class MapAwards:
     def __init__(self):
+        template = {"uid": 0, "clan_id": Player.default_clan_id, "name": "", "value": 0}
         # most kills - deaths
-        self.mvp = {"uid": 0, "clan_id": Player.default_clan_id, "name": "", "value": 0}
+        self.mvp = copy.copy(template)
         # most kills
-        self.sadist = {"uid": 0, "clan_id": Player.default_clan_id, "name": "", "value": 0}
+        self.sadist = copy.copy(template)
         # most kills in a row
-        self.survivor = {"uid": 0, "clan_id": Player.default_clan_id, "name": "", "value": 0}
+        self.survivor = copy.copy(template)
         # most deaths
-        self.ripper = {"uid": 0, "clan_id": Player.default_clan_id, "name": "", "value": 0}
+        self.ripper = copy.copy(template)
         # most npcs killed
-        self.phoe = {"uid": 0, "clan_id": Player.default_clan_id, "name": "", "value": 0}
+        self.phoe = copy.copy(template)
         # most accurate
-        self.aimbot = {"uid": 0, "clan_id": Player.default_clan_id, "name": "", "value": 0}
+        self.aimbot = copy.copy(template)
+        # first frag
+        self.first_frag = copy.copy(template)
+        # last frag that made your team win
+        self.last_frag = copy.copy(template)
+        # 0 deaths
+        self.camper = copy.copy(template)
+        # fpm (frags per minute): game time / frags
+        self.fpm = copy.copy(template)
+        # bunny
+        self.bunny = copy.copy(template)
 
     # Hardcoded structure
     def get_transmit_value(self):
+        delimiter = ','
         return \
-            str(self.mvp["uid"]) + '.' + str(self.mvp["clan_id"]) + '.' + self.mvp["name"] + '.' + \
-            str(self.mvp["value"]) + '.' + \
-            str(self.sadist["uid"]) + '.' + str(self.sadist["clan_id"]) + '.' + self.sadist["name"] + '.' + \
-            str(self.sadist["value"]) + '.' + \
-            str(self.survivor["uid"]) + '.' + str(self.survivor["clan_id"]) + '.' + self.survivor["name"] + '.' + \
-            str(self.survivor["value"]) + '.' + \
-            str(self.ripper["uid"]) + '.' + str(self.ripper["clan_id"]) + '.' + self.ripper["name"] + '.' + \
-            str(self.ripper["value"]) + '.' + \
-            str(self.phoe["uid"]) + '.' + str(self.phoe["clan_id"]) + '.' + self.phoe["name"] + '.' + \
-            str(self.phoe["value"]) + '.' + \
-            str(self.aimbot["uid"]) + '.' + str(self.aimbot["uid"]) + '.' + self.aimbot["name"] + '.' + \
-            str(self.aimbot["value"]) + '.'
+            str(self.mvp["uid"]) + delimiter + str(self.mvp["clan_id"]) + delimiter + \
+            self.mvp["name"] + delimiter + str(self.mvp["value"]) + delimiter + \
+            str(self.sadist["uid"]) + delimiter + str(self.sadist["clan_id"]) + delimiter + \
+            self.sadist["name"] + delimiter + str(self.sadist["value"]) + delimiter + \
+            str(self.survivor["uid"]) + delimiter + str(self.survivor["clan_id"]) + delimiter + \
+            self.survivor["name"] + delimiter + str(self.survivor["value"]) + delimiter + \
+            str(self.ripper["uid"]) + delimiter + str(self.ripper["clan_id"]) + delimiter + \
+            self.ripper["name"] + delimiter + str(self.ripper["value"]) + delimiter + \
+            str(self.phoe["uid"]) + delimiter + str(self.phoe["clan_id"]) + delimiter + \
+            self.phoe["name"] + delimiter + str(self.phoe["value"]) + delimiter + \
+            str(self.aimbot["uid"]) + delimiter + str(self.aimbot["clan_id"]) + delimiter + \
+            self.aimbot["name"] + delimiter + str(self.aimbot["value"]) + delimiter + \
+            str(self.first_frag["uid"]) + delimiter + str(self.first_frag["clan_id"]) + delimiter + \
+            self.first_frag["name"] + delimiter + str(self.first_frag["value"]) + delimiter + \
+            str(self.last_frag["uid"]) + delimiter + str(self.last_frag["clan_id"]) + delimiter + \
+            self.last_frag["name"] + delimiter + str(self.last_frag["value"]) + delimiter + \
+            str(self.camper["uid"]) + delimiter + str(self.camper["clan_id"]) + delimiter + \
+            self.camper["name"] + delimiter + str(self.camper["value"]) + delimiter + \
+            str(self.fpm["uid"]) + delimiter + str(self.fpm["clan_id"]) + delimiter + \
+            self.fpm["name"] + delimiter + str(self.fpm["value"]) + delimiter + \
+            str(self.bunny["uid"]) + delimiter + str(self.bunny["clan_id"]) + delimiter + \
+            self.bunny["name"] + delimiter + str(self.bunny["value"]) + delimiter
 
 
 class Awards(object):

@@ -41,7 +41,7 @@ possible_teleport_locations = ("spawnflag")
 inventory = {}
 
 # First-Last frags structure:
-global first_last_frags
+global first_and_last_frag
 first_and_last_frag = {}
 players_frags = {}
 
@@ -116,24 +116,28 @@ def get_team_stats():
     for idx_1 in objects_team_1:
         frags = int(server.GetClientInfo(int(idx_1), STAT_KILLS))
         team_frags[0] += frags
-        trace_first_and_last_frag(idx_1, frags)
+        track_first_and_last_frag(idx_1, frags)
     for idx_2 in objects_team_2:
         frags = int(server.GetClientInfo(int(idx_2), STAT_KILLS))
         team_frags[1] += frags
-        trace_first_and_last_frag(idx_2, frags)
+        track_first_and_last_frag(idx_2, frags)
     return team_frags
 
 
-def trace_first_and_last_frag(guid, frags):
+def track_first_and_last_frag(guid, frags):
     global first_and_last_frag
     global players_frags
-    if frags == 1 and 'first' not in first_and_last_frag:
-        first_and_last_frag['first'] = guid
-    if guid not in players_frags:
-        players_frags[guid] = frags
-    elif frags > players_frags[guid]:
-        players_frags[guid] = frags
-        first_and_last_frag['last'] = guid
+    # If game is in the normal state
+    if server.GetGameInfo(GAME_STATE) == 3:
+        if frags == 1 and 'first' not in first_and_last_frag:
+            first_and_last_frag['first'] = guid
+            core.CommandExec("set gs_first_frag_guid %s" % guid)
+        if guid not in players_frags:
+            players_frags[guid] = frags
+        elif frags > players_frags[guid]:
+            players_frags[guid] = frags
+            first_and_last_frag['last'] = guid
+            core.CommandExec("set gs_last_frag_guid %s" % guid)
 
 
 # Global variables (gs_transmit1-3) that are being transferred to the clients:
@@ -149,6 +153,8 @@ def update_clients_vars():
 def reset_clients_vars():
     for idx in range(1, 10):
         core.CommandExec("set gs_transmit%s 0" % idx)
+    core.CommandExec("set gs_first_frag_guid 0")
+    core.CommandExec("set gs_last_frag_guid 0")
 
 
 def scan_for_teleport_and_revive():
