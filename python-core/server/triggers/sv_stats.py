@@ -309,7 +309,7 @@ def calculate_players_with_accuracy():
                     if player.kills > 0:
                         player.fpm = round(float(server.GetClientInfo(guid, STAT_ONTEAMTIME)) / 1000 / player.kills, 1)
                     if guid == first_frag_guid:
-                        player.fist_frag = 1
+                        player.first_frag = 1
                     if guid == last_frag_guid:
                         player.last_frag = 1
                     player.accuracy_stats = get_accuracy(guid)
@@ -383,7 +383,7 @@ def calculate_map_awards():
                 map_awards.phoe["name"] = p.last_used_name
                 map_awards.phoe["value"] = p.npc_killed
             # first frag
-            if p.fist_frag == 1:
+            if p.first_frag == 1:
                 map_awards.first_frag["uid"] = p.uid
                 map_awards.first_frag["clan_id"] = p.clan_id
                 map_awards.first_frag["name"] = p.last_used_name
@@ -395,7 +395,7 @@ def calculate_map_awards():
                 map_awards.last_frag["name"] = p.last_used_name
                 map_awards.last_frag["value"] = p.last_frag
             # camper (0 deaths)
-            if p.deaths == 0:
+            if p.deaths == 0 and p.kills > 0:
                 map_awards.camper["uid"] = p.uid
                 map_awards.camper["clan_id"] = p.clan_id
                 map_awards.camper["name"] = p.last_used_name

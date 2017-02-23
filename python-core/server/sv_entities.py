@@ -22,7 +22,7 @@ class Player(object):
         # frags per minute
         self.fpm = 0
         # 0 means no award; 1 - got award
-        self.fist_frag = 0
+        self.first_frag = 0
         # 0 means no award; 1 - got award
         self.last_frag = 0
 

@@ -152,8 +152,8 @@ def update_clients_vars():
 def reset_clients_vars():
     for idx in range(1, 10):
         core.CommandExec("set gs_transmit%s 0" % idx)
-    core.CommandExec("set gs_first_frag_guid 0")
-    core.CommandExec("set gs_last_frag_guid 0")
+    core.CommandExec("set gs_first_frag_guid -1")
+    core.CommandExec("set gs_last_frag_guid -1")
 
 
 def scan_for_teleport_and_revive():
