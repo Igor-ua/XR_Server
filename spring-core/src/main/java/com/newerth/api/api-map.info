@@ -21,3 +21,5 @@ Secure (private) API:
 "/stats/server/player/put"
 "/stats/server/players/put"
 
+"/stats/server/map-stats/post"
+

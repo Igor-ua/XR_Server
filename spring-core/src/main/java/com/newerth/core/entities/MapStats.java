@@ -6,16 +6,11 @@ import com.newerth.core.View;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Date;
-
-// Unused entity
-// Not implemented yet
 
 @Component
 @Entity
 @Table(name = "map_stats")
-public class MapStats implements Serializable {
+public class MapStats {
 
 	@Id
 	@GeneratedValue
@@ -27,17 +22,17 @@ public class MapStats implements Serializable {
 	@JsonView(View.Summary.class)
 	private String mapName;
 
-	@Column(name = "team_one_score")
+	@Column(name = "red_score")
 	@JsonView(View.Summary.class)
-	private int teamOneScore;
+	private int redScore;
 
-	@Column(name = "team_two_score")
+	@Column(name = "blue_score")
 	@JsonView(View.Summary.class)
-	private int teamTwoScore;
+	private int blueScore;
 
-	@Column(name = "map_ts")
+	@Column(name = "winner")
 	@JsonView(View.Summary.class)
-	private Date mapTimeStamp;
+	private String winner;
 
 	public Long getId() {
 		return id;
@@ -55,28 +50,28 @@ public class MapStats implements Serializable {
 		this.mapName = mapName;
 	}
 
-	public int getTeamOneScore() {
-		return teamOneScore;
+	public int getRedScore() {
+		return redScore;
 	}
 
-	public void setTeamOneScore(int teamOneScore) {
-		this.teamOneScore = teamOneScore;
+	public void setRedScore(int redScore) {
+		this.redScore = redScore;
 	}
 
-	public int getTeamTwoScore() {
-		return teamTwoScore;
+	public int getBlueScore() {
+		return blueScore;
 	}
 
-	public void setTeamTwoScore(int teamTwoScore) {
-		this.teamTwoScore = teamTwoScore;
+	public void setBlueScore(int blueScore) {
+		this.blueScore = blueScore;
 	}
 
-	public Date getMapTimeStamp() {
-		return mapTimeStamp;
+	public String getWinner() {
+		return winner;
 	}
 
-	public void setMapTimeStamp(Date mapTimeStamp) {
-		this.mapTimeStamp = mapTimeStamp;
+	public void setWinner(String winner) {
+		this.winner = winner;
 	}
 
 	@Override
@@ -99,12 +94,12 @@ public class MapStats implements Serializable {
 
 	@Override
 	public String toString() {
-		return "MapStats{" +
-				"id=" + id +
-				", mapName='" + mapName + '\'' +
-				", teamOneScore=" + teamOneScore +
-				", teamTwoScore=" + teamTwoScore +
-				", mapTimeStamp=" + mapTimeStamp +
+		return "MapStats: {\n" +
+				"\tid: " + id + ",\n" +
+				"\tmap name: '" + mapName +  ",\n" +
+				"\tred score: " + redScore + ",\n" +
+				"\tblue score: " + blueScore + ",\n" +
+				"\twinner: " + winner + ",\n" +
 				'}';
 	}
 }

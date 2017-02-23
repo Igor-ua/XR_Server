@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.newerth.core.entities.MapStats;
 import com.newerth.core.entities.Player;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,6 +70,31 @@ public class Utils {
 			e.printStackTrace();
 		}
 		return type.cast(obj);
+	}
+
+	/**
+	 * MapStats JSON structure:
+	 *
+	 * {
+	 *     "mapName" : xr_eden,
+	 *     "redScore" : 80,
+	 *     "blueScore" : 100,
+	 *     "winner": "red" // red, blue, draw
+	 * }
+	 */
+	public static MapStats getMapStatsFromJson(String json) {
+		MapStats ms = new MapStats();
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			JsonNode node = mapper.readTree(json);
+			ms.setMapName(node.at("/mapName").asText());
+			ms.setRedScore(node.at("/redScore").asInt());
+			ms.setBlueScore(node.at("/blueScore").asInt());
+			ms.setWinner(node.at("/winner").asText());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return ms;
 	}
 
 	/**

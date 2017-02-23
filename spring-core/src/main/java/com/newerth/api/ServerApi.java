@@ -53,4 +53,16 @@ public class ServerApi {
 		return updater.saveOrUpdatePlayers(Utils.getListOfPlayersFromJson(body));
 	}
 
+	@RequestMapping(
+			value = "/map-stats/post",
+			method = RequestMethod.POST)
+	@ResponseBody
+	@JsonView(View.Summary.class)
+	public boolean saveMapStats(
+			@RequestBody String body,
+			HttpServletRequest request) {
+		Utils.logRequest(request, body, this.getClass());
+		return updater.saveMapStats(Utils.getMapStatsFromJson(body));
+	}
+
 }

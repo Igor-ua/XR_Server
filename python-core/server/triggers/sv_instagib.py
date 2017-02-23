@@ -41,7 +41,6 @@ possible_teleport_locations = ("spawnflag")
 inventory = {}
 
 # First-Last frags structure:
-global first_and_last_frag
 first_and_last_frag = {}
 players_frags = {}
 

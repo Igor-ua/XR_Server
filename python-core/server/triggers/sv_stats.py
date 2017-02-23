@@ -23,6 +23,7 @@ run_at_start = False
 game_end_flag = False
 ROOT_URL = 'http://127.0.0.1:8080'
 players = list()
+map_stats = MapStats()
 # Cache for stats for one player during one round
 single_stats_cache = {}
 # Cache for top-stats during one round
@@ -229,20 +230,26 @@ def get_top_stats():
 def calculate_players_and_awards():
     global players
     calculate_players_with_accuracy()
+    calculate_map_stats()
     map_awards = calculate_map_awards()
     bind_awards_to_players(map_awards)
     update_clients_vars(map_awards)
 
 
-# Saves the stats of the players
+# Saves stats
 def execute_save_stats():
     try:
-        global players
+        # Saves stats of players
         data = get_json_from_players()
         url = ROOT_URL + '/stats/server/players/put'
         headers = {'content-type': 'application/json'}
         resp = requests.put(url, data, headers=headers)
-        print("[!]   Save stats result  ->  [%s, %s]" % (resp.status_code, resp.text))
+        print("[!]   Save players stats result  ->  [%s, %s]" % (resp.status_code, resp.text))
+        # Saves map stats
+        data = json.dumps(map_stats, default=sv_custom_utils.obj_repr)
+        url = ROOT_URL + '/stats/server/map-stats/post'
+        resp = requests.post(url, data, headers=headers)
+        print("[!]   Save map stats result  ->  [%s, %s]" % (resp.status_code, resp.text))
     except:
         sv_custom_utils.simple_exception_info()
 
@@ -309,6 +316,19 @@ def calculate_players_with_accuracy():
                     players.append(player)
     except:
         sv_custom_utils.simple_exception_info()
+
+
+# Fill MapStats for save
+def calculate_map_stats():
+    global map_stats
+    map_stats = MapStats()
+    map_stats.map_name = 'set map name here'
+    map_stats.red_score = int(core.CvarGetValue('gs_transmit1'))
+    map_stats.blue_score = int(core.CvarGetValue('gs_transmit2'))
+    if map_stats.red_score > map_stats.blue_score:
+        map_stats.winner = 'red'
+    elif map_stats.red_score < map_stats.blue_score:
+        map_stats.winner = 'blue'
 
 
 # Returns a JSON String of the list of players

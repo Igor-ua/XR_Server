@@ -1,5 +1,7 @@
 package com.newerth.core;
 
+import com.newerth.core.entities.MapStats;
+import com.newerth.core.repository.MapStatsRepository;
 import com.newerth.core.repository.PlayerRepository;
 import com.newerth.core.entities.Player;
 import org.slf4j.Logger;
@@ -17,8 +19,9 @@ import java.util.List;
 public class Updater {
 
 	private PlayerRepository playerRepo;
-	private Reference ref;
+	private MapStatsRepository msRepo;
 	private static Logger log = LoggerFactory.getLogger(Updater.class);
+	private Reference ref;
 
 	@Autowired
 	private void setPlayerRepo(PlayerRepository repository) {
@@ -86,5 +89,15 @@ public class Updater {
 				player.getAwards().getLastAimbot()
 		);
 		return found;
+	}
+
+	public boolean saveMapStats(MapStats ms) {
+		try {
+			msRepo.save(ms);
+			return true;
+		} catch (RuntimeException e) {
+			log.info("Error during saving map stats: " + ms);
+		}
+		return false;
 	}
 }

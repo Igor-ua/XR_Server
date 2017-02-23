@@ -25,7 +25,6 @@ class Player(object):
         self.fist_frag = 0
         # 0 means no award; 1 - got award
         self.last_frag = 0
-        pass
 
     def json_repr(self):
         return dict(uid=self.uid, clanId=self.clan_id, lastUsedName=self.last_used_name, accuracyStats=self.accuracy_stats,
@@ -144,3 +143,18 @@ class Awards(object):
         return "Awards : [UID: %s], [AIMBOT: %s], [MVP: %s], [SADIST: %s], [SURVIVOR: %s], [RIPPER: %s], [PHOE: %s]" \
                % (self.uid, self.accumulated_aimbot, self.accumulated_mvp, self.accumulated_sadist,
                   self.accumulated_survivor, self.accumulated_ripper, self.accumulated_phoe)
+
+
+class MapStats(object):
+    def __init__(self):
+        self.map_name = 'default_map_name'
+        self.red_score = 0
+        self.blue_score = 0
+        self.winner = 'draw'
+
+    def json_repr(self):
+        return dict(mapName=self.map_name, redScore=self.red_score, blueScore=self.blue_score, winner=self.winner)
+
+    def __str__(self):
+        return "MapStats: [MAP_NAME: %s], [RED: %s], [BLUE: %s], [WINNER: %s]" % (self.map_name, self.red_score,
+                                                                                  self.blue_score, self.winner)
