@@ -15,8 +15,8 @@ import sys
 import time
 import sv_custom_utils
 import re
-# Will replace all symbols from the input string that are not: 'A-Za-z-_() '
-REGEXP_FOR_INPUT = '[^!^A-Z^a-z^\-^_^(^) ]'
+# Will replace all symbols from the input string that are not: '0-9A-Za-z-_() '
+REGEXP_FOR_INPUT = '[^!^0-9^A-Z^a-z^\-^_^(^) ]'
 
 messages = {'info', 'last', 'top'}
 

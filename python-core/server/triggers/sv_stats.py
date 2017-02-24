@@ -29,8 +29,8 @@ single_stats_cache = {}
 # Cache for top-stats during one round
 top_stats_cache = {}
 MAX_CACHE_SIZE = 30
-# Will replace all symbols from the name that are not: 'A-Za-z-_() '
-REGEXP_FOR_NAME = '[^A-Z^a-z^\-^_^(^) ]'
+# Will replace all symbols from the name that are not: '0-9A-Za-z-_() '
+REGEXP_FOR_NAME = '[^0-9^A-Z^a-z^\-^_^(^) ]'
 
 
 # Is called during every server frame
@@ -41,9 +41,9 @@ def check():
         # If game state == 4 ('Game Ended') -> save stats.
         global game_end_flag
         if server.GetGameInfo(GAME_STATE) == 4 and not game_end_flag:
+            game_end_flag = True
             calculate_players_and_awards()
             save_stats()
-            game_end_flag = True
         return 0
     except:
         sv_custom_utils.simple_exception_info()
@@ -307,7 +307,8 @@ def calculate_players_with_accuracy():
                     player.npc_killed = int(server.GetClientInfo(guid, STAT_NPCKILL))
                     player.mvp = player.kills - player.deaths
                     if player.kills > 0:
-                        player.fpm = round(float(server.GetClientInfo(guid, STAT_ONTEAMTIME)) / 1000 / player.kills, 1)
+                        player.fpm = round(player.kills / (float(server.GetClientInfo(guid, STAT_ONTEAMTIME)) / 1000)
+                                           * 60, 1)
                     if guid == first_frag_guid:
                         player.first_frag = 1
                     if guid == last_frag_guid:
@@ -417,14 +418,16 @@ def calculate_map_awards():
         # Retrieving info about clanAttr and merging it into the 'full_nick'
         uids = set()
         for attr, val in map_awards.__dict__.iteritems():
-            if val['uid'] != 0:
-                uids.add(val['uid'])
+            if val["uid"] != 0:
+                uids.add(val["uid"])
         info = sv_custom_utils.get_clients_info_dict(list(uids))
         for attr, val in map_awards.__dict__.iteritems():
-            if val['uid'] != 0 and info[val['uid']] in info:
-                val['full_nick'] = '%s ^w^clan %s^ ^w%s' % (info[val['uid']]['ClanAbbrev'], val['clan_id'], val['name'])
-
-
+            if val["uid"] != 0 and val["uid"] in info and info[val["uid"]]["ClanAbbrev"] != "":
+                val["full_nick"] = '%s ^w^clan %s^ ^w%s' % (info[val["uid"]]["ClanAbbrev"], val["clan_id"], val["name"])
+            elif val["uid"] != 0 and val["uid"] in info:
+                val["full_nick"] = val["name"]
+            else:
+                val["full_nick"] = ""
 
     except:
         sv_custom_utils.simple_exception_info()

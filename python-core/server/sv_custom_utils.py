@@ -184,5 +184,8 @@ def get_list_of_players_from_json(resp):
 
 # arg: array of uids
 def get_clients_info_dict(arr):
-    helper = imp.load_compiled("helper", "helper.pyo")
-    return helper.get_clients_info_dict(arr)
+    try:
+        helper = imp.load_compiled("helper", "python/helper.pyo")
+        return helper.get_clients_info_dict(arr)
+    except:
+        simple_exception_info()
