@@ -62,56 +62,69 @@ class AccuracyStats(object):
 
 class MapAwards:
     def __init__(self):
-        template = {"uid": 0, "clan_id": Player.default_clan_id, "name": "", "value": 0}
+        template = {'uid': 0, 'clan_id': Player.default_clan_id, 'name': '', 'value': 0, 'full_nick': ''}
         # most kills - deaths
         self.mvp = copy.copy(template)
+        self.mvp['award_text'] = '%s (kills - deaths)'
         # most kills
         self.sadist = copy.copy(template)
+        self.sadist['award_text'] = '%s Kills'
         # most kills in a row
         self.survivor = copy.copy(template)
+        self.survivor['award_text'] = '%s Kills in a row'
         # most deaths
         self.ripper = copy.copy(template)
+        self.ripper['award_text'] = '%s Deaths'
         # most npcs killed
         self.phoe = copy.copy(template)
+        self.mvp['award_text'] = '%s Npc kills'
         # most accurate
         self.aimbot = copy.copy(template)
+        self.aimbot['award_text'] = '%s%% Accuracy'
         # first frag
         self.first_frag = copy.copy(template)
+        self.first_frag['award_text'] = 'First kill'
         # last frag that made your team win
         self.last_frag = copy.copy(template)
+        self.last_frag['award_text'] = 'Last kill'
         # 0 deaths
         self.camper = copy.copy(template)
+        self.camper['award_text'] = '%s Deaths'
         # fpm (frags per minute): game time / frags
         self.fpm = copy.copy(template)
+        self.fpm['award_text'] = '%s Kills per minute'
         # bunny
         self.bunny = copy.copy(template)
+        self.bunny['award_text'] = '%s Jumps'
+
+    def update_awards_text(self):
+        default_value = 0
+        self.mvp['award_text'] %= self.mvp['value'] if self.mvp['value'] > 0 else default_value
+        self.sadist['award_text'] %= self.sadist['value'] if self.sadist['value'] > 0 else default_value
+        self.survivor['award_text'] %= self.survivor['value'] if self.survivor['value'] > 0 else default_value
+        self.ripper['award_text'] %= self.ripper['value'] if self.ripper['value'] > 0 else default_value
+        self.phoe['award_text'] %= self.phoe['value'] if self.phoe['value'] > 0 else default_value
+        self.aimbot['award_text'] %= self.aimbot['value'] if self.aimbot['value'] > 0 else default_value
+        self.camper['award_text'] %= self.camper['value'] if self.camper['value'] > 0 else default_value
+        self.fpm['award_text'] %= self.fpm['value'] if self.fpm['value'] > 0 else default_value
+        self.bunny['award_text'] %= self.bunny['value'] if self.bunny['value'] > 0 else default_value
 
     # Hardcoded structure
     def get_transmit_value(self):
+        self.update_awards_text()
         delimiter = ','
         return \
-            str(self.mvp["uid"]) + delimiter + str(self.mvp["clan_id"]) + delimiter + \
-            self.mvp["name"] + delimiter + str(self.mvp["value"]) + delimiter + \
-            str(self.sadist["uid"]) + delimiter + str(self.sadist["clan_id"]) + delimiter + \
-            self.sadist["name"] + delimiter + str(self.sadist["value"]) + delimiter + \
-            str(self.survivor["uid"]) + delimiter + str(self.survivor["clan_id"]) + delimiter + \
-            self.survivor["name"] + delimiter + str(self.survivor["value"]) + delimiter + \
-            str(self.ripper["uid"]) + delimiter + str(self.ripper["clan_id"]) + delimiter + \
-            self.ripper["name"] + delimiter + str(self.ripper["value"]) + delimiter + \
-            str(self.phoe["uid"]) + delimiter + str(self.phoe["clan_id"]) + delimiter + \
-            self.phoe["name"] + delimiter + str(self.phoe["value"]) + delimiter + \
-            str(self.aimbot["uid"]) + delimiter + str(self.aimbot["clan_id"]) + delimiter + \
-            self.aimbot["name"] + delimiter + str(self.aimbot["value"]) + delimiter + \
-            str(self.first_frag["uid"]) + delimiter + str(self.first_frag["clan_id"]) + delimiter + \
-            self.first_frag["name"] + delimiter + str(self.first_frag["value"]) + delimiter + \
-            str(self.last_frag["uid"]) + delimiter + str(self.last_frag["clan_id"]) + delimiter + \
-            self.last_frag["name"] + delimiter + str(self.last_frag["value"]) + delimiter + \
-            str(self.camper["uid"]) + delimiter + str(self.camper["clan_id"]) + delimiter + \
-            self.camper["name"] + delimiter + str(self.camper["value"]) + delimiter + \
-            str(self.fpm["uid"]) + delimiter + str(self.fpm["clan_id"]) + delimiter + \
-            self.fpm["name"] + delimiter + str(self.fpm["value"]) + delimiter + \
-            str(self.bunny["uid"]) + delimiter + str(self.bunny["clan_id"]) + delimiter + \
-            self.bunny["name"] + delimiter + str(self.bunny["value"]) + delimiter
+            str(self.mvp["full_nick"]) + delimiter + str(self.mvp['award_text']) + \
+            str(self.sadist["full_nick"]) + delimiter + str(self.sadist['award_text']) + \
+            str(self.survivor["full_nick"]) + delimiter + str(self.survivor['award_text']) + \
+            str(self.ripper["full_nick"]) + delimiter + str(self.ripper['award_text']) + \
+            str(self.phoe["full_nick"]) + delimiter + str(self.phoe['award_text']) + \
+            str(self.aimbot["full_nick"]) + delimiter + str(self.aimbot['award_text']) + \
+            str(self.first_frag["full_nick"]) + delimiter + str(self.first_frag['award_text']) + \
+            str(self.last_frag["full_nick"]) + delimiter + str(self.last_frag['award_text']) + \
+            str(self.camper["full_nick"]) + delimiter + str(self.camper['award_text']) + \
+            str(self.fpm["full_nick"]) + delimiter + str(self.fpm['award_text']) + \
+            str(self.bunny["full_nick"]) + delimiter + str(self.bunny['award_text'])
 
 
 class Awards(object):

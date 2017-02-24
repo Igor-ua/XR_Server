@@ -16,6 +16,7 @@ import traceback
 from sv_entities import *
 import logging
 import os
+import imp
 
 last_error = [0, 0]
 
@@ -179,3 +180,9 @@ def get_list_of_players_from_json(resp):
             if player.uid != 0:
                 players.append(get_player_from_json(r))
     return players
+
+
+# arg: array of uids
+def get_clients_info_dict(arr):
+    helper = imp.load_compiled("helper", "helper.pyo")
+    return helper.get_clients_info_dict(arr)

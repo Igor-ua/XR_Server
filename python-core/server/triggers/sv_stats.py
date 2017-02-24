@@ -344,6 +344,7 @@ def calculate_map_awards():
     frag_limit = int(core.CvarGetValue('sv_instagib_fraglimit'))
     red_score = int(core.CvarGetValue('gs_transmit1'))
     blue_score = int(core.CvarGetValue('gs_transmit2'))
+
     try:
         for p in players:
             # sadist
@@ -412,6 +413,19 @@ def calculate_map_awards():
                 map_awards.bunny["clan_id"] = p.clan_id
                 map_awards.bunny["name"] = p.last_used_name
                 map_awards.bunny["value"] = p.jumps
+
+        # Retrieving info about clanAttr and merging it into the 'full_nick'
+        uids = set()
+        for attr, val in map_awards.__dict__.iteritems():
+            if val['uid'] != 0:
+                uids.add(val['uid'])
+        info = sv_custom_utils.get_clients_info_dict(list(uids))
+        for attr, val in map_awards.__dict__.iteritems():
+            if val['uid'] != 0 and info[val['uid']] in info:
+                val['full_nick'] = '%s ^w^clan %s^ ^w%s' % (info[val['uid']]['ClanAbbrev'], val['clan_id'], val['name'])
+
+
+
     except:
         sv_custom_utils.simple_exception_info()
     return map_awards
