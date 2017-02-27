@@ -97,7 +97,7 @@ def check_mod():
 
 def get_vars_from_config():
     global frag_limit
-    frag_limit = int(core.CvarGetValue('sv_instagib_fraglimit'))
+    frag_limit = int(core.CvarGetValue('py_instagib_fraglimit'))
 
 
 # Gets an array of the team frags ([T1_FRAGS, T2_FRAGS]).

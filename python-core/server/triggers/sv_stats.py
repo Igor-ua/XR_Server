@@ -21,7 +21,10 @@ import re
 
 run_at_start = False
 game_end_flag = False
+
+# Default value:
 ROOT_URL = 'http://127.0.0.1:8080'
+
 players = list()
 map_stats = MapStats()
 # Cache for stats for one player during one round
@@ -63,6 +66,13 @@ def run_once():
         global single_stats_cache
         single_stats_cache.clear()
         top_stats_cache.clear()
+        get_vars_from_config()
+
+
+def get_vars_from_config():
+    global ROOT_URL
+    # ROOT_URL Example: 'http://127.0.0.1:8586'
+    ROOT_URL = str(core.CvarGetString('py_stats_root_url'))
 
 
 # Get Client's stats by UID
@@ -342,7 +352,7 @@ def get_json_from_players():
 def calculate_map_awards():
     global players
     map_awards = MapAwards()
-    frag_limit = int(core.CvarGetValue('sv_instagib_fraglimit'))
+    frag_limit = int(core.CvarGetValue('py_instagib_fraglimit'))
     red_score = int(core.CvarGetValue('gs_transmit1'))
     blue_score = int(core.CvarGetValue('gs_transmit2'))
 
