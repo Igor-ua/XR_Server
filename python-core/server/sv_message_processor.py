@@ -125,6 +125,8 @@ def process_request(options):
                         nothing_was_found(guid)
             elif command == 'top':
                 notify_top(guid, sv_stats.get_top_stats())
+            elif command == 'help':
+                notify_help(guid)
     except:
         sv_custom_utils.simple_exception_info()
 
@@ -217,3 +219,27 @@ def notify_top(guid, cache):
                              cache['mvps'][idx].clan_id, cache['mvps'][idx].last_used_name)
     server.Notify(guid, mvps)
     # ------------------------------------------------------------------------------------------
+
+
+def notify_help(guid):
+    server.Notify(guid, 'Instagib Mode Information:')
+    server.Notify(guid, 'General:')
+    server.Notify(guid, '- Winner is a team that first gets a frag limit of the round.')
+    server.Notify(guid, '- Winner is a team that has more frags by the end of the time limit.')
+    server.Notify(guid, '- Draw is possible if both teams have equal amount of frags.')
+    server.Notify(guid, 'Physics:')
+    server.Notify(guid, '- increased player speed')
+    server.Notify(guid, '- increased sprint speed')
+    server.Notify(guid, '- stamina cost for jump is 0')
+    server.Notify(guid, '- increased stamina regen speed')
+    server.Notify(guid, '- increased coil dmg (500)')
+    server.Notify(guid, '- reviving and teleporting in 1 second after the death')
+    server.Notify(guid, 'Statistics:')
+    server.Notify(guid, '- stats are being updated every round')
+    server.Notify(guid, '- stats are bound to your UIDs')
+    server.Notify(guid, 'Available stats commands:')
+    server.Notify(guid, '- !info - general info about your current UID')
+    server.Notify(guid, '- !info <part of the nick> (ex: !info xr_pla - finds info about "XR_Player")')
+    server.Notify(guid, '- !last information about your stats from the last round')
+    server.Notify(guid, '- !last <part of the nick> (ex: !last xr_pla - finds last info about "XR_Player")')
+    server.Notify(guid, '- !top - Top5: Aimbots, Sadists, Survivors, Trigs, MVPs, Phoes')
