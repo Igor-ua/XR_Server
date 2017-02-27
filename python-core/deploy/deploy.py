@@ -40,7 +40,7 @@ copy_files(src, XR_SERVER_PATH + 'game/python/')
 
 print "  deploying: /server/configs/"
 copy_one(src + '/configs/XR_admin.cfg', XR_SERVER_PATH + 'game/')
-copy_one(src + '/configs/Passwords.cfg', XR_SERVER_PATH + 'game/')
+# copy_one(src + '/configs/Passwords.cfg', XR_SERVER_PATH + 'game/')
 copy_one(src + '/configs/Instagib.cfg', XR_SERVER_PATH + 'game/script/instagib/')
 
 print "  deploying: /server/triggers/"
