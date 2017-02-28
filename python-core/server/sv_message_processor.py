@@ -201,19 +201,19 @@ def notify_top(guid, cache):
                                cache['survivors'][idx].clan_id, cache['survivors'][idx].last_used_name)
     server.Notify(guid, survivors)
     # ------------------------------------------------------------------------------------------
-    rippers = '^cRIPPERS:\n'
+    rippers = '^cTrigardon\'s ^cbest ^cbuddy:\n'
     for idx in xrange(0, len(cache['rippers'])):
         rippers += template % (cache['rippers'][idx].awards.accumulated_ripper,
                                cache['rippers'][idx].clan_id, cache['rippers'][idx].last_used_name)
     server.Notify(guid, rippers)
     # ------------------------------------------------------------------------------------------
-    phoes = '^cPHOES:\n'
+    phoes = '^cPhoes:\n'
     for idx in xrange(0, len(cache['phoes'])):
         phoes += template % (cache['phoes'][idx].awards.accumulated_phoe,
                                cache['phoes'][idx].clan_id, cache['phoes'][idx].last_used_name)
     server.Notify(guid, phoes)
     # ------------------------------------------------------------------------------------------
-    mvps = '^cMVPS:\n'
+    mvps = '^cMVPs:\n'
     for idx in xrange(0, len(cache['mvps'])):
         mvps += template % (cache['mvps'][idx].awards.accumulated_mvp,
                              cache['mvps'][idx].clan_id, cache['mvps'][idx].last_used_name)
@@ -222,24 +222,30 @@ def notify_top(guid, cache):
 
 
 def notify_help(guid):
-    server.Notify(guid, 'Instagib Mode Information:')
-    server.Notify(guid, 'General:')
-    server.Notify(guid, '- Winner is a team that first gets a frag limit of the round.')
-    server.Notify(guid, '- Winner is a team that has more frags by the end of the time limit.')
-    server.Notify(guid, '- Draw is possible if both teams have equal amount of frags.')
-    server.Notify(guid, 'Physics:')
-    server.Notify(guid, '- increased player speed')
-    server.Notify(guid, '- increased sprint speed')
-    server.Notify(guid, '- stamina cost for jump is 0')
-    server.Notify(guid, '- increased stamina regen speed')
-    server.Notify(guid, '- increased coil dmg (500)')
-    server.Notify(guid, '- reviving and teleporting in 1 second after the death')
-    server.Notify(guid, 'Statistics:')
-    server.Notify(guid, '- stats are being updated every round')
-    server.Notify(guid, '- stats are bound to your UIDs')
-    server.Notify(guid, 'Available stats commands:')
-    server.Notify(guid, '- !info - general info about your current UID')
-    server.Notify(guid, '- !info <part of the nick> (ex: !info xr_pla - finds info about "XR_Player")')
-    server.Notify(guid, '- !last information about your stats from the last round')
-    server.Notify(guid, '- !last <part of the nick> (ex: !last xr_pla - finds last info about "XR_Player")')
-    server.Notify(guid, '- !top - Top5: Aimbots, Sadists, Survivors, Trigs, MVPs, Phoes')
+    server.Notify(guid, '^gInstagib ^gMode ^gInformation:')
+    server.Notify(guid, '^gGeneral:')
+    server.Notify(guid, '^y- ^yGame ^ystarts ^ywhen ^y70% ^yare ^yready ^y(press ^yF3)')
+    server.Notify(guid, '^y- ^yWinner ^yis ^ya ^yteam ^ythat ^yfirst ^ygets ^ya ^yfrag ^ylimit ^yof ^ythe ^yround.')
+    server.Notify(guid, '^y- ^yWinner ^yis ^ya ^yteam ^ythat ^yhas ^ymore ^yfrags ^yby ^ythe ^yend ^yof ^ythe ^ytime '
+                        '^ylimit.')
+    server.Notify(guid, '^y- ^yDraw ^yis ^ypossible ^yif ^yboth ^yteams ^yhave ^yequal ^yamount ^yof ^yfrags.')
+    server.Notify(guid, '^gPhysics:')
+    server.Notify(guid, '^y- ^yincreased ^yplayer ^yspeed')
+    server.Notify(guid, '^y- ^yincreased ^ysprint ^yspeed')
+    server.Notify(guid, '^y- ^ystamina ^ycost ^yfor ^yjump ^yis ^y0')
+    server.Notify(guid, '^y- ^yincreased ^ystamina ^yregen ^yspeed')
+    server.Notify(guid, '^y- ^yincreased ^ycoil ^ydmg ^y(500)')
+    server.Notify(guid, '^y- ^yreviving ^yand ^yteleporting ^yin ^y1 ^ysecond ^yafter ^ythe ^ydeath')
+    server.Notify(guid, '^gStatistics:')
+    server.Notify(guid, '^y- ^ystats ^yare ^ybeing ^yupdated ^yevery ^yround')
+    server.Notify(guid, '^y- ^ystats ^yare ^ybound ^yto ^yyour ^yUIDs')
+    server.Notify(guid, '^gItems:')
+    server.Notify(guid, '^y- ^yEvery ^y5, ^y7, ^y10 ^yfrags ^ygive ^yyou ^ymist, ^ysensor, ^yreloc.')
+    server.Notify(guid, '^gAvailable stats commands:')
+    server.Notify(guid, '^y- ^y!info ^y- ^ygeneral ^yinfo ^yabout ^yyour ^ycurrent ^yUID')
+    server.Notify(guid, '^y- ^y!info ^y<part ^yof ^ythe ^ynick> ^y(ex: ^y!info ^yxr_pla ^y- ^yfinds ^yinfo ^yabout '
+                        '^y"XR_Player")')
+    server.Notify(guid, '^y- ^y!last ^yinformation ^yabout ^yyour ^ystats ^yfrom ^ythe ^ylast ^yround')
+    server.Notify(guid, '^y- ^y!last ^y<part ^yof ^ythe ^ynick> ^y(ex: ^y!last ^yxr_pla ^y- ^yfinds ^ylast ^yinfo '
+                        '^yabout ^y"XR_Player")')
+    server.Notify(guid, '^y- ^y!top ^y- ^yTop5: ^yAimbots, ^ySadists, ^ySurvivors, ^yTrigs, ^yMVPs, ^yPhoes')
