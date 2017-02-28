@@ -1,7 +1,9 @@
 package com.newerth.core;
 
 import com.newerth.core.entities.Awards;
+import com.newerth.core.entities.MapStats;
 import com.newerth.core.repository.AwardsRepository;
+import com.newerth.core.repository.MapStatsRepository;
 import com.newerth.core.repository.PlayerRepository;
 import com.newerth.core.entities.Player;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ public class Reference {
 
 	private PlayerRepository playerRepo;
 	private AwardsRepository awardsRepo;
+	private MapStatsRepository msRepo;
 
 	@Autowired
 	private void setPlayerRepo(PlayerRepository repository) {
@@ -27,6 +30,11 @@ public class Reference {
 	@Autowired
 	private void setAwardsRepo(AwardsRepository repository) {
 		this.awardsRepo = repository;
+	}
+
+	@Autowired
+	private void setMapStatsRepo(MapStatsRepository msRepo) {
+		this.msRepo = msRepo;
 	}
 
 	/**
@@ -96,5 +104,12 @@ public class Reference {
 		List<Player> players = new ArrayList<>();
 		awards.forEach(award -> players.add(award.getPlayer()));
 		return players;
+	}
+
+	/**
+	 * Finds MapStats
+	 */
+	public List<MapStats> findAllMapStats() {
+		return msRepo.findAll();
 	}
 }

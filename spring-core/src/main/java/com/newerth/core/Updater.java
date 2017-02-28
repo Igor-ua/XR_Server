@@ -33,6 +33,11 @@ public class Updater {
 		this.ref = reference;
 	}
 
+	@Autowired
+	private void setMapStatsRepo(MapStatsRepository msRepo) {
+		this.msRepo = msRepo;
+	}
+
 	/**
 	 * Saves new player or updates old player if he exists
 	 */
@@ -97,6 +102,7 @@ public class Updater {
 			return true;
 		} catch (RuntimeException e) {
 			log.info("Error during saving map stats: " + ms);
+			e.printStackTrace();
 		}
 		return false;
 	}

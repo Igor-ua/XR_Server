@@ -1,5 +1,6 @@
 package com.newerth.core;
 
+import com.newerth.core.entities.MapStats;
 import com.newerth.core.entities.Player;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,6 +34,9 @@ public class UpdaterTest {
 
 	@Autowired
 	private Reference ref;
+
+	@Autowired
+	private MapStats mapStats;
 
 	private Player player;
 
@@ -73,5 +77,18 @@ public class UpdaterTest {
 		players.add(p1);
 		players.add(p2);
 		assertThat(updater.saveOrUpdatePlayers(players));
+	}
+
+	@Test
+	public void saveMapStats() {
+		mapStats = new MapStats();
+		mapStats.setBlueScore(30);
+		mapStats.setRedScore(22);
+		mapStats.setMapName("eden2");
+		mapStats.setWinner("blue");
+		assertThat(updater.saveMapStats(mapStats));
+		List<MapStats> ms = ref.findAllMapStats();
+		System.out.println(ms);
+		assertThat(ms.contains(mapStats));
 	}
 }

@@ -333,7 +333,7 @@ def calculate_players_with_accuracy():
 def calculate_map_stats():
     global map_stats
     map_stats = MapStats()
-    map_stats.map_name = 'set map name here'
+    map_stats.map_name = str(core.CvarGetString('world_name'))
     map_stats.red_score = int(core.CvarGetValue('gs_transmit1'))
     map_stats.blue_score = int(core.CvarGetValue('gs_transmit2'))
     if map_stats.red_score > map_stats.blue_score:
