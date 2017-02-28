@@ -18,7 +18,7 @@ import re
 # Will replace all symbols from the input string that are not: '0-9A-Za-z-_() '
 REGEXP_FOR_INPUT = '[^!^0-9^A-Z^a-z^\-^_^(^) ]'
 
-messages = {'info', 'last', 'top'}
+messages = {'info', 'last', 'top', 'help'}
 
 # Generated list of GUIDs. Contains values from 0 to 128
 clients_list = []
@@ -96,6 +96,7 @@ def process_request(options):
         if get_client_timeout(guid) > current_millis:
             notify_to_wait(guid)
         else:
+            print("[%s] %s: [%s]" % (uid, str(server.GetClientInfo(guid, INFO_NAME)), command))
             update_client_timeout(guid)
             if command == 'info':
                 if not param:
@@ -149,7 +150,7 @@ def notify_info(guid, player):
     server.Notify(guid, '^yShots: ^g%s' % player.accuracy_stats.accumulated_shots)
     server.Notify(guid, '^yHits: ^g%s' % player.accuracy_stats.accumulated_hits)
     server.Notify(guid, '^yFrags: ^g%s' % player.accuracy_stats.accumulated_frags)
-    server.Notify(guid, '^yAccuracy: ^g%s' % player.accuracy_stats.accumulated_percent)
+    server.Notify(guid, '^yAccuracy: ^g%s%%' % player.accuracy_stats.accumulated_percent)
     if player.awards.has_awards():
         server.Notify(guid, '^y[^900Awards^y]')
         server.Notify(guid, '^yMost valuable player: ^g%s' % player.awards.accumulated_mvp)\
@@ -222,30 +223,28 @@ def notify_top(guid, cache):
 
 
 def notify_help(guid):
-    server.Notify(guid, '^gInstagib ^gMode ^gInformation:')
-    server.Notify(guid, '^gGeneral:')
-    server.Notify(guid, '^y- ^yGame ^ystarts ^ywhen ^y70% ^yare ^yready ^y(press ^yF3)')
-    server.Notify(guid, '^y- ^yWinner ^yis ^ya ^yteam ^ythat ^yfirst ^ygets ^ya ^yfrag ^ylimit ^yof ^ythe ^yround.')
-    server.Notify(guid, '^y- ^yWinner ^yis ^ya ^yteam ^ythat ^yhas ^ymore ^yfrags ^yby ^ythe ^yend ^yof ^ythe ^ytime '
-                        '^ylimit.')
-    server.Notify(guid, '^y- ^yDraw ^yis ^ypossible ^yif ^yboth ^yteams ^yhave ^yequal ^yamount ^yof ^yfrags.')
-    server.Notify(guid, '^gPhysics:')
-    server.Notify(guid, '^y- ^yincreased ^yplayer ^yspeed')
-    server.Notify(guid, '^y- ^yincreased ^ysprint ^yspeed')
-    server.Notify(guid, '^y- ^ystamina ^ycost ^yfor ^yjump ^yis ^y0')
-    server.Notify(guid, '^y- ^yincreased ^ystamina ^yregen ^yspeed')
-    server.Notify(guid, '^y- ^yincreased ^ycoil ^ydmg ^y(500)')
-    server.Notify(guid, '^y- ^yreviving ^yand ^yteleporting ^yin ^y1 ^ysecond ^yafter ^ythe ^ydeath')
-    server.Notify(guid, '^gStatistics:')
-    server.Notify(guid, '^y- ^ystats ^yare ^ybeing ^yupdated ^yevery ^yround')
-    server.Notify(guid, '^y- ^ystats ^yare ^ybound ^yto ^yyour ^yUIDs')
-    server.Notify(guid, '^gItems:')
-    server.Notify(guid, '^y- ^yEvery ^y5, ^y7, ^y10 ^yfrags ^ygive ^yyou ^ymist, ^ysensor, ^yreloc.')
-    server.Notify(guid, '^gAvailable stats commands:')
-    server.Notify(guid, '^y- ^y!info ^y- ^ygeneral ^yinfo ^yabout ^yyour ^ycurrent ^yUID')
-    server.Notify(guid, '^y- ^y!info ^y<part ^yof ^ythe ^ynick> ^y(ex: ^y!info ^yxr_pla ^y- ^yfinds ^yinfo ^yabout '
-                        '^y"XR_Player")')
-    server.Notify(guid, '^y- ^y!last ^yinformation ^yabout ^yyour ^ystats ^yfrom ^ythe ^ylast ^yround')
-    server.Notify(guid, '^y- ^y!last ^y<part ^yof ^ythe ^ynick> ^y(ex: ^y!last ^yxr_pla ^y- ^yfinds ^ylast ^yinfo '
-                        '^yabout ^y"XR_Player")')
-    server.Notify(guid, '^y- ^y!top ^y- ^yTop5: ^yAimbots, ^ySadists, ^ySurvivors, ^yTrigs, ^yMVPs, ^yPhoes')
+    server.Notify(guid, '')
+    server.Notify(guid, '^900|   ^900Instagib ^900Mode ^900Information:')
+    server.Notify(guid, '^900|   ^900General:')
+    server.Notify(guid, '^900| ^yGame ^ystarts ^ywhen ^y70% ^yare ^yready ^y(press ^yF3)')
+    server.Notify(guid, '^900| ^yWinner: ^yteam ^ythat ^yfirst ^ygets ^ya ^yfrag ^ylimit.')
+    server.Notify(guid, '^900| ^yWinner: ^yteam ^ythat ^yhas ^ymore ^yfrags ^yby ^ythe ^yend.')
+    server.Notify(guid, '^900|   ^900Physics:')
+    server.Notify(guid, '^900| ^yIncreased ^yplayer ^yspeed')
+    server.Notify(guid, '^900| ^yIncreased ^ysprint ^yspeed')
+    server.Notify(guid, '^900| ^yStamina ^ycost ^yfor ^yjump ^yis ^y0')
+    server.Notify(guid, '^900| ^yIncreased ^ystamina ^yregen ^yspeed')
+    server.Notify(guid, '^900| ^yIncreased ^ycoil ^ydmg ^y(500)')
+    server.Notify(guid, '^900| ^yReviving ^yand ^yteleporting ^yin ^y1 ^ysecond ^yafter ^ythe ^ydeath')
+    server.Notify(guid, '^900|   ^900Statistics:')
+    server.Notify(guid, '^900| ^yStats ^yare ^ybeing ^yupdated ^yevery ^yround')
+    server.Notify(guid, '^900| ^yStats ^yare ^ybound ^yto ^yyour ^yUIDs')
+    server.Notify(guid, '^900|   ^900Items:')
+    server.Notify(guid, '^900| ^yEvery ^y5, ^y7, ^y10 ^yfrags ^ygive ^yyou ^ymist, ^ysensor, ^yreloc.')
+    server.Notify(guid, '^900|   ^900Available stats commands:')
+    server.Notify(guid, '^900| ^y!info ^y- ^ygeneral ^yinfo ^yabout ^yyour ^ycurrent ^yUID')
+    server.Notify(guid, '^900| ^y!info ^y<part ^yof ^ythe ^ynick> - ^y(ex: ^y!info ^yxr_pla)')
+    server.Notify(guid, '^900| ^y!last ^yyour ^ystats ^yfrom ^ythe ^ylast ^yround')
+    server.Notify(guid, '^900| ^y!last ^y<part ^yof ^ythe ^ynick> - ^y(ex: ^y!last ^yxr_pla)')
+    server.Notify(guid, '^900| ^y!top ^y- ^yTop5 players for every stat.')
+    server.Notify(guid, '')

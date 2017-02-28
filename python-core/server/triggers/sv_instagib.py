@@ -307,7 +307,7 @@ def broadcast_get_ready():
     current_time_millis = int(round(time.time() * 1000))
     if current_time_millis > last_notify_time + NOTIFY_PERIOD:
         last_notify_time = current_time_millis
-        server.Broadcast('^bGet ^bReady ^b(press ^900F3) ^bto ^bstart ^bthe ^bgame')
+        server.Broadcast('^gGet ^gReady! ^yPress ^900F3 ^gto ^gstart ^gthe ^ggame.')
 
 
 # Is called when check() returns 1
