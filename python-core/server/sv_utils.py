@@ -44,7 +44,6 @@ def getIndicesFromTeam(team):
             # Check Player's Team
         if str(sv_defs.clientList_Team[index]) == team:
             indices.append(str(index))
-    print indices
     return indices
 
 
@@ -63,7 +62,6 @@ def getActiveIndices():
 
             # Collect Information
             indices.append(str(index))
-    print indices
     return indices
 
 

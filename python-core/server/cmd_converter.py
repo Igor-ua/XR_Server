@@ -31,7 +31,7 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
     def handle(self):
         global connected_guid
         connected_guid += 1
-        print(">   Remote client #%d connected: %s\n" % (connected_guid, self.client_address[0]))
+        core.ConsolePrint(">   Remote client #%d connected: %s\n" % (connected_guid, self.client_address[0]))
         try:
             self.request.settimeout(3600)
             while 1:
@@ -51,31 +51,31 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
                             server.GameScript(guid, exec_params[1])
                             self.request.send("OK")
                         except:
-                            print(">   Wrong params")
+                            core.ConsolePrint(">   Wrong params")
                             self.request.send("Wrong params")
                 elif len(params) > 1:
                     try:
                         value = float(params[1])
-                        print(">   Remote client #%d: %s" % (connected_guid, self.data))
+                        core.ConsolePrint(">   Remote client #%d: %s" % (connected_guid, self.data))
                         core.CvarSetValue(params[0], value)
                         result = str("%s = %s" % (params[0], core.CvarGetValue(params[0])))
-                        print(">   Result: %s" % result)
+                        core.ConsolePrint(">   Result: %s" % result)
                         self.request.send(result)
                     except:
-                        print(">   Wrong params")
+                        core.ConsolePrint(">   Wrong params")
                         self.request.send("Wrong params")
                 elif len(params) == 1:
                     result = str(
                         "%s = %s | %s" % (params[0], core.CvarGetValue(params[0]), core.CvarGetString(params[0])))
-                    print(">   Result: %s" % result)
+                    core.ConsolePrint(">   Result: %s" % result)
                     self.request.send(result)
         except:
-            print(">   Remote client #%d disconnected: %s\n" % (connected_guid, self.client_address[0]))
+            core.ConsolePrint(">   Remote client #%d disconnected: %s\n" % (connected_guid, self.client_address[0]))
 
 
 class ServerHandler:
     def __call__(self):
-        print("[*]   Server is up: %s:%d\n" % (HOST, PORT))
+        core.ConsolePrint("[*]   Server is up: %s:%d\n" % (HOST, PORT))
         server = SocketServer.TCPServer((HOST, PORT), MyTCPHandler)
         server.serve_forever()
 
@@ -92,7 +92,7 @@ def start_server():
 
 
 def execute_thread():
-    print("[*]   Server is up: %s:%d\n" % (HOST, PORT))
+    core.ConsolePrint("[*]   Server is up: %s:%d\n" % (HOST, PORT))
     server = SocketServer.TCPServer((HOST, PORT), MyTCPHandler)
     server.serve_forever()
 

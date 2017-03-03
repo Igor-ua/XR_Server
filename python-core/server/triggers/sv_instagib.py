@@ -88,7 +88,7 @@ def run_once():
     global run_once_flag
     if run_once_flag:
         run_once_flag = False
-        print("________SV_INSTAGIB RUN-ONCE_______")
+        core.ConsolePrint("________SV_INSTAGIB RUN-ONCE_______")
         check_mod()
         find_teleport_locations()
         get_vars_from_config()
@@ -98,7 +98,7 @@ def run_once():
 def check_mod():
     global game_mod
     game_mod = core.CvarGetString('sv_map_gametype')
-    print("[!]   MOD: %s" % game_mod)
+    core.ConsolePrint("[!]   MOD: %s" % game_mod)
 
 
 def get_vars_from_config():
@@ -242,7 +242,7 @@ def execute_waiting_and_reviving(guid):
                 global dead_queue
                 core.CommandExec('revive %s' % guid)
                 Point3 = get_random_spawn_location()
-                print("Teleporting id: %s [%s, %s]" % (guid, Point3[0], Point3[1]))
+                core.ConsolePrint("Teleporting id: %s [%s, %s]" % (guid, Point3[0], Point3[1]))
                 server.GameScript(guid, '!teleport target coords %s %s' % (Point3[0], Point3[1]))
                 server.GameScript(guid, '!heal target 500')
                 if guid in dead_queue:
@@ -263,9 +263,9 @@ def find_teleport_locations():
                 object_name = str(sv_defs.objectList_Name[index])
                 if object_name in possible_teleport_locations:
                     teleport_locations.append(sv_utils.get_point3(index))
-        print("Teleport locations[%s]:" % len(teleport_locations))
+        core.ConsolePrint("Teleport locations[%s]:" % len(teleport_locations))
         for t in teleport_locations:
-            print(" - %s" % t)
+            core.ConsolePrint(" - %s" % t)
         are_flags_found = True
 
 

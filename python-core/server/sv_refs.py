@@ -388,7 +388,6 @@ def teleport(object, target):
         if target == 'home':
             server.GameScript(int(sv_utils.getIndexFromName(str(object))), '!teleport target home')
         elif target.find('|') != -1:
-            print("index: ", int(sv_utils.getIndexFromName(str(object))))
             server.GameScript(int(sv_utils.getIndexFromName(str(object))),
                               '!teleport target coords %s %s' % (str(target.split('|')[0]), str(target.split('|')[1])))
 

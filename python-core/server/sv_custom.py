@@ -7,10 +7,11 @@
 # External modules
 import cmd_converter
 import sv_custom_utils
+import core
 
 
 def init():
-    print("[!]   Initializing Custom Module...")
+    core.ConsolePrint("[!]   Initializing Custom Module...")
     try:
         pass
         # cmd_converter.init()

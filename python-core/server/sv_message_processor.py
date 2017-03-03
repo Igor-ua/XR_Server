@@ -96,7 +96,7 @@ def process_request(options):
         if get_client_timeout(guid) > current_millis:
             notify_to_wait(guid)
         else:
-            print("[%s] %s: [%s]" % (uid, str(server.GetClientInfo(guid, INFO_NAME)), command))
+            core.ConsolePrint("[%s] %s: [%s]" % (uid, str(server.GetClientInfo(guid, INFO_NAME)), command))
             update_client_timeout(guid)
             if command == 'info':
                 if not param:

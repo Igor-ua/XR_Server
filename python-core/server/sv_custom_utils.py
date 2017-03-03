@@ -36,17 +36,17 @@ def custom_exception_info():
             'message': exc_value.message,  # or see traceback._some_str()
         }
         del (exc_type, exc_value, exc_traceback)
-        print
-        print traceback_template % traceback_details
-        print
+        core.ConsolePrint('')
+        core.ConsolePrint(traceback_template % traceback_details)
+        core.ConsolePrint('')
     except:
         pass
 
 
 def full_exception_info():
-    print
-    print traceback.format_exc()
-    print
+    core.ConsolePrint('')
+    core.ConsolePrint(traceback.format_exc())
+    core.ConsolePrint('')
 
 
 def simple_exception_info():
@@ -78,14 +78,14 @@ def simple_exception_info():
 
         global last_error
         if not (last_error[0] == root_info[0] and last_error[1] == root_info[1]):
-            print traceback_msg
+            core.ConsolePrint(traceback_msg)
             logging.error(traceback_msg)
             last_error[0] = root_info[0]
             last_error[1] = root_info[1]
 
     except:
         traceback_msg = "\nError in simple_exception_info()\n" + traceback.format_exc() + "\n"
-        print(traceback_msg)
+        core.ConsolePrint(traceback_msg)
         logging.error(traceback_msg)
 
 
@@ -99,11 +99,11 @@ def show_object(index):
     res += "health: " + str(sv_defs.objectList_Health[index]) + ", "
     res += "construct: " + str(sv_defs.objectList_Construct[index]) + ", "
     res += "active: " + str(sv_defs.objectList_Active[index])
-    print res
+    core.ConsolePrint(res)
 
 
 def check_objects():
-    print("[Map Objects]")
+    core.ConsolePrint("[Map Objects]")
     # global objects
     # Get the initial list of all objects
     # Print the information about all "active" objects
