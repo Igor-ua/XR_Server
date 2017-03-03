@@ -105,7 +105,7 @@ def init():
 
     except:
         # Could not read the CSV file
-        ConsolePrint("Python: Error loading sv_maps.csv\n%s%s\n" % (sys.exc_info()[0], sys.exc_info()[1]))
+        ConsolePrint("[!]   sv_maps.csv does not exist\n")
 
         # Make all maps equally likely
         mapTotal = len(mapName)

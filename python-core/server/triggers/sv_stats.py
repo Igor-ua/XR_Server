@@ -292,7 +292,7 @@ def get_accuracy(guid):
                 acs.timestamp = int(round(time.time() * 1000))
     except:
         sv_custom_utils.simple_exception_info()
-    core.ConsolePrint(acs)
+    print acs
     return acs
 
 
