@@ -62,7 +62,7 @@ def run_once():
     global run_at_start
     if not run_at_start:
         run_at_start = True
-        core.ConsolePrint("________SV_STATS_______")
+        core.ConsolePrint("________SV_STATS_______\n")
         global single_stats_cache
         single_stats_cache.clear()
         top_stats_cache.clear()
@@ -254,12 +254,12 @@ def execute_save_stats():
         url = ROOT_URL + '/stats/server/players/put'
         headers = {'content-type': 'application/json'}
         resp = requests.put(url, data, headers=headers)
-        core.ConsolePrint("[!]   Save players stats result  ->  [%s, %s]" % (resp.status_code, resp.text))
+        core.ConsolePrint("[!]   Save players stats result  ->  [%s, %s]\n" % (resp.status_code, resp.text))
         # Saves map stats
         data = json.dumps(map_stats, default=sv_custom_utils.obj_repr)
         url = ROOT_URL + '/stats/server/map-stats/post'
         resp = requests.post(url, data, headers=headers)
-        core.ConsolePrint("[!]   Save map stats result  ->  [%s, %s]" % (resp.status_code, resp.text))
+        core.ConsolePrint("[!]   Save map stats result  ->  [%s, %s]\n" % (resp.status_code, resp.text))
     except:
         sv_custom_utils.simple_exception_info()
 

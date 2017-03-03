@@ -36,17 +36,17 @@ def custom_exception_info():
             'message': exc_value.message,  # or see traceback._some_str()
         }
         del (exc_type, exc_value, exc_traceback)
-        core.ConsolePrint('')
+        core.ConsolePrint('\n')
         core.ConsolePrint(traceback_template % traceback_details)
-        core.ConsolePrint('')
+        core.ConsolePrint('\n')
     except:
         pass
 
 
 def full_exception_info():
-    core.ConsolePrint('')
+    core.ConsolePrint('\n')
     core.ConsolePrint(traceback.format_exc())
-    core.ConsolePrint('')
+    core.ConsolePrint('\n')
 
 
 def simple_exception_info():
@@ -103,7 +103,7 @@ def show_object(index):
 
 
 def check_objects():
-    core.ConsolePrint("[Map Objects]")
+    core.ConsolePrint("[Map Objects]\n")
     # global objects
     # Get the initial list of all objects
     # Print the information about all "active" objects

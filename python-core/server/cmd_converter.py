@@ -51,23 +51,23 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
                             server.GameScript(guid, exec_params[1])
                             self.request.send("OK")
                         except:
-                            core.ConsolePrint(">   Wrong params")
+                            core.ConsolePrint(">   Wrong params\n")
                             self.request.send("Wrong params")
                 elif len(params) > 1:
                     try:
                         value = float(params[1])
-                        core.ConsolePrint(">   Remote client #%d: %s" % (connected_guid, self.data))
+                        core.ConsolePrint(">   Remote client #%d: %s\n" % (connected_guid, self.data))
                         core.CvarSetValue(params[0], value)
                         result = str("%s = %s" % (params[0], core.CvarGetValue(params[0])))
-                        core.ConsolePrint(">   Result: %s" % result)
+                        core.ConsolePrint(">   Result: %s\n" % result)
                         self.request.send(result)
                     except:
-                        core.ConsolePrint(">   Wrong params")
+                        core.ConsolePrint(">   Wrong params\n")
                         self.request.send("Wrong params")
                 elif len(params) == 1:
                     result = str(
                         "%s = %s | %s" % (params[0], core.CvarGetValue(params[0]), core.CvarGetString(params[0])))
-                    core.ConsolePrint(">   Result: %s" % result)
+                    core.ConsolePrint(">   Result: %s\n" % result)
                     self.request.send(result)
         except:
             core.ConsolePrint(">   Remote client #%d disconnected: %s\n" % (connected_guid, self.client_address[0]))
