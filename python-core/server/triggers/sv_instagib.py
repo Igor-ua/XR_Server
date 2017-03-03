@@ -46,7 +46,7 @@ players_frags = {}
 
 last_notify_time = 0
 # Sec:
-NOTIFY_PERIOD = 20 * 1000
+NOTIFY_PERIOD = 25 * 1000
 
 # Is called during every server frame
 def check():
@@ -66,7 +66,7 @@ def check():
 
         # If game setup, warmup or normal
         if server.GetGameInfo(GAME_STATE) in available_game_states:
-            scan_for_teleport_and_revive()
+            iterate_through_clients()
             get_team_stats()
             update_clients_vars()
             is_time_to_finish()
@@ -76,9 +76,6 @@ def check():
             get_team_stats()
             update_clients_vars()
             end_run_once = False
-        # If game is in the 'setup' state - notify players to hit F3
-        if server.GetGameInfo(GAME_STATE) == 1:
-            broadcast_get_ready()
     except:
         sv_custom_utils.simple_exception_info()
     return 0
@@ -162,7 +159,7 @@ def reset_clients_vars():
     core.CommandExec("set gs_last_frag_guid -1")
 
 
-def scan_for_teleport_and_revive():
+def iterate_through_clients():
     for guid in xrange(0, sv_defs.objectList_Last):
         if sv_defs.objectList_Active[guid]:
             object_type = str(type_list[sv_defs.objectList_Type[guid]])
@@ -171,6 +168,8 @@ def scan_for_teleport_and_revive():
                 teleport_and_revive(guid)
             if object_type == "CLIENT":
                 check_for_frags_and_items(guid)
+                # If game is in the 'setup' state - notify players to hit F3
+                notify_to_get_ready(guid)
 
 
 def check_for_frags_and_items(guid):
@@ -302,12 +301,12 @@ def get_team_winner(team_frags):
     return 0
 
 
-def broadcast_get_ready():
+def notify_to_get_ready(guid):
     global last_notify_time
     current_time_millis = int(round(time.time() * 1000))
     if current_time_millis > last_notify_time + NOTIFY_PERIOD:
         last_notify_time = current_time_millis
-        server.Broadcast('^gGet ^gReady! ^yPress ^900F3 ^gto ^gstart ^gthe ^ggame.')
+        server.Notify(guid, '^gGet ^gReady! ^yPress ^900F3 ^gto ^gstart ^gthe ^ggame.')
 
 
 # Is called when check() returns 1
