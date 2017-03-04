@@ -25,6 +25,7 @@ end_run_once = True
 type_list = ["CLIENT", "WORKER", "NPC", "MINE", "BASE", "OUTPOST", "BUILDING", "OTHER"]
 teleport_locations = []
 lock = threading.Lock()
+dead_queue_lock = threading.Lock()
 
 # A queue of dead players that should be revived
 dead_queue = set()
@@ -225,15 +226,22 @@ def check_for_frags_and_items(guid):
 def teleport_and_revive(guid):
     guid = int(guid)
     global dead_queue
-    if guid not in dead_queue:
-        dead_queue.add(guid)
-        createThread('import sv_instagib; sv_instagib.execute_waiting_and_reviving(%s)' % guid)
+    with dead_queue_lock:
+        if guid not in dead_queue:
+            dead_queue.add(guid)
+            createThread('import sv_instagib; sv_instagib.execute_waiting_and_reviving(%s)' % guid)
 
 
 def execute_waiting_and_reviving(guid):
     guid = int(guid)
     # Sleeping N seconds before any further actions. Is done to prevent interrupting of the death animation and effects
     time.sleep(1)
+
+    # Check if client's hp > 0 - return (already teleported)
+    if int(sv_defs.clientList_Health[guid]) > 0:
+        global dead_queue
+        dead_queue.remove(guid)
+        return
 
     # If game state is setup, warmup or normal
     try:
@@ -242,7 +250,7 @@ def execute_waiting_and_reviving(guid):
                 global dead_queue
                 core.CommandExec('revive %s' % guid)
                 Point3 = get_random_spawn_location()
-                core.ConsolePrint("Teleporting id: %s [%s, %s]\n" % (guid, Point3[0], Point3[1]))
+                core.ConsolePrint("Teleporting: %s [%s, %s]\n" % (server.GetClientInfo(guid, INFO_NAME), Point3[0], Point3[1]))
                 server.GameScript(guid, '!teleport target coords %s %s' % (Point3[0], Point3[1]))
                 server.GameScript(guid, '!heal target 500')
                 if guid in dead_queue:
