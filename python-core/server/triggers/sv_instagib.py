@@ -233,13 +233,13 @@ def teleport_and_revive(guid):
 
 
 def execute_waiting_and_reviving(guid):
+    global dead_queue
     guid = int(guid)
     # Sleeping N seconds before any further actions. Is done to prevent interrupting of the death animation and effects
     time.sleep(1)
 
     # Check if client's hp > 0 - return (already teleported)
     if int(sv_defs.clientList_Health[guid]) > 0:
-        global dead_queue
         dead_queue.remove(guid)
         return
 
@@ -247,7 +247,6 @@ def execute_waiting_and_reviving(guid):
     try:
         if server.GetGameInfo(GAME_STATE) in available_game_states:
             with lock:
-                global dead_queue
                 core.CommandExec('revive %s' % guid)
                 Point3 = get_random_spawn_location()
                 core.ConsolePrint("Teleporting: %s [%s, %s]\n" % (server.GetClientInfo(guid, INFO_NAME), Point3[0], Point3[1]))
