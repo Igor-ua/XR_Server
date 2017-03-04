@@ -169,7 +169,8 @@ def iterate_through_clients():
             if object_type == "CLIENT":
                 check_for_frags_and_items(guid)
                 # If game is in the 'setup' state - notify players to hit F3
-                notify_to_get_ready(guid)
+                if server.GetGameInfo(GAME_STATE) == 1 or server.GetGameInfo(GAME_STATE) == 2:
+                    notify_to_get_ready(guid)
 
 
 def check_for_frags_and_items(guid):

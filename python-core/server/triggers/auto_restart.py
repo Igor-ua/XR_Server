@@ -21,4 +21,5 @@ def check():
 # -------------------------------
 def execute():
     # Restart the server
-    core.CommandExec('quit')
+    # core.CommandExec('quit')
+    pass
