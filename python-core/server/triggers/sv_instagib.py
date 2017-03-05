@@ -155,7 +155,9 @@ def update_clients_vars():
 
 def reset_clients_vars():
     for idx in range(1, 10):
-        core.CommandExec("set gs_transmit%s 0" % idx)
+        # reset all except gs_transmit 5
+        if idx != 5:
+            core.CommandExec("set gs_transmit%s 0" % idx)
     core.CommandExec("set gs_first_frag_guid -1")
     core.CommandExec("set gs_last_frag_guid -1")
 
