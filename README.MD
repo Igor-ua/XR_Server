@@ -2,10 +2,10 @@
 
 **Additional content (mod) for the XR Server.**
 
-This mod consists from the three main parts:
-- **Python-core**: Main ingame logic and client's api.
-- **Spring-core**: Java Spring module with an API to manage statistics.
-- **db-core**: Contains H2 database for a spring-core module.
+This mod consists from the three main parts:</br>
+- **Python-core**: Main ingame logic and client's api.</br>
+- **Spring-core**: Java Spring module with an API to manage statistics.</br>
+- **db-core**: Contains H2 database for a spring-core module.</br>
 _*note: requires standard files of the XR Server._
 
 **Python** (module: `requests`) <--> **Spring** (`Jackson`) communication is going through the http/json.
