@@ -10,12 +10,11 @@ _*note: requires standard files of the XR Server._
 
 **Python** (module: `requests`) <--> **Spring** (`Jackson`) communication is going through the http/json.
 
-**Spring API** (file: api-map.info):
-
+**Spring API:**</br>
+`spring-core/src/main/java/com/newerth/api/api-map.info`</br>
 Public API:</br>
 `"/"`</br>
 `"/world"`</br>
-
 Secure (private) API:</br>
 `"/stats"`</br>
 `"/stats/"`</br>
