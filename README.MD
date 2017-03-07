@@ -1,4 +1,4 @@
-CL status: [![Build Status](https://travis-ci.org/Igor-ua/XR_Server.svg?branch=master)](https://travis-ci.org/Igor-ua/XR_Server)
+[![Build Status](https://travis-ci.org/Igor-ua/XR_Server.svg?branch=master)](https://travis-ci.org/Igor-ua/XR_Server)
 
 **Additional content (mod) for the XR Server.**
 
