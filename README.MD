@@ -12,10 +12,10 @@ _*note: requires standard files of the XR Server._
 
 **Spring API:**</br>
 `spring-core/src/main/java/com/newerth/api/api-map.info`</br>
-Public API:</br>
+- public API:</br>
 `"/"`</br>
 `"/world"`</br>
-Secure (private) API:</br>
+- secure (private) API:</br>
 `"/stats"`</br>
 `"/stats/"`</br>
 `"/stats/get/{uid}"`</br>
