@@ -8,25 +8,31 @@ This mod consists from the three main parts:
 - **db-core**: Contains H2 database for a spring-core module.
 _*note: requires standard files of the XR Server._
 
-**Python** (module: requests) <--> **Spring** (Jackson) communication is going through the http/json.
+**Python** (module: `requests`) <--> **Spring** (`Jackson`) communication is going through the http/json.
 
 **Spring API** (file: api-map.info):
 
-Public API:
+Public API:</br>
+`"/"`</br>
+`"/world"`</br>
 
-`"/"
-"/world"`
+Secure (private) API:</br>
+`"/stats"`</br>
+`"/stats/"`</br>
+`"/stats/get/{uid}"`</br>
+`"/stats/get/name/{name}"`</br>
+`"/stats/get/top/..."`</br>
+`"/stats/server"`</br>
+`"/stats/server/"`</br>
+`"/stats/server/player/put"`</br>
+`"/stats/server/players/put"`</br>
+`"/stats/server/map-stats/post"`</br>
 
-Secure (private) API:
-`"/stats"
-"/stats/"
-"/stats/get/{uid}"
-"/stats/get/name/{name}"
-"/stats/get/top/..."
-"/stats/server"
-"/stats/server/"
-"/stats/server/player/put"
-"/stats/server/players/put"
-"/stats/server/map-stats/post"`
+Server configs:</br>
+`python-core/server/configs`</br>
 
-Online copy of this server is available here: `http://94.177.253.129:8586` (VPS/London)
+Required files for clients:</br>
+`python-core/client/savage5.s2z`</br></br>
+
+
+Online copy of this server is available here: `http://94.177.253.129:8586` _(vps/London)_
