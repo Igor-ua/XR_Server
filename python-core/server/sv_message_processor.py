@@ -174,7 +174,7 @@ def notify_last(guid, player):
     server.Notify(guid, '^yShots: ^g%s' % player.accuracy_stats.last_shots)
     server.Notify(guid, '^yHits: ^g%s' % player.accuracy_stats.last_hits)
     server.Notify(guid, '^yFrags: ^g%s' % player.accuracy_stats.last_frags)
-    server.Notify(guid, '^yAccuracy: ^g%s' % player.accuracy_stats.accuracy_percent)
+    server.Notify(guid, '^yAccuracy: ^g%s%%' % player.accuracy_stats.accuracy_percent)
 
 
 def notify_top(guid, cache):
