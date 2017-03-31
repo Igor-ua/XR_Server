@@ -1,0 +1,7 @@
+skinName default
+
+skinRef BALL 1_red.tga
+
+skinName team2
+
+skinRef BALL 1_blue.tga

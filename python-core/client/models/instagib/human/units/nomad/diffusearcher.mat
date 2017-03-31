@@ -1,0 +1,6 @@
+set mat_shininess 25.000000
+set mat_specular 1.00000 1.00000 1.00000
+set mat_doublesided 0
+set mat_normalmap /models/human/units/nomad/diffusearcher_normalmap.tga
+set mat_glossmap /models/human/units/nomad/diffusearcher_gm.tga
+set mat_heightmapScale 1.000000

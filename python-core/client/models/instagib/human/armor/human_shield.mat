@@ -1,0 +1,7 @@
+set mat_shininess 25.000000
+set mat_specular 5.000000 5.000000 5.000000
+set mat_doublesided 0
+set mat_terrain_overblend 1.000000
+set mat_normalmap /models/human/armor/human_shield_normalmap.tga
+set mat_glossmap /models/human/armor/human_shield_gm.tga
+set mat_heightmapScale 1.500000
