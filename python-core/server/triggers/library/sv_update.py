@@ -70,11 +70,11 @@ def compare_versions():
         server.Notify(-1, "^779(XR AutoUpdater) ^wPlease Wait! You will automatically reconnect if you have the latest version of XR.")
     elif local_version == remote_version:
         core.CvarSetValue('svr_update_available', 0)
-        core.ConsolePrint("Local and remote versions are the same.")
+        core.ConsolePrint("Local and remote versions are the same.\n")
 
 
 # -------------------------------
 def execute():
-    core.ConsolePrint("Applying an update: from %s to %s" % (local_version, remote_version))
+    core.ConsolePrint("Applying an update: from %s to %s\n" % (local_version, remote_version))
     # Turn off the server to apply an update:
     core.CommandExec('quit')
