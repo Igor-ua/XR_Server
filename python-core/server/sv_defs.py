@@ -89,6 +89,7 @@ __builtin__.STAT_CONNECTTIME = 37 # Time connected to server
 __builtin__.STAT_ONTEAMTIME = 38  # Time spent playing
 __builtin__.INFO_CANCOMMTIME = 39 # Time after the Client can command again
 __builtin__.INFO_REFSTATUS = 40   # 'none', 'guest', 'normal' or 'god'
+__builtin__.INFO_CLANABBREV = 41  # Client's Clan's ABBREVIATION/TAG
 
 # Max Definitions
 __builtin__.MAX_OBJECTS = 1024
