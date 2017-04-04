@@ -1,6 +1,6 @@
 # ---------------------------------------------------------------------------
 #           Name: sv_update.py
-#    Description: Updated that works in the end of the game.
+#    Description: Updater that works in the end of the game.
 #                 Should be used for Linux servers.
 # ---------------------------------------------------------------------------
 
@@ -29,7 +29,6 @@ def check():
     # If the game has ended - check remote and local versions of the server
     if server.GetGameInfo(GAME_STATE) == 4 and run_checkers:
         run_checkers = False
-        core.CvarGetValue('svr_update_available', 0)
         check_local_version()
         check_remote_version()
         compare_versions()
@@ -76,4 +75,6 @@ def compare_versions():
 # -------------------------------
 def execute():
     # Turn off the server to apply an update:
-    core.CommandExec('quit')
+    # Note: Use 'quit' or 'crash' here. 'Quit' shows a message to the clients while 'crash' lets clients
+    #       to reconnect after it's updated
+    core.CommandExec('crash')
