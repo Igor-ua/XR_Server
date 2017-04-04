@@ -131,76 +131,17 @@ def savestats():
     mapHistory.append(index)
 
 
-# -------------------------------
+# Makes simple next-mapping in a row -------------------------------
 def nextmap():
-    # Compute number of Clients (including Bots)
-    numClients = 0
-    for index in range(0, MAX_CLIENTS):
-        if GetClientInfo(index, INFO_ACTIVE):
-            numClients += 1
-
-    # Select good Maps 
-    mapSel = []
-    mapFreq = []
-    cumFreq = 0
-    mapTotal = len(mapName)
-    for index in range(0, mapTotal):
-        # Ignore recent Maps!
-        if len(mapHistory) > 0 and index == mapHistory[len(mapHistory) - 1]:
-            continue
-        if len(mapHistory) > 1 and index == mapHistory[len(mapHistory) - 2]:
-            continue
-        if len(mapHistory) > 2 and index == mapHistory[len(mapHistory) - 3]:
-            continue
-
-        # Check Clients range
-        if numClients < minPlayer[index] or numClients > maxPlayer[index]:
-            continue
-
-        # Calculate deviation from ideal player number
-        delta1 = numClients - avgPlayer[index]
-        if delta1 < 0:
-            delta2 = minPlayer[index] - avgPlayer[index]
+    try:
+        current_map_name = str(CvarGetString('svr_world'))
+        current_map_index = mapName.index(current_map_name)
+        if current_map_index < len(mapName) - 1:
+            CvarSetString('sv_nextMap', mapName[current_map_index + 1])
         else:
-            delta2 = maxPlayer[index] - avgPlayer[index]
-
-        if delta2 <> 0:
-            deviation = delta1 / delta2
-        else:
-            deviation = 0
-
-        # Cumulate frequencies (decrease actual contribution for higher deviation from avgPlayer)
-        cumFreq += lerp(deviation, frequency[index], frequency[index] / 3)
-
-        # Add Map to selection
-        mapSel.append(mapName[index])
-        mapFreq.append(cumFreq)
-
-    # Check there are selected Maps!
-    if len(mapSel) == 0:
-        # Just use next Map
-        curName = CvarGetString('svr_world')
-        curIndex = mapName.index(curName)
-        if curIndex < len(mapName) - 1:
-            index = curIndex + 1
-        else:
-            index = 0
-
-        CvarSetString('sv_nextMap', mapName[index])
-        return
-
-        # Choose randomly from selection
-    else:
-        randFreq = random.uniform(0, cumFreq)
-        mapTotal = len(mapSel)
-        for index in range(0, mapTotal):
-            # Check Random Number of this Map
-            if mapFreq[index] < randFreq:
-                continue
-
-            # That's our Map! :o)            
-            CvarSetString('sv_nextMap', mapName[index])
-            return
+            CvarSetString('sv_nextMap', mapName[current_map_index + 1])
+    except:
+        CvarSetString('sv_nextMap', mapName[0])
 
 
 # -------------------------------

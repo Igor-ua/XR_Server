@@ -78,39 +78,36 @@ def status():
 
         if state == 0:
             # Server is waiting for clients to connect
-            core.ConsolePrint('[+]   ---->   Game state: [Server is Empty]\n')
+            core.ConsolePrint('\n[!]   Game state: Empty\n\n')
 
         elif state == 1:
             # Setting a game up in the lobby
-            core.ConsolePrint('[+]   ---->   Game state: [Game Setup]\n')
+            core.ConsolePrint('\n[!]   Game state: Setup\n\n')
 
         elif state == 2:
             # Warming up
-            core.ConsolePrint('[+]   ---->   Game state: [Game Warmup]\n')
+            core.ConsolePrint('\n[!]   Game state: Warmup\n\n')
 
         elif state == 3:
             # Normal play mode
-            core.ConsolePrint('[+]   ---->   Game state: [Game Normal]\n')
+            core.ConsolePrint('\n[!]   Game state: Normal\n\n')
 
         elif state == 4:
             # Game has ended
-            core.ConsolePrint('[+]   ---->   Game state: [Game Ended]\n')
+            core.ConsolePrint('\n[!]   Game state: Ended\n\n')
 
         elif state == 5:
             # About to load the next map
-            core.ConsolePrint('[+]   ---->   Game state: [Loading Next Map]\n')
-            sv_maps.savestats()
+            core.ConsolePrint('\n[!]   Game state: Loading Next Map\n\n')
             sv_maps.nextmap()
 
         elif state == 6:
             # About to load the voted map
-            core.ConsolePrint('[+]   ---->   Game state: [Loading Voted Map]\n')
-            sv_maps.savestats()
+            core.ConsolePrint('\n[!]   Game state: Loading Voted Map\n\n')
 
         elif state == 7:
             # Match is restarting (same map)
-            core.ConsolePrint('[+]   ---->   Game state: [Restarting Map]\n')
-            sv_maps.savestats()
+            core.ConsolePrint('\n[!]   Game state: Restarting Map\n\n')
 
         # Reload Trigger (resets trigger states)
         sv_triggers.re_load()
