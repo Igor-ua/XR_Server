@@ -20,6 +20,7 @@ global game_mod
 frag_limit = 30
 frag_limit_raise = 0
 constant_frag_limit = 0
+default_frag_limit = 0
 
 are_flags_found = False
 run_once_flag = True
@@ -108,7 +109,8 @@ def get_vars_from_config():
     global frag_limit
     global frag_limit_raise
     global constant_frag_limit
-    frag_limit = int(core.CvarGetValue('py_instagib_fragLimit'))
+    global default_frag_limit
+    frag_limit = default_frag_limit = int(core.CvarGetValue('py_instagib_fragLimit'))
     frag_limit_raise = int(core.CvarGetValue('py_instagib_fragLimitRaise'))
     constant_frag_limit = int(core.CvarGetValue('py_instagib_constantFragLimit'))
     if constant_frag_limit > 0:
@@ -178,7 +180,7 @@ def calculate_dynamic_frag_limit():
     active_clients = len(active_clients_guids)
     if active_clients > 0 and constant_frag_limit == 0:
         current_frag_limit = int(core.CvarGetValue('py_instagib_fragLimit'))
-        future_frag_limit = current_frag_limit + active_clients * frag_limit_raise
+        future_frag_limit = default_frag_limit + active_clients * frag_limit_raise
         if future_frag_limit > current_frag_limit:
             frag_limit = future_frag_limit
             core.CvarSetValue('py_instagib_fragLimit', future_frag_limit)
