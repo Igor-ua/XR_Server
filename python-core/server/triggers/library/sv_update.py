@@ -62,7 +62,7 @@ def check_remote_version():
 
 
 def compare_versions():
-    core.ConsolePrint("Checking version: local is: %s, remote is: %s\n" % (local_version, remote_version))
+    core.ConsolePrint("Checking versions: local is: %s, remote is: %s\n" % (local_version, remote_version))
     if remote_version > local_version:
         core.CvarSetValue('svr_update_available', 1)
         # Notify all clients that update will take place
@@ -75,6 +75,5 @@ def compare_versions():
 
 # -------------------------------
 def execute():
-    core.ConsolePrint("Applying an update: from %s to %s\n" % (local_version, remote_version))
     # Turn off the server to apply an update:
     core.CommandExec('quit')
