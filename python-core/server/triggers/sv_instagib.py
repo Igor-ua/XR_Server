@@ -17,8 +17,9 @@ import sv_custom_utils
 
 # Global vars
 global game_mod
-frag_limit = 0
+frag_limit = 30
 frag_limit_raise = 0
+constant_frag_limit = 0
 
 are_flags_found = False
 run_once_flag = True
@@ -106,8 +107,12 @@ def check_mod():
 def get_vars_from_config():
     global frag_limit
     global frag_limit_raise
+    global constant_frag_limit
     frag_limit = int(core.CvarGetValue('py_instagib_fragLimit'))
     frag_limit_raise = int(core.CvarGetValue('py_instagib_fragLimitRaise'))
+    constant_frag_limit = int(core.CvarGetValue('py_instagib_constantFragLimit'))
+    if constant_frag_limit > 0:
+        frag_limit = constant_frag_limit
 
 
 # Gets an array of the team frags ([T1_FRAGS, T2_FRAGS]).
@@ -171,7 +176,7 @@ def reset_clients_vars():
 def calculate_dynamic_frag_limit():
     global frag_limit
     active_clients = len(active_clients_guids)
-    if active_clients > 0:
+    if active_clients > 0 and constant_frag_limit == 0:
         current_frag_limit = int(core.CvarGetValue('py_instagib_fragLimit'))
         future_frag_limit = current_frag_limit + active_clients * frag_limit_raise
         if future_frag_limit > current_frag_limit:
