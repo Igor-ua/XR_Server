@@ -352,7 +352,7 @@ def get_json_from_players():
 def calculate_map_awards():
     global players
     map_awards = MapAwards()
-    frag_limit = int(core.CvarGetValue('py_instagib_fraglimit'))
+    frag_limit = int(core.CvarGetValue('py_instagib_fragLimit'))
     red_score = int(core.CvarGetValue('gs_transmit1'))
     blue_score = int(core.CvarGetValue('gs_transmit2'))
 

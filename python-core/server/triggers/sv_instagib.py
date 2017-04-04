@@ -18,12 +18,14 @@ import sv_custom_utils
 # Global vars
 global game_mod
 frag_limit = 0
+frag_limit_raise = 0
 
 are_flags_found = False
 run_once_flag = True
 end_run_once = True
 type_list = ["CLIENT", "WORKER", "NPC", "MINE", "BASE", "OUTPOST", "BUILDING", "OTHER"]
 teleport_locations = []
+active_clients_guids = set()
 lock = threading.Lock()
 dead_queue_lock = threading.Lock()
 
@@ -47,7 +49,8 @@ players_frags = {}
 
 last_notify_time = 0
 # Sec:
-NOTIFY_PERIOD = 25 * 1000
+NOTIFY_PERIOD_SEC = 25 * 1000
+
 
 # Is called during every server frame
 def check():
@@ -69,6 +72,7 @@ def check():
         if server.GetGameInfo(GAME_STATE) in available_game_states:
             iterate_through_clients()
             get_team_stats()
+            calculate_dynamic_frag_limit()
             update_clients_vars()
             is_time_to_finish()
         # Update latest stats for end-game status
@@ -101,7 +105,9 @@ def check_mod():
 
 def get_vars_from_config():
     global frag_limit
-    frag_limit = int(core.CvarGetValue('py_instagib_fraglimit'))
+    global frag_limit_raise
+    frag_limit = int(core.CvarGetValue('py_instagib_fragLimit'))
+    frag_limit_raise = int(core.CvarGetValue('py_instagib_fragLimitRaise'))
 
 
 # Gets an array of the team frags ([T1_FRAGS, T2_FRAGS]).
@@ -162,6 +168,17 @@ def reset_clients_vars():
     core.CommandExec("set gs_last_frag_guid -1")
 
 
+def calculate_dynamic_frag_limit():
+    global frag_limit
+    active_clients = len(active_clients_guids)
+    if active_clients > 0:
+        current_frag_limit = int(core.CvarGetValue('py_instagib_fragLimit'))
+        future_frag_limit = current_frag_limit + active_clients * frag_limit_raise
+        if future_frag_limit > current_frag_limit:
+            frag_limit = future_frag_limit
+            core.CvarSetValue('py_instagib_fragLimit', future_frag_limit)
+
+
 def iterate_through_clients():
     for guid in xrange(0, sv_defs.objectList_Last):
         if sv_defs.objectList_Active[guid]:
@@ -170,6 +187,7 @@ def iterate_through_clients():
             if object_type == "CLIENT" and object_health == 0:
                 teleport_and_revive(guid)
             if object_type == "CLIENT":
+                active_clients_guids.add(guid)
                 check_for_frags_and_items(guid)
                 # If game is in the 'setup' state - notify players to hit F3
                 if server.GetGameInfo(GAME_STATE) == 1 or server.GetGameInfo(GAME_STATE) == 2:
@@ -314,7 +332,7 @@ def get_team_winner(team_frags):
 def notify_to_get_ready(guid):
     global last_notify_time
     current_time_millis = int(round(time.time() * 1000))
-    if current_time_millis > last_notify_time + NOTIFY_PERIOD:
+    if current_time_millis > last_notify_time + NOTIFY_PERIOD_SEC:
         last_notify_time = current_time_millis
         server.Notify(guid, '^gGet ^gReady! ^yPress ^900F3 ^gto ^gstart ^gthe ^ggame.')
 
