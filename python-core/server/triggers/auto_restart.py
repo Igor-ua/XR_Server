@@ -21,5 +21,6 @@ def check():
 # -------------------------------
 def execute():
     # Restart the server
+    core.ConsolePrint("[!]   Applying auto restart. Server game time is: [%s]\n" % server.GetGameInfo(GAME_TIME))
     core.CommandExec('quit')
     pass
