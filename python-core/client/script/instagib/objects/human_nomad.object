@@ -245,7 +245,7 @@ atkSet impact 167 350
 atkSet lunge 0
 atkSet lungeTime 0
 atkSet flurry 300
-atkSet flurryTime 367
+atkSet flurryTime 467
 atkSet damage 0
 atkSet damageFlags -no_knockback -no_air -no_ground -no_block -self_none -self_half -no_falloff -no_structures -quake_event -no_reaction -strip_states -explosive -burning -electrical 
 atkSet xLunge 0
@@ -262,7 +262,7 @@ atkSet impact 200 400
 atkSet lunge 0
 atkSet lungeTime 0
 atkSet flurry 267
-atkSet flurryTime 467
+atkSet flurryTime 600
 atkSet damage 0
 atkSet damageFlags -no_knockback -no_air -no_ground -no_block -self_none -self_half -no_falloff -no_structures -quake_event -no_reaction -strip_states -explosive -burning -electrical 
 atkSet xLunge 0
@@ -279,7 +279,7 @@ atkSet impact 200 400
 atkSet lunge 0
 atkSet lungeTime 0
 atkSet flurry 267
-atkSet flurryTime 367
+atkSet flurryTime 533
 atkSet damage 0
 atkSet damageFlags -no_knockback -no_air -no_ground -no_block -self_none -self_half -no_falloff -no_structures -quake_event -no_reaction -strip_states -explosive -burning -electrical 
 atkSet xLunge 0
