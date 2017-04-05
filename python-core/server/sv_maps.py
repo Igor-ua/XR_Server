@@ -131,15 +131,10 @@ def savestats():
     mapHistory.append(index)
 
 
-# Makes simple next-mapping in a row -------------------------------
+# Random map choice -------------------------------
 def nextmap():
     try:
-        current_map_name = str(CvarGetString('svr_world'))
-        current_map_index = mapName.index(current_map_name)
-        if current_map_index < len(mapName) - 1:
-            CvarSetString('sv_nextMap', mapName[current_map_index + 1])
-        else:
-            CvarSetString('sv_nextMap', mapName[current_map_index + 1])
+        CvarSetString('sv_nextMap', random.choice(mapName))
     except:
         CvarSetString('sv_nextMap', mapName[0])
 
