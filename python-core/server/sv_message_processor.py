@@ -101,12 +101,14 @@ def process_request(options):
             if command == 'info':
                 if not param:
                     player = sv_stats.get_client_stats(uid)
+                    player.clan_tag = str(server.GetClientInfo(guid, INFO_CLANABBREV))
                     if player and player.uid != 0:
                         notify_info(guid, player)
                     else:
                         nothing_was_found(guid)
                 else:
                     player = sv_stats.get_client_stats_by_name(param)
+                    player.clan_tag = str(server.GetClientInfo(guid, INFO_CLANABBREV))
                     if player and player.uid != 0:
                         notify_info(guid, player)
                     else:
@@ -114,12 +116,14 @@ def process_request(options):
             elif command == 'last':
                 if not param:
                     player = sv_stats.get_client_stats(uid)
+                    player.clan_tag = str(server.GetClientInfo(guid, INFO_CLANABBREV))
                     if player and player.uid != 0:
                         notify_last(guid, player)
                     else:
                         nothing_was_found(guid)
                 else:
                     player = sv_stats.get_client_stats_by_name(param)
+                    player.clan_tag = str(server.GetClientInfo(guid, INFO_CLANABBREV))
                     if player and player.uid != 0:
                         notify_last(guid, player)
                     else:
@@ -145,7 +149,8 @@ def nothing_was_found(guid):
 
 def notify_info(guid, player):
     server.Notify(guid, '')
-    server.Notify(guid, '^y[General ^ystatistic ^yfor: ^w^clan %s^ ^g%s^y]' % (player.clan_id, player.last_used_name))
+    server.Notify(guid, '^y[General ^ystatistic ^yfor: ^w%s ^w^clan %s^ ^g%s^y]' %
+                  (player.clan_tag, player.clan_id, player.last_used_name))
     server.Notify(guid, '^y[^900Accuracy^y]')
     server.Notify(guid, '^yShots: ^g%s' % player.accuracy_stats.accumulated_shots)
     server.Notify(guid, '^yHits: ^g%s' % player.accuracy_stats.accumulated_hits)
@@ -169,7 +174,8 @@ def notify_info(guid, player):
 
 def notify_last(guid, player):
     server.Notify(guid, '')
-    server.Notify(guid, '^y[Latest ^ystatistic ^yfor: ^w^clan %s^ ^g%s^y]' % (player.clan_id, player.last_used_name))
+    server.Notify(guid, '^y[Latest ^ystatistic ^yfor: ^w%s ^w^clan %s^ ^g%s^y]' %
+                  (player.clan_tag, player.clan_id, player.last_used_name))
     server.Notify(guid, '^y[^900Accuracy^y]')
     server.Notify(guid, '^yShots: ^g%s' % player.accuracy_stats.last_shots)
     server.Notify(guid, '^yHits: ^g%s' % player.accuracy_stats.last_hits)
