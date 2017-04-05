@@ -7,6 +7,7 @@ enemy_death	skull_green
 
 victory		gui/standard/victory.tga
 defeat		gui/standard/defeat.tga
+draw		gui/standard/draw.tga
 
 siege_crosshair	gui/standard/crosshairs/grenade_xhair.tga
 fp_crosshair	gui/standard/crosshairs/grenade_xhair.tga

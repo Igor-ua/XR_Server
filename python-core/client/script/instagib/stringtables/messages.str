@@ -23,6 +23,7 @@ beast_unmatched 			Your skill is unmatched!
 beast_unmatched_other 		's skill is unmatched!
 
 dropoff_resources		You gave the team
+dropoffcart_resources 		You deposited 
 
 notice_rtss_victory		Your team has achieved victory!
 notice_rtss_defeat		Your team has been defeated!
