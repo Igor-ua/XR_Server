@@ -14,7 +14,6 @@ import sv_stats
 import time
 import sv_custom_utils
 import re
-import logging
 import os
 from time import gmtime, strftime
 import re
@@ -64,10 +63,10 @@ def get_current_millis():
 def process_chat_message(guid, message_type, message):
     try:
         # Logging a message to the file
-        file_name = 'python/logs/general_chat_%s.log' % strftime("%Y-%m-%d", gmtime())
-        logging.basicConfig(filename=file_name, filemode='a', level=logging.INFO)
+        file_name = './python/logs/general_chat_%s.log' % strftime("%Y-%m-%d", gmtime())
         player_name = re.sub(REGEXP_FOR_NAME, '', server.GetClientInfo(guid, INFO_NAME))
-        logging.info('[%s] %s: %s' % (message_type, player_name, re.sub(REGEXP_FOR_INPUT, '', message)))
+        with open(file_name, 'a') as f:
+            f.write('[%s] %s: %s\n' % (message_type, player_name, re.sub(REGEXP_FOR_INPUT, '', message)))
     except:
         sv_custom_utils.simple_exception_info()
     # type strings: global, team, squad, selected
@@ -84,11 +83,11 @@ def process_chat_message(guid, message_type, message):
 def process_private_message(sender_idx, receiver_idx, message):
     try:
         # Logging a message to the file
-        file_name = 'python/logs/private_chat_%s.log' % strftime("%Y-%m-%d", gmtime())
-        logging.basicConfig(filename=file_name, filemode='a', level=logging.INFO)
+        file_name = './python/logs/private_chat_%s.log' % strftime("%Y-%m-%d", gmtime())
         sender_name = re.sub(REGEXP_FOR_NAME, '', server.GetClientInfo(sender_idx, INFO_NAME))
         receiver_name = re.sub(REGEXP_FOR_NAME, '', server.GetClientInfo(receiver_idx, INFO_NAME))
-        logging.info('%s -> %s: %s' % (sender_name, receiver_name, re.sub(REGEXP_FOR_INPUT, '', message)))
+        with open(file_name, 'a') as f:
+            f.write('%s -> %s: %s\n' % (sender_name, receiver_name, re.sub(REGEXP_FOR_INPUT, '', message)))
     except:
         sv_custom_utils.simple_exception_info()
     return 1
@@ -97,10 +96,10 @@ def process_private_message(sender_idx, receiver_idx, message):
 def parse_request(message, guid):
     try:
         # Logging a message to the file
-        file_name = 'python/logs/requests_%s.log' % strftime("%Y-%m-%d", gmtime())
-        logging.basicConfig(filename=file_name, filemode='a', level=logging.INFO)
+        file_name = './python/logs/requests_%s.log' % strftime("%Y-%m-%d", gmtime())
         player_name = re.sub(REGEXP_FOR_NAME, '', server.GetClientInfo(guid, INFO_NAME))
-        logging.info('%s: %s' % (player_name, re.sub(REGEXP_FOR_INPUT, '', message)))
+        with open(file_name, 'a') as f:
+            f.write('%s: %s' % (player_name, re.sub(REGEXP_FOR_INPUT, '', message)))
     except:
         sv_custom_utils.simple_exception_info()
     try:
