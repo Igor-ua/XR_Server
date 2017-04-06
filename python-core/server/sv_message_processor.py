@@ -101,7 +101,8 @@ def parse_request(message, guid):
         file_name = './python/logs/requests_%s.log' % strftime("%Y-%m-%d", gmtime())
         player_name = re.sub(REGEXP_FOR_NAME, '', server.GetClientInfo(guid, INFO_NAME))
         with open(file_name, 'a') as f:
-            f.write('%s %s: %s' % (strftime("%H:%M:%S", gmtime()), player_name, re.sub(REGEXP_FOR_INPUT, '', message)))
+            f.write('%s %s: %s\n' % (strftime("%H:%M:%S", gmtime()),
+                                     player_name, re.sub(REGEXP_FOR_INPUT, '', message)))
     except:
         sv_custom_utils.simple_exception_info()
     try:
