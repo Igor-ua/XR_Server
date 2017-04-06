@@ -11,12 +11,18 @@ import server
 import sv_defs
 import sv_utils
 import sv_stats
-import sys
 import time
 import sv_custom_utils
 import re
+import logging
+import os
+from time import gmtime, strftime
+import re
+
 # Will replace all symbols from the input string that are not: '0-9A-Za-z-_() '
 REGEXP_FOR_INPUT = '[^!^0-9^A-Z^a-z^\-^_^(^) ]'
+# Will replace all symbols from the name that are not: '0-9A-Za-z-_() '
+REGEXP_FOR_NAME = '[^0-9^A-Z^a-z^\-^_^(^) ]'
 
 messages = {'info', 'last', 'top', 'help'}
 
@@ -31,6 +37,8 @@ def init():
     global clients_list
     for idx in range(0, MAX_CLIENTS):
         clients_list.append([idx, long(0)])
+    if not os.path.exists('python/logs'):
+        os.makedirs('python/logs')
 
 
 # Gets current timeout for the client id
@@ -54,6 +62,14 @@ def get_current_millis():
 
 
 def process_chat_message(guid, message_type, message):
+    try:
+        # Logging a message to the file
+        file_name = 'python/logs/general_chat_%s.log' % strftime("%Y-%m-%d", gmtime())
+        logging.basicConfig(filename=file_name, filemode='a', level=logging.INFO)
+        player_name = re.sub(REGEXP_FOR_NAME, '', server.GetClientInfo(guid, INFO_NAME))
+        logging.info('[%s] %s: %s' % (message_type, player_name, re.sub(REGEXP_FOR_INPUT, '', message)))
+    except:
+        sv_custom_utils.simple_exception_info()
     # type strings: global, team, squad, selected
     if message.startswith("!"):
         try:
@@ -66,10 +82,27 @@ def process_chat_message(guid, message_type, message):
 
 
 def process_private_message(sender_idx, receiver_idx, message):
+    try:
+        # Logging a message to the file
+        file_name = 'python/logs/private_chat_%s.log' % strftime("%Y-%m-%d", gmtime())
+        logging.basicConfig(filename=file_name, filemode='a', level=logging.INFO)
+        sender_name = re.sub(REGEXP_FOR_NAME, '', server.GetClientInfo(sender_idx, INFO_NAME))
+        receiver_name = re.sub(REGEXP_FOR_NAME, '', server.GetClientInfo(receiver_idx, INFO_NAME))
+        logging.info('%s -> %s: %s' % (sender_name, receiver_name, re.sub(REGEXP_FOR_INPUT, '', message)))
+    except:
+        sv_custom_utils.simple_exception_info()
     return 1
 
 
 def parse_request(message, guid):
+    try:
+        # Logging a message to the file
+        file_name = 'python/logs/requests_%s.log' % strftime("%Y-%m-%d", gmtime())
+        logging.basicConfig(filename=file_name, filemode='a', level=logging.INFO)
+        player_name = re.sub(REGEXP_FOR_NAME, '', server.GetClientInfo(guid, INFO_NAME))
+        logging.info('%s: %s' % (player_name, re.sub(REGEXP_FOR_INPUT, '', message)))
+    except:
+        sv_custom_utils.simple_exception_info()
     try:
         replaced_message = re.sub(REGEXP_FOR_INPUT, '', message)
         msg_parts = replaced_message.split(' ')

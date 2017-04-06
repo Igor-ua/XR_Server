@@ -17,6 +17,7 @@ from sv_entities import *
 import logging
 import os
 import imp
+from time import gmtime, strftime
 
 last_error = [0, 0]
 
@@ -52,7 +53,8 @@ def full_exception_info():
 def simple_exception_info():
     if not os.path.exists('python/logs'):
         os.makedirs('python/logs')
-    logging.basicConfig(filename='python/logs/exceptions.log', filemode='a', level=logging.ERROR)
+    file_name = 'python/logs/exceptions_%s.log' % strftime("%Y-%m-%d", gmtime())
+    logging.basicConfig(filename=file_name, filemode='a', level=logging.ERROR)
     try:
         exc_type, exc_value, exc_traceback = sys.exc_info()
         exception_data = traceback.format_exc().splitlines()
