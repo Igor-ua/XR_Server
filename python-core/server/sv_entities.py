@@ -6,11 +6,12 @@ class Player(object):
 
     # Robot icon
     default_clan_id = 86846
+    default_clan_tag = '^gBOT'
 
     def __init__(self, uid):
         self.uid = uid
         self.clan_id = self.default_clan_id
-        self.clan_tag = ""
+        self.clan_tag = self.default_clan_tag
         self.last_used_name = ""
         self.accuracy_stats = AccuracyStats(self.uid)
         self.awards = Awards(self.uid)
@@ -64,7 +65,8 @@ class AccuracyStats(object):
 
 class MapAwards:
     def __init__(self):
-        template = {"uid": 0, "clan_id": Player.default_clan_id, "name": "", "value": 0, "full_nick": ""}
+        template = {"uid": 0, "clan_id": Player.default_clan_id, "name": "", "value": 0, "full_nick": "",
+                    "clan_tag": Player.default_clan_tag}
         # most kills - deaths
         self.mvp = copy.copy(template)
         self.mvp["award_text"] = '%s (kills - deaths)'

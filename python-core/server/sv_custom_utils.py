@@ -183,6 +183,8 @@ def get_list_of_players_from_json(resp):
 
 
 # arg: array of uids
+# @ Deprecated since INFO_CLANABBREV is available via guid.
+#   This method still can be used to get info via uids.
 def get_clients_info_dict(arr):
     try:
         helper = imp.load_compiled("helper", "python/helper.pyo")

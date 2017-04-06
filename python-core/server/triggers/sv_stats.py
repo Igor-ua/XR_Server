@@ -239,7 +239,7 @@ def get_top_stats():
 
 def calculate_players_and_awards():
     global players
-    calculate_players_with_accuracy()
+    calculate_players_stats()
     calculate_map_stats()
     map_awards = calculate_map_awards()
     bind_awards_to_players(map_awards)
@@ -297,7 +297,7 @@ def get_accuracy(guid):
 
 
 # Gets accuracy for all active players
-def calculate_players_with_accuracy():
+def calculate_players_stats():
     global players
     first_frag_guid = int(core.CvarGetValue('gs_first_frag_guid'))
     last_frag_guid = int(core.CvarGetValue('gs_last_frag_guid'))
@@ -309,6 +309,8 @@ def calculate_players_with_accuracy():
                     player = Player(uid)
                     clan_id = int(server.GetClientInfo(guid, INFO_CLANID))
                     player.clan_id = player.default_clan_id if clan_id == 0 else clan_id
+                    clan_tag = str(server.GetClientInfo(guid, INFO_CLANABBREV))
+                    player.clan_tag = player.default_clan_tag if not clan_tag else clan_tag
                     player.last_used_name = re.sub(REGEXP_FOR_NAME, '', server.GetClientInfo(guid, INFO_NAME))
                     player.kills = int(server.GetClientInfo(guid, STAT_KILLS))
                     player.deaths = int(server.GetClientInfo(guid, STAT_DEATHS))
@@ -356,6 +358,7 @@ def calculate_map_awards():
     red_score = int(core.CvarGetValue('gs_transmit1'))
     blue_score = int(core.CvarGetValue('gs_transmit2'))
 
+    full_nick_template = '%s ^w^clan %s^ ^w%s'
     try:
         for p in players:
             # sadist
@@ -364,81 +367,88 @@ def calculate_map_awards():
                 map_awards.sadist["clan_id"] = p.clan_id
                 map_awards.sadist["name"] = p.last_used_name
                 map_awards.sadist["value"] = p.kills
+                map_awards.sadist["clan_tag"] = p.clan_tag
+                map_awards.sadist["full_nick"] = full_nick_template % (p.clan_tag, p.clan_id, p.last_used_name)
             # ripper
             if p.deaths > map_awards.ripper["value"]:
                 map_awards.ripper["uid"] = p.uid
                 map_awards.ripper["clan_id"] = p.clan_id
                 map_awards.ripper["name"] = p.last_used_name
                 map_awards.ripper["value"] = p.deaths
+                map_awards.ripper["clan_tag"] = p.clan_tag
+                map_awards.ripper["full_nick"] = full_nick_template % (p.clan_tag, p.clan_id, p.last_used_name)
             # mvp
             if p.kills - p.deaths > map_awards.mvp["value"]:
                 map_awards.mvp["uid"] = p.uid
                 map_awards.mvp["clan_id"] = p.clan_id
                 map_awards.mvp["name"] = p.last_used_name
                 map_awards.mvp["value"] = p.kills - p.deaths
+                map_awards.mvp["clan_tag"] = p.clan_tag
+                map_awards.mvp["full_nick"] = full_nick_template % (p.clan_tag, p.clan_id, p.last_used_name)
             # survivor
             if p.killstreak > map_awards.survivor["value"]:
                 map_awards.survivor["uid"] = p.uid
                 map_awards.survivor["clan_id"] = p.clan_id
                 map_awards.survivor["name"] = p.last_used_name
                 map_awards.survivor["value"] = p.killstreak
+                map_awards.survivor["clan_tag"] = p.clan_tag
+                map_awards.survivor["full_nick"] = full_nick_template % (p.clan_tag, p.clan_id, p.last_used_name)
             # aimbot
             if p.accuracy_stats.accuracy_percent > map_awards.aimbot["value"]:
                 map_awards.aimbot["uid"] = p.uid
                 map_awards.aimbot["clan_id"] = p.clan_id
                 map_awards.aimbot["name"] = p.last_used_name
                 map_awards.aimbot["value"] = p.accuracy_stats.accuracy_percent
+                map_awards.aimbot["clan_tag"] = p.clan_tag
+                map_awards.aimbot["full_nick"] = full_nick_template % (p.clan_tag, p.clan_id, p.last_used_name)
             # phoe
             if p.npc_killed > map_awards.phoe["value"]:
                 map_awards.phoe["uid"] = p.uid
                 map_awards.phoe["clan_id"] = p.clan_id
                 map_awards.phoe["name"] = p.last_used_name
                 map_awards.phoe["value"] = p.npc_killed
+                map_awards.phoe["clan_tag"] = p.clan_tag
+                map_awards.phoe["full_nick"] = full_nick_template % (p.clan_tag, p.clan_id, p.last_used_name)
             # first frag
             if p.first_frag == 1:
                 map_awards.first_frag["uid"] = p.uid
                 map_awards.first_frag["clan_id"] = p.clan_id
                 map_awards.first_frag["name"] = p.last_used_name
                 map_awards.first_frag["value"] = p.first_frag
+                map_awards.first_frag["clan_tag"] = p.clan_tag
+                map_awards.first_frag["full_nick"] = full_nick_template % (p.clan_tag, p.clan_id, p.last_used_name)
             # last frag that made your team win
             if p.last_frag == 1 and (red_score == frag_limit or blue_score == frag_limit):
                 map_awards.last_frag["uid"] = p.uid
                 map_awards.last_frag["clan_id"] = p.clan_id
                 map_awards.last_frag["name"] = p.last_used_name
                 map_awards.last_frag["value"] = p.last_frag
+                map_awards.last_frag["clan_tag"] = p.clan_tag
+                map_awards.last_frag["full_nick"] = full_nick_template % (p.clan_tag, p.clan_id, p.last_used_name)
             # camper (0 deaths)
             if p.deaths == 0 and p.kills > 0:
                 map_awards.camper["uid"] = p.uid
                 map_awards.camper["clan_id"] = p.clan_id
                 map_awards.camper["name"] = p.last_used_name
                 map_awards.camper["value"] = p.deaths
+                map_awards.camper["clan_tag"] = p.clan_tag
+                map_awards.camper["full_nick"] = full_nick_template % (p.clan_tag, p.clan_id, p.last_used_name)
             # fpm (frags per minute)
             if p.fpm > map_awards.fpm["value"]:
                 map_awards.fpm["uid"] = p.uid
                 map_awards.fpm["clan_id"] = p.clan_id
                 map_awards.fpm["name"] = p.last_used_name
                 map_awards.fpm["value"] = p.fpm
+                map_awards.fpm["clan_tag"] = p.clan_tag
+                map_awards.fpm["full_nick"] = full_nick_template % (p.clan_tag, p.clan_id, p.last_used_name)
             # bunny
             if p.jumps > map_awards.bunny["value"]:
                 map_awards.bunny["uid"] = p.uid
                 map_awards.bunny["clan_id"] = p.clan_id
                 map_awards.bunny["name"] = p.last_used_name
                 map_awards.bunny["value"] = p.jumps
-
-        # Retrieving info about clanAttr and merging it into the 'full_nick'
-        uids = set()
-        for attr, val in map_awards.__dict__.iteritems():
-            if val["uid"] != 0:
-                uids.add(val["uid"])
-        info = sv_custom_utils.get_clients_info_dict(list(uids))
-        for attr, val in map_awards.__dict__.iteritems():
-            if val["uid"] != 0 and val["uid"] in info and info[val["uid"]]["ClanAbbrev"] != "":
-                val["full_nick"] = '%s ^w^clan %s^ ^w%s' % (info[val["uid"]]["ClanAbbrev"], val["clan_id"], val["name"])
-            elif val["uid"] != 0 and val["uid"] in info:
-                val["full_nick"] = val["name"]
-            else:
-                val["full_nick"] = ""
-
+                map_awards.bunny["clan_tag"] = p.clan_tag
+                map_awards.bunny["full_nick"] = full_nick_template % (p.clan_tag, p.clan_id, p.last_used_name)
     except:
         sv_custom_utils.simple_exception_info()
     return map_awards
