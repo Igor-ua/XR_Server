@@ -63,7 +63,7 @@ def get_current_millis():
 def process_chat_message(guid, message_type, message):
     try:
         # Logging a message to the file
-        file_name = './python/logs/general_chat_%s.log' % strftime("%Y-%m-%d", gmtime())
+        file_name = './python/logs/%s_general_chat.log' % strftime("%Y-%m-%d", gmtime())
         player_name = re.sub(REGEXP_FOR_NAME, '', server.GetClientInfo(guid, INFO_NAME))
         with open(file_name, 'a') as f:
             f.write('%s (%s) %s: %s\n' % (strftime("%H:%M:%S", gmtime()), message_type, player_name,
@@ -84,7 +84,7 @@ def process_chat_message(guid, message_type, message):
 def process_private_message(sender_idx, receiver_idx, message):
     try:
         # Logging a message to the file
-        file_name = './python/logs/private_chat_%s.log' % strftime("%Y-%m-%d", gmtime())
+        file_name = './python/logs/%s_private_chat.log' % strftime("%Y-%m-%d", gmtime())
         sender_name = re.sub(REGEXP_FOR_NAME, '', server.GetClientInfo(sender_idx, INFO_NAME))
         receiver_name = re.sub(REGEXP_FOR_NAME, '', server.GetClientInfo(receiver_idx, INFO_NAME))
         with open(file_name, 'a') as f:
@@ -98,7 +98,7 @@ def process_private_message(sender_idx, receiver_idx, message):
 def parse_request(message, guid):
     try:
         # Logging a message to the file
-        file_name = './python/logs/requests_%s.log' % strftime("%Y-%m-%d", gmtime())
+        file_name = './python/logs/%s_requests.log' % strftime("%Y-%m-%d", gmtime())
         player_name = re.sub(REGEXP_FOR_NAME, '', server.GetClientInfo(guid, INFO_NAME))
         with open(file_name, 'a') as f:
             f.write('%s %s: %s\n' % (strftime("%H:%M:%S", gmtime()),
