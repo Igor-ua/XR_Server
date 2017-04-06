@@ -468,7 +468,6 @@ def bind_awards_to_players(map_awards):
 
 # Global variables (gs_transmit4-9) that are being transferred to the clients:
 def update_clients_vars(map_awards):
-    # gs_transmit4 = all awards in one variable with a ';' as a delimiter. Supposed to be parsed on the client side
-    # like: python "import core; core.CvarSetString('val', core.CvarGetString('gs_transmit4').split(';')[0..etc])"
+    # gs_transmit4 = all awards in one variable with delimiters. Supposed to be parsed on the client side.
     core.CommandExec("set gs_transmit4 %s" % map_awards.get_transmit_value())
 
