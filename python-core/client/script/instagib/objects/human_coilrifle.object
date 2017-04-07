@@ -142,3 +142,8 @@ objSet itemActiveSound ""
 // XR Additions
 objset canpickup 1
 objset pickupGive human_coilrifle
+
+// Instagib
+objSet staminaDrain 20.000000
+objSet canBlock 0
+objSet canDodge 1

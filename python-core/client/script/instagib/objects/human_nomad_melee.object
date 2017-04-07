@@ -48,7 +48,6 @@ objSet manaCost 0
 objSet transferHealth 0.000000
 objSet staminaDrain 0.000000
 objSet speedPenalty 1.000000
-objSet canBlock 1
 objSet fullHealth 100
 objSet expMult 1.000000
 objSet alwaysWaypoint 0
@@ -76,3 +75,8 @@ objSet wpOverheatSound ""
 objSet wpFiringSound ""
 objSet itemSleepSound ""
 objSet itemActiveSound ""
+
+// Instagib
+objSet canBlock 0
+objSet canDodge 1
+objSet staminaDrain 20.000000

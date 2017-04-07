@@ -115,7 +115,6 @@ objSet healAmount 2
 objSet healRate 5000
 objSet canPurchase 1
 objSet allowFirstPerson 1
-objSet canDodge 0
 objSet isSiegeWeapon 0
 objSet maxMana 0
 objSet manaRegenRate 1000
@@ -409,3 +408,5 @@ atkSet vertKick 0.000000
 atkSet speed 1.000000
 atkSet restTime 0 0
 
+// Instagib
+objSet canDodge 1
