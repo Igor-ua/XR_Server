@@ -143,7 +143,7 @@ def process_request(options):
                         nothing_was_found(guid)
                 else:
                     player = sv_stats.get_client_stats_by_name(param)
-                    player.clan_tag = str(server.GetClientInfo(guid, INFO_CLANABBREV))
+                    player.clan_tag = ''
                     if player and player.uid != 0:
                         notify_info(guid, player)
                     else:
@@ -151,7 +151,7 @@ def process_request(options):
             elif command == 'last':
                 if not param:
                     player = sv_stats.get_client_stats(uid)
-                    player.clan_tag = str(server.GetClientInfo(guid, INFO_CLANABBREV))
+                    player.clan_tag = ''
                     if player and player.uid != 0:
                         notify_last(guid, player)
                     else:
