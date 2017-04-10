@@ -196,18 +196,25 @@ def iterate_through_clients():
             if object_type == "CLIENT":
                 active_clients_guids.add(guid)
                 check_for_frags_and_items(guid)
+                # promote_officers(guid)
                 # If game is in the 'setup' state - notify players to hit F3
                 if server.GetGameInfo(GAME_STATE) == 1 or server.GetGameInfo(GAME_STATE) == 2:
                     notify_to_get_ready(guid)
+
+
+# Unused
+def promote_officers(guid):
+    if not bool(sv_defs.clientList_Officer[guid]):
+        server.GameScript(guid, '!give target officer')
 
 
 def check_for_frags_and_items(guid):
     try:
         guid = int(guid)
         global inventory
+        kills_for_reloc = 2
+        kills_for_sensor = 3
         kills_for_mist = 5
-        kills_for_sensor = 7
-        kills_for_reloc = 10
 
         # Checking is there enough ammo in the Coil
         server.GameScript(guid, '!inventory target 1')
