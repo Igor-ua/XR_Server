@@ -30,6 +30,8 @@ global frequency  # List (for each map): Likelyhood of playing this Map (Range: 
 global numPlayed  # List (for each map): Number of times Map has been played since Server started
 global mapHistory  # List: Indexes of Maps played since Server started, in chronological order
 
+mapFileName = 'Maplist.cfg'
+
 
 # -------------------------------
 def init():
@@ -133,10 +135,21 @@ def savestats():
 
 # Random map choice -------------------------------
 def nextmap():
+    mapList = []
     try:
-        CvarSetString('sv_nextMap', random.choice(mapName))
+        with open(mapFileName) as f:
+            unfiltered = [c.strip() for c in f.readlines()]
+        for c in unfiltered:
+            if c != '' and not c.startswith('//'):
+                mapList.append(c)
+        current_map_name = str(CvarGetString('svr_world'))
+        current_map_index = mapList.index(current_map_name)
+        if current_map_index < len(mapList) - 1:
+            CvarSetString('sv_nextMap', mapList[current_map_index + 1])
+        else:
+            CvarSetString('sv_nextMap', mapList[0])
     except:
-        CvarSetString('sv_nextMap', mapName[0])
+        CvarSetString('sv_nextMap', str(CvarGetString('default_world')))
 
 
 # -------------------------------
