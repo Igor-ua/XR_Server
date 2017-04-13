@@ -196,16 +196,16 @@ def iterate_through_clients():
             if object_type == "CLIENT":
                 active_clients_guids.add(guid)
                 check_for_frags_and_items(guid)
-                # promote_officers(guid)
+                remove_items_on_death(guid)
                 # If game is in the 'setup' state - notify players to hit F3
                 if server.GetGameInfo(GAME_STATE) == 1 or server.GetGameInfo(GAME_STATE) == 2:
                     notify_to_get_ready(guid)
 
 
-# Unused
-def promote_officers(guid):
-    if not bool(sv_defs.clientList_Officer[guid]):
-        server.GameScript(guid, '!give target officer')
+def remove_items_on_death(guid):
+    # Cleaning 2 slots:
+    server.GameScript(guid, '!remove target 3')
+    server.GameScript(guid, '!remove target 4')
 
 
 def check_for_frags_and_items(guid):
@@ -214,7 +214,7 @@ def check_for_frags_and_items(guid):
         global inventory
         kills_for_reloc = 2
         kills_for_sensor = 3
-        kills_for_mist = 5
+        # kills_for_mist = 5
 
         # Checking is there enough ammo in the Coil
         server.GameScript(guid, '!inventory target 1')
@@ -231,14 +231,19 @@ def check_for_frags_and_items(guid):
         slot4 = bool(core.CvarGetString('gs_inventory_name'))
         kills = int(server.GetClientInfo(guid, STAT_KILLS))
         # killstreak = int(server.GetClientInfo(guid, STAT_KILLSTREAK))
+
+        # Always give beast_tracking_sense
+        if not bool(slot2):
+            server.GameScript(guid, '!give target beast_tracking_sense 1 2')
+
         template = '^gReceived new item: ^y%s'
         if guid in inventory:
-            if not bool(kills % kills_for_mist) and inventory[guid][0] != kills and not bool(slot2):
-                server.GameScript(guid, '!give target beast_camouflage 1 2')
-                inventory[guid][0] = kills
-                server.Notify(guid, template % 'Mist Shroud')
-            elif not bool(kills % kills_for_mist) and bool(slot2):
-                inventory[guid][0] = kills
+            # if not bool(kills % kills_for_mist) and inventory[guid][0] != kills and not bool(slot2):
+            #     server.GameScript(guid, '!give target beast_camouflage 1 2')
+            #     inventory[guid][0] = kills
+            #     server.Notify(guid, template % 'Mist Shroud')
+            # elif not bool(kills % kills_for_mist) and bool(slot2):
+            #     inventory[guid][0] = kills
             if not bool(kills % kills_for_sensor) and inventory[guid][1] != kills and not bool(slot3):
                 server.GameScript(guid, '!give target human_motion_sensor 1 3')
                 inventory[guid][1] = kills
