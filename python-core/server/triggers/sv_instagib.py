@@ -213,8 +213,8 @@ def check_for_frags_and_items(guid):
         guid = int(guid)
         global inventory
         kills_for_reloc = 2
-        kills_for_sensor = 3
-        # kills_for_mist = 5
+        # kills_for_sensor = 3
+        kills_for_mist = 5
 
         # Checking is there enough ammo in the Coil
         server.GameScript(guid, '!inventory target 1')
@@ -238,18 +238,18 @@ def check_for_frags_and_items(guid):
 
         template = '^gReceived new item: ^y%s'
         if guid in inventory:
-            # if not bool(kills % kills_for_mist) and inventory[guid][0] != kills and not bool(slot2):
-            #     server.GameScript(guid, '!give target beast_camouflage 1 2')
-            #     inventory[guid][0] = kills
-            #     server.Notify(guid, template % 'Mist Shroud')
-            # elif not bool(kills % kills_for_mist) and bool(slot2):
-            #     inventory[guid][0] = kills
-            if not bool(kills % kills_for_sensor) and inventory[guid][1] != kills and not bool(slot3):
-                server.GameScript(guid, '!give target human_motion_sensor 1 3')
+            if not bool(kills % kills_for_mist) and inventory[guid][1] != kills and not bool(slot3):
+                server.GameScript(guid, '!give target beast_camouflage 1 3')
                 inventory[guid][1] = kills
-                server.Notify(guid, template % 'Sensor')
-            elif not bool(kills % kills_for_sensor) and bool(slot3):
+                server.Notify(guid, template % 'Mist Shroud')
+            elif not bool(kills % kills_for_mist) and bool(slot3):
                 inventory[guid][1] = kills
+            # if not bool(kills % kills_for_sensor) and inventory[guid][1] != kills and not bool(slot3):
+            #     server.GameScript(guid, '!give target human_motion_sensor 1 3')
+            #     inventory[guid][1] = kills
+            #     server.Notify(guid, template % 'Sensor')
+            # elif not bool(kills % kills_for_sensor) and bool(slot3):
+            #     inventory[guid][1] = kills
             if not bool(kills % kills_for_reloc) and inventory[guid][2] != kills and not bool(slot4):
                 server.GameScript(guid, '!give target human_relocater 1 4')
                 inventory[guid][2] = kills
