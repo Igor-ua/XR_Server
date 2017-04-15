@@ -193,10 +193,10 @@ def iterate_through_clients():
             object_health = int(sv_defs.objectList_Health[guid])
             if object_type == "CLIENT" and object_health == 0:
                 teleport_and_revive(guid)
+                remove_items_on_death(guid)
             if object_type == "CLIENT":
                 active_clients_guids.add(guid)
                 check_for_frags_and_items(guid)
-                remove_items_on_death(guid)
                 # If game is in the 'setup' state - notify players to hit F3
                 if server.GetGameInfo(GAME_STATE) == 1 or server.GetGameInfo(GAME_STATE) == 2:
                     notify_to_get_ready(guid)
@@ -212,9 +212,9 @@ def check_for_frags_and_items(guid):
     try:
         guid = int(guid)
         global inventory
-        kills_for_reloc = 2
-        # kills_for_sensor = 3
-        kills_for_mist = 5
+        kills_for_sensor = 3
+        kills_for_reloc = 1
+        # kills_for_mist = 5
 
         # Checking is there enough ammo in the Coil
         server.GameScript(guid, '!inventory target 1')
@@ -238,24 +238,28 @@ def check_for_frags_and_items(guid):
 
         template = '^gReceived new item: ^y%s'
         if guid in inventory:
-            if not bool(kills % kills_for_mist) and inventory[guid][1] != kills and not bool(slot3):
-                server.GameScript(guid, '!give target beast_camouflage 1 3')
-                inventory[guid][1] = kills
-                server.Notify(guid, template % 'Mist Shroud')
-            elif not bool(kills % kills_for_mist) and bool(slot3):
-                inventory[guid][1] = kills
-            # if not bool(kills % kills_for_sensor) and inventory[guid][1] != kills and not bool(slot3):
-            #     server.GameScript(guid, '!give target human_motion_sensor 1 3')
+
+            # if not bool(kills % kills_for_mist) and inventory[guid][1] != kills and not bool(slot3):
+            #     server.GameScript(guid, '!give target beast_camouflage 1 3')
             #     inventory[guid][1] = kills
-            #     server.Notify(guid, template % 'Sensor')
-            # elif not bool(kills % kills_for_sensor) and bool(slot3):
+            #     server.Notify(guid, template % 'Mist Shroud')
+            # elif not bool(kills % kills_for_mist) and bool(slot3):
             #     inventory[guid][1] = kills
+
+            if not bool(kills % kills_for_sensor) and inventory[guid][1] != kills and not bool(slot3):
+                server.GameScript(guid, '!give target human_motion_sensor 1 3')
+                inventory[guid][1] = kills
+                server.Notify(guid, template % 'Sensor')
+            elif not bool(kills % kills_for_sensor) and bool(slot3):
+                inventory[guid][1] = kills
+
             if not bool(kills % kills_for_reloc) and inventory[guid][2] != kills and not bool(slot4):
                 server.GameScript(guid, '!give target human_relocater 1 4')
                 inventory[guid][2] = kills
                 server.Notify(guid, template % 'Relocater')
             elif not bool(kills % kills_for_reloc) and bool(slot4):
                 inventory[guid][2] = kills
+
         else:
             inventory[guid] = [0, 0, 0]
     except:
