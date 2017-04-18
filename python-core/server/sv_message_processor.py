@@ -280,7 +280,7 @@ def notify_help(guid):
     server.Notify(guid, '^900| ^yStats ^yare ^ybeing ^yupdated ^yevery ^yround')
     server.Notify(guid, '^900| ^yStats ^yare ^ybound ^yto ^yyour ^yUIDs')
     server.Notify(guid, '^900|   ^900Items:')
-    server.Notify(guid, '^900| ^yEvery ^yN ^yfrags ^ygive ^yyou ^yan ^yitem.')
+    server.Notify(guid, '^900| ^yEvery ^yNth ^yfrag ^ygives ^yyou ^yan ^yitem.')
     server.Notify(guid, '^900|   ^900Available stats commands:')
     server.Notify(guid, '^900| ^y!info ^y- ^ygeneral ^yinfo ^yabout ^yyour ^ycurrent ^yUID')
     server.Notify(guid, '^900| ^y!info ^y<part ^yof ^ythe ^ynick> - ^y(ex: ^y!info ^yxr_pla)')
