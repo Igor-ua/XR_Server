@@ -295,6 +295,7 @@ def execute_waiting_and_reviving(guid):
                 core.ConsolePrint("Teleporting: %s [%s, %s]\n" % (server.GetClientInfo(guid, INFO_NAME), Point3[0], Point3[1]))
                 server.GameScript(guid, '!teleport target coords %s %s' % (Point3[0], Point3[1]))
                 server.GameScript(guid, '!heal target 500')
+                server.GameScript(guid, '!givestamina target 100')
                 if guid in dead_queue:
                     dead_queue.remove(guid)
                 time.sleep(0.5)
