@@ -188,7 +188,7 @@ def calculate_dynamic_frag_limit():
 
 def iterate_through_clients():
     for guid in xrange(0, sv_defs.objectList_Last):
-        if sv_defs.objectList_Active[guid]:
+        if sv_defs.objectList_Active[guid] and sv_defs.objectList_Team[guid] > 0:
             object_type = str(type_list[sv_defs.objectList_Type[guid]])
             object_health = int(sv_defs.objectList_Health[guid])
             if object_type == "CLIENT" and object_health == 0:
