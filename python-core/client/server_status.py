@@ -10,6 +10,7 @@
 # Server name:	[^yCommunity ^yServer ^c(Public)]
 # Online:		[1 / 72]
 # World:		[xr_greenout]
+# Version:		[^900XR ^g1.3]
 # ----------------------------------------------------------------------
 # [^900Team 1 (human)]
 # [--empty--]
@@ -73,6 +74,7 @@ def print_header(fp):
     print("Server name:\t[%s]" % fp['name'])
     print("Online:\t\t[%s / %s]" % (fp['cnum'], fp['cmax']))
     print("World:\t\t[%s]" % fp['world'])
+    print("Version:\t\t[%s]" % fp['ver'])
 
 
 def print_teams(data):
