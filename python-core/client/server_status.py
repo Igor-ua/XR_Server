@@ -49,10 +49,10 @@ def get_server_status():
 
     data = data.split("name")[1].split("\n")
 
-    fp = parse_header(data[0])
-    data[0] = fp['players']
+    header = parse_header(data[0])
+    data[0] = header['players']
 
-    print_header(fp)
+    print_header(header)
     print_teams(data)
     print(delimiter)
 
