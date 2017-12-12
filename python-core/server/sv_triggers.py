@@ -53,12 +53,18 @@ def init():
 
 # -------------------------------
 def re_load():
-    # Reload all trigger modules
-    for index in range(0, len(triggerList)):
-        try:
-            imp.reload(triggerList[index])
-        except:
-            sv_custom_utils.simple_exception_info()
+    global fileList
+    updated_file_list = [f for f in os.listdir('python/triggers')]
+    updated_file_list = [f for f in updated_file_list if os.path.splitext(f)[1] == '.py']
+    if (len(updated_file_list) is not len(fileList)):
+        init()
+    else:
+        # Reload all trigger modules
+        for index in range(0, len(triggerList)):
+            try:
+                imp.reload(triggerList[index])
+            except:
+                sv_custom_utils.simple_exception_info()
 
 
 # -------------------------------

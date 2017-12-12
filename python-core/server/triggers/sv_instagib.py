@@ -198,8 +198,8 @@ def iterate_through_clients():
                 active_clients_guids.add(guid)
                 check_for_frags_and_items(guid)
                 # If game is in the 'setup' state - notify players to hit F3
-                if server.GetGameInfo(GAME_STATE) == 1 or server.GetGameInfo(GAME_STATE) == 2:
-                    notify_to_get_ready(guid)
+                #if server.GetGameInfo(GAME_STATE) == 1 or server.GetGameInfo(GAME_STATE) == 2:
+                #    notify_to_get_ready(guid)
 
 
 def remove_items_on_death(guid):

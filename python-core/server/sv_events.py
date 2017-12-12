@@ -119,22 +119,6 @@ def status():
         pass
 
 
-# -------------------------------
-# Called directly by Silverback
-# -------------------------------
-def callvote(guid, vote_type, vote_info):
-    # Accept vote by default
-    answer = 1
-    try:
-        # Calling Map Vote?
-        if vote_type == 'world':
-            answer = sv_maps.callvote(guid, vote_info)
-    except:
-        sv_custom_utils.simple_exception_info()
-
-    return answer
-
-
 # message_type strings: global, team, squad, selected
 def chatmessage(guid, message_type, message):
     # Accept chat by default
@@ -158,7 +142,37 @@ def privatemessage(sender_idx, receiver_idx, message):
 
 def clientconnect(guid):
     core.ConsolePrint('   -> Connected GUID: %i\n' % guid)
+    # message = '^900Take ^900part ^yto ^ymake ^ythis ^yserver ^ybetter: ^ggoo.gl/PXCnqR'
+    # server.Notify(guid, message)
 
 
 def clientdisconnect(guid):
     core.ConsolePrint('   <- Disconnected GUID: %i\n' % guid)
+
+
+# -------------------------------
+# Called directly by Silverback
+# -------------------------------
+def playerspawned(guid):
+    core.ConsolePrint('Python: Player %s (%i) spawned as %s\n' % (
+    server.GetClientInfo(guid, INFO_NAME), v, sv_defs.objectList_Name[guid]))
+
+
+# -------------------------------
+# Called directly by Silverback
+# -------------------------------
+def playerkilled(guid, killer_guid):
+    name = ''
+
+    # check killerIndex first, might not be client, and might not even be a valid object
+    if killer_guid >= 0 and killer_guid < MAX_CLIENTS:
+        name = server.GetClientInfo(killer_guid, INFO_NAME)
+    elif killer_guid < MAX_OBJECTS:
+        name = sv_defs.objectList_Name[killer_guid]
+    else:
+        core.ConsolePrint('Python: Player %s (%i) was killed in mysterious ways\n' % (
+            server.GetClientInfo(guid, INFO_NAME), guid))
+        return
+
+    core.ConsolePrint('Python: Player %s (%i) was killed by %s (%i)\n' % (
+        server.GetClientInfo(guid, INFO_NAME), guid, name, killer_guid))
