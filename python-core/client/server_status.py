@@ -26,13 +26,13 @@ import socket
 import re
 
 # CSP
-# IP = "94.177.253.129"
+IP = "94.177.253.129"
 
 # Pulse:
 # IP = "139.162.195.241"
 
 # Local
-IP = "127.0.0.1"
+# IP = "127.0.0.1"
 
 PORT = 11235
 
@@ -74,7 +74,7 @@ def print_header(fp):
     print("Server name:\t[%s]" % fp['name'])
     print("Online:\t\t[%s / %s]" % (fp['cnum'], fp['cmax']))
     print("World:\t\t[%s]" % fp['world'])
-    print("Version:\t\t[%s]" % fp['ver'])
+    print("Version:\t[%s]" % fp['ver'])
 
 
 def print_teams(data):
