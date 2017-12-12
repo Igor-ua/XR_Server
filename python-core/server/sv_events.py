@@ -155,7 +155,7 @@ def clientdisconnect(guid):
 # -------------------------------
 def playerspawned(guid):
     core.ConsolePrint('Python: Player %s (%i) spawned as %s\n' % (
-    server.GetClientInfo(guid, INFO_NAME), v, sv_defs.objectList_Name[guid]))
+    server.GetClientInfo(guid, INFO_NAME), guid, sv_defs.objectList_Name[guid]))
 
 
 # -------------------------------
