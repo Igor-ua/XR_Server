@@ -88,11 +88,11 @@ def status():
         elif state == 2:
             # Warming up
             core.ConsolePrint('\n[!]   Game state: Warmup\n\n')
-            sv_respawn_handler.unban_siege_campers()
 
         elif state == 3:
             # Normal play mode
             core.ConsolePrint('\n[!]   Game state: Normal\n\n')
+            sv_respawn_handler.unban_siege_campers()
 
         elif state == 4:
             # Game has ended

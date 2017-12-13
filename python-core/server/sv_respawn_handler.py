@@ -21,10 +21,11 @@ def process_respawn(guid):
     core.ConsolePrint('Python: Player %s (%i) spawned as %s\n' % (server.GetClientInfo(guid, INFO_NAME), guid, sv_defs.objectList_Name[guid]))
     object_name = sv_defs.objectList_Name[guid]
     if is_camper_banned(guid):
-        server.Notify(guid, 'Siege is banned for you! Pick up another unit.')
         if object_name in human_siege:
+            server.Notify(guid, 'Siege is banned for you! Pick up another unit.')
             server.GameScript(guid, '!changeunit target %s' % human_unit)
         if object_name in beast_siege:
+            server.Notify(guid, 'Siege is banned for you! Pick up another unit.')
             server.GameScript(guid, '!changeunit target %s' % beast_unit)
 
 
