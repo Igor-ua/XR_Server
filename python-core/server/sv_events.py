@@ -12,6 +12,7 @@ import sv_defs
 import sv_maps
 import sv_triggers
 import sv_custom_utils
+import sv_respawn_handler
 
 
 # -------------------------------
@@ -87,6 +88,7 @@ def status():
         elif state == 2:
             # Warming up
             core.ConsolePrint('\n[!]   Game state: Warmup\n\n')
+            sv_respawn_handler.unban_siege_campers()
 
         elif state == 3:
             # Normal play mode
@@ -100,14 +102,17 @@ def status():
             # About to load the next map
             core.ConsolePrint('\n[!]   Game state: Loading Next Map\n\n')
             sv_maps.nextmap()
+            sv_respawn_handler.unban_siege_campers()
 
         elif state == 6:
             # About to load the voted map
             core.ConsolePrint('\n[!]   Game state: Loading Voted Map\n\n')
+            sv_respawn_handler.unban_siege_campers()
 
         elif state == 7:
             # Match is restarting (same map)
             core.ConsolePrint('\n[!]   Game state: Restarting Map\n\n')
+            sv_respawn_handler.unban_siege_campers()
 
         # Reload Trigger (resets trigger states)
         sv_triggers.re_load()
@@ -141,21 +146,26 @@ def privatemessage(sender_idx, receiver_idx, message):
 
 
 def clientconnect(guid):
-    core.ConsolePrint('   -> Connected GUID: %i\n' % guid)
+    core.ConsolePrint('[*] ---> Connected GUID: %i\n' % guid)
     # message = '^900Take ^900part ^yto ^ymake ^ythis ^yserver ^ybetter: ^ggoo.gl/PXCnqR'
     # server.Notify(guid, message)
 
 
 def clientdisconnect(guid):
-    core.ConsolePrint('   <- Disconnected GUID: %i\n' % guid)
+    try:
+        core.ConsolePrint('[*] <--- Disconnected GUID: %i\n' % guid)
+    except:
+        sv_custom_utils.simple_exception_info()
 
 
 # -------------------------------
 # Called directly by Silverback
 # -------------------------------
 def playerspawned(guid):
-    core.ConsolePrint('Python: Player %s (%i) spawned as %s\n' % (
-    server.GetClientInfo(guid, INFO_NAME), guid, sv_defs.objectList_Name[guid]))
+    try:
+        sv_respawn_handler.process_respawn(guid)
+    except:
+        sv_custom_utils.simple_exception_info()
 
 
 # -------------------------------
@@ -170,9 +180,7 @@ def playerkilled(guid, killer_guid):
     elif killer_guid < MAX_OBJECTS:
         name = sv_defs.objectList_Name[killer_guid]
     else:
-        core.ConsolePrint('Python: Player %s (%i) was killed in mysterious ways\n' % (
-            server.GetClientInfo(guid, INFO_NAME), guid))
+        core.ConsolePrint('Python: Player %s (%i) was killed in mysterious ways\n' % (server.GetClientInfo(guid, INFO_NAME), guid))
         return
 
-    core.ConsolePrint('Python: Player %s (%i) was killed by %s (%i)\n' % (
-        server.GetClientInfo(guid, INFO_NAME), guid, name, killer_guid))
+    core.ConsolePrint('Python: Player %s (%i) was killed by %s (%i)\n' % (server.GetClientInfo(guid, INFO_NAME), guid, name, killer_guid))

@@ -13,11 +13,14 @@ import server
 import sv_defs
 import sv_custom_utils
 import sv_vote_processor
+import sv_utils
+import sv_respawn_handler
 
 # Custom Vote Vars
 global currentVote
 global currentClient
 
+CUSTOM_VOTES = ['camper']
 
 #-------------------------------
 # Called directly by Silverback
@@ -25,8 +28,8 @@ global currentClient
 def init():
 
     # Print Console Message
-    core.ConsolePrint('Python: Initializing Server-Side Custom Votes...\n')  
-    
+    core.ConsolePrint('Python: Initializing Server-Side Custom Votes...\n')
+
     try:
         # init your custom vote stuff
         pass
@@ -53,51 +56,64 @@ def callvote(guid, vote_type, vote_info):
 
 def callcustomvote(clientIndex, voteType, voteInfo):
 
-    core.ConsolePrint('Python: callcustomvote\n') # debug
-    core.ConsolePrint('clientIndex: %i\n' % clientIndex) # debug
-    core.ConsolePrint('voteType: %s\n' % voteType) # debug
-    core.ConsolePrint('voteInfo: %s\n' % voteInfo) # debug
-    
-    if voteType == 'NULL':
-        server.Notify(clientIndex, 'Custom Vote Explanation')
+    clearCustomVoteCvars()
+
+    if voteType not in CUSTOM_VOTES:
+        server.Notify(clientIndex, 'Example: /callvote custom <voteType> <voteInfo>')
         return -1 # doesn't count as an invalid vote
-    
-    # Reject vote by default
+    if voteInfo == '':
+        return 0
+
+    # Reject vote by default; Client gets a message: "Invalid custom vote."
     answer = 0
 
     try:
-        if voteType == 'test':
-            answer = 1
-            core.CvarSetString('sv_customVoteName', 'Testing Vote') # Custom: + own description
-            core.CvarSetValue('sv_customVotePassPercent', 0.90) # float
-            core.CvarSetValue('sv_customVoteAffectedIndex', -1) # -1 = none
-            core.CvarSetValue('sv_customVoteMalus', 0) # defines if affected can, or has to, accept
-            core.CvarSetValue('sv_customVoteVotableBy', 1) # 1 = TEAM
+        if voteType == 'camper':
+            affectedIndex = sv_utils.getIndexFromName(str(voteInfo))
+            if affectedIndex is None:
+                server.Notify(clientIndex, '%s is not found' % voteInfo)
+                answer = -1
+            else:
+                answer = 1
+                core.CvarSetString('sv_customVoteName', 'Ban siege for %s' % voteInfo)
+                core.CvarSetString('sv_customVoteType', 'camper')
+                core.CvarSetValue('sv_customVotePassPercent', 0.80)
+                core.CvarSetValue('sv_customVoteAffectedIndex', affectedIndex)
+                core.CvarSetValue('sv_customVoteMalus', 1)
+                core.CvarSetValue('sv_customVoteVotableBy', 0)
         else:
-            core.ConsolePrint('Python: callcustomvote invalid: %i / %s / %s\n' % (clientIndex, voteType, voteInfo)) # debug
+            core.ConsolePrint('Python: callCustomVote invalid: %i / %s / %s\n' % (clientIndex, voteType, voteInfo))
     except:
-        core.ConsolePrint('Python: callcustomvote failed\n')
         sv_custom_utils.simple_exception_info()
-        pass
-    
+
     currentVote = voteType
     currentClient = clientIndex
-    
+
     return answer
+
+
+def clearCustomVoteCvars():
+    currentVote = ''
+    currentClient = -1
+    core.CvarSetString('sv_customVoteName', '')              # Custom: + own description
+    core.CvarSetString('sv_customVoteType', '')              # Custom vote type
+    core.CvarSetValue('sv_customVotePassPercent', 1.00)      # float
+    core.CvarSetValue('sv_customVoteAffectedIndex', -1)      # -1 = none
+    core.CvarSetValue('sv_customVoteMalus', 1)               # defines if affected can, or has to, accept; 1 - has NOT to accept; 0 - HAS to accept. 1 - has NOT
+    core.CvarSetValue('sv_customVoteVotableBy', 0)           # 1 = TEAM
 
 
 def passcustomvote(yes, no):
 
-    core.ConsolePrint('Python: passcustomvote: %i vs %i\n' % (yes, no)) # debug
+    core.ConsolePrint('Python: passCustomVote: %i vs %i\n' % (yes, no))
     # Accept pass by default
     answer = 1
 
-    try:    
-        # Do your thing
-        pass
-    
+    try:
+        if core.CvarGetString('sv_customVoteType') == 'camper':
+            guid = int(core.CvarGetValue('sv_customVoteAffectedIndex'))
+            sv_respawn_handler.ban_siege_camper(guid)
     except:
         sv_custom_utils.simple_exception_info()
-        pass
-        
+
     return answer
