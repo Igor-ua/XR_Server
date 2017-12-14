@@ -113,7 +113,6 @@ def passcustomvote(yes, no):
         if core.CvarGetString('sv_customVoteType') == 'camper':
             guid = int(core.CvarGetValue('sv_customVoteAffectedIndex'))
             sv_respawn_handler.ban_siege_camper(guid)
-            server.Broadcast('^ySiege ^ywas ^900banned ^yfor ^g%s' % server.GetClientInfo(guid, INFO_NAME))
     except:
         sv_custom_utils.simple_exception_info()
 
