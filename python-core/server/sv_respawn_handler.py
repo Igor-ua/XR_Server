@@ -11,8 +11,8 @@ import sv_defs
 
 
 banned_clients = []
-human_siege = ['human_ballista', 'human_catapult']
-beast_siege = ['beast_summoner', 'beast_behemoth']
+human_siege = {'human_ballista': '4000', 'human_catapult': '7500'}
+beast_siege = {'beast_summoner': '5500', 'beast_behemoth': '7500'}
 human_unit = 'human_nomad'
 beast_unit = 'beast_scavenger'
 
@@ -37,9 +37,12 @@ def unban_siege_campers():
 
 def warn_and_change_unit(guid):
     object_name = sv_defs.objectList_Name[guid]
+    object_team = str(sv_defs.objectList_Team[guid])
     if object_name in human_siege:
         server.Notify(guid, 'Siege is banned for you! Pick up another unit.')
         server.GameScript(guid, '!changeunit target %s' % human_unit)
+        core.CommandExec('giveresource %s %s %s' % ('gold', human_siege[object_name], object_team))
     if object_name in beast_siege:
         server.Notify(guid, 'Siege is banned for you! Pick up another unit.')
         server.GameScript(guid, '!changeunit target %s' % beast_unit)
+        core.CommandExec('giveresource %s %s %s' % ('gold', beast_siege[object_name], object_team))

@@ -80,10 +80,12 @@ def status():
         if state == 0:
             # Server is waiting for clients to connect
             core.ConsolePrint('\n[!]   Game state: Empty\n\n')
+            sv_respawn_handler.unban_siege_campers()
 
         elif state == 1:
             # Setting a game up in the lobby
             core.ConsolePrint('\n[!]   Game state: Setup\n\n')
+            sv_respawn_handler.unban_siege_campers()
 
         elif state == 2:
             # Warming up
